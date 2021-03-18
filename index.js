@@ -26,7 +26,7 @@ var layers = [
 ];
 
 new Map({
-  layers: [layers, vector],
+  layers: layers,
   view: new View({
     center: denmarkWebMercator,
     zoom: 7

@@ -103834,7 +103834,7 @@ var layers = [new _layer.Tile({
   source: new _OSM.default()
 })];
 new _Map.default({
-  layers: [layers, vector],
+  layers: layers,
   view: new _View.default({
     center: denmarkWebMercator,
     zoom: 7
