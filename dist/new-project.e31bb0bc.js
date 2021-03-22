@@ -81987,7 +81987,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"node_modules/node-libs-browser/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -83780,7 +83780,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
+},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
 var global = arguments[3];
 var Buffer = require("buffer").Buffer;
 "use strict";
@@ -98516,7 +98516,7 @@ const visit = {
 exports.visit = visit;
 validateStyle.parsed = validateStyle;
 validateStyle.latest = validateStyle;
-},{"buffer":"node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
+},{"buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -103818,22 +103818,60 @@ var _style = require("ol/style");
 
 var _layer = require("ol/layer");
 
-var _filter = require("ol/format/filter");
-
 var _proj = require("ol/proj");
 
 var _OSM = _interopRequireDefault(require("ol/source/OSM"));
 
-var _loadingstrategy = require("ol/loadingstrategy");
+var _Overlay = _interopRequireDefault(require("ol/Overlay"));
+
+var _coordinate = require("ol/coordinate");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Elements that make up the popup.
+ */
+var container = document.getElementById('popup');
+var content = document.getElementById('popup-content');
+var closer = document.getElementById('popup-closer');
+/**
+ * Create an overlay to anchor the popup to the map.
+ */
+
+var overlay = new _Overlay.default({
+  element: container,
+  autoPan: true,
+  autoPanAnimation: {
+    duration: 250
+  }
+});
+/**
+ * Add a click handler to hide the popup.
+ * @return {boolean} Don't follow the href.
+ */
+
+closer.onclick = function () {
+  overlay.setPosition(undefined);
+  closer.blur();
+  return false;
+}; // Designate Center of Map
+
+
 var denmarkLonLat = [10.835589, 56.232371];
-var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat);
+var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Pull Municipalities Boundaries from GitHub
+
+var municipalities = new _layer.Vector({
+  source: new _Vector.default({
+    format: new _format.GeoJSON(),
+    url: "https://raw.githubusercontent.com/Neogeografen/dagi/master/geojson/kommuner.geojson"
+  })
+}); // Define layers to be mapped
+
 var layers = [new _layer.Tile({
   source: new _OSM.default()
-})];
-new _Map.default({
+}), municipalities]; // Define map
+
+var map = new _Map.default({
   layers: layers,
   view: new _View.default({
     center: denmarkWebMercator,
@@ -103841,7 +103879,17 @@ new _Map.default({
   }),
   target: 'map'
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/source/Vector":"node_modules/ol/source/Vector.js","ol/View":"node_modules/ol/View.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/format/filter":"node_modules/ol/format/filter.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/loadingstrategy":"node_modules/ol/loadingstrategy.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+/**
+ * Add a click handler to the map to render the popup.
+ */
+
+map.on('singleclick', function (evt) {
+  var coordinate = evt.coordinate;
+  var hdms = (0, _coordinate.toStringHDMS)((0, _proj.toLonLat)(coordinate));
+  content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+  overlay.setPosition(coordinate);
+});
+},{"ol/ol.css":"node_modules/ol/ol.css","ol/Map":"node_modules/ol/Map.js","ol/source/Vector":"node_modules/ol/source/Vector.js","ol/View":"node_modules/ol/View.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -103869,7 +103917,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49889" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
