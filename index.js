@@ -11,7 +11,6 @@ import OSM from 'ol/source/OSM';
 import Overlay from 'ol/Overlay';
 import {toStringHDMS} from 'ol/coordinate';
 import {ScaleLine, ZoomToExtent, defaults as defaultControls} from 'ol/control';
-import ImageWMS from 'ol/source/ImageWMS';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
