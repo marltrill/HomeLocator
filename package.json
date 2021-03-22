@@ -4,6 +4,7 @@
     "elm-pep": "^1.0.6",
     "ol": "^6.5.0",
     "ol-mapbox-style": "^6.3.2",
+    "openrouteservice-js": "^0.1.18",
     "proj4": "^2.7.2"
   },
   "devDependencies": {
