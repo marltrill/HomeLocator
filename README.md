@@ -5,4 +5,4 @@ Repository for Spring 2021 semester geoinformatics project for building a real e
 * Added Municipalities boundaries from GitHub (NOT GML, couldn't get that working...) -22.03.2021 ABP
 
 Sample of app so far:
-(images/app_progress.png)
+[Image of App Progress](images/app_progress.png)
