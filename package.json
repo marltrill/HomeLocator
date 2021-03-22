@@ -1,13 +1,20 @@
 {
-  "name": "test",
+  "name": "real_estate_map",
   "dependencies": {
-    "ol": "6.5.0"
+    "elm-pep": "^1.0.6",
+    "ol": "^6.5.0",
+    "ol-mapbox-style": "^6.3.2",
+    "proj4": "^2.7.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1",
+    "parcel-bundler": "^1.12.5"
   },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node module.js",
     "start": "parcel index.html",
     "build": "parcel build --public-url . index.html"
   },
