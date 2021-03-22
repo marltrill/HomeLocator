@@ -15,9 +15,11 @@ npm start
 
 #### Progress Notes:
 * Added Municipalities boundaries from GitHub (NOT GML, couldn't get that working...). -22.03.2021 ABP
-    * Added "Home" button to return user to default extent as well as a scaleline.
-    * Added navigation bar at the top, the buttons don't do anything yet.
-    * Cleaned navigation bar, added structure to files, and enabled "About" button so it loads a page now.
+    * Added "Home" button to return user to default extent as well as a scaleline. -ABP
+    * Added navigation bar at the top, the buttons don't do anything yet. -ABP
+    * Cleaned navigation bar, added structure to files, and enabled "About" button so it loads a page now. -ABP
+    * Added DK boundary & labels. Search bar has been added but doesn't do anything yet. -ABP
+    * Now layers are scale dependent, renders depend on zoom level. -ABP
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)
