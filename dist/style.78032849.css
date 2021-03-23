@@ -1,6 +1,6 @@
 #map {
-    width: 100%;
-    height: 90vh;
+    width: 78%;
+    height: 89.4vh;
     position: absolute; 
     bottom: 0px;
   }
@@ -30,6 +30,7 @@
     background-color: #4CAF50;
     color: white;
   }
+  /* Old search bar replaced by OSM geocoder on map
   .topnav .search-container {
     float: right;
   }
@@ -79,36 +80,42 @@
     left: 0;
     width: 100%;
 }
+*/
+.pane {
+  position: absolute;
+  top: 10.6vh;
+  bottom: 0;
+  right: 0;
+  width: 22%;
+  background: ghostwhite;
+  border-left: 5px solid lightsteelblue;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+#menu {
+  float: left;
+	position: absolute;
+	bottom: 74.6vh;
+  left: 1vh;
+	z-index: 2000;
+}
 
-ul {
-    list-style-type: none;
-    margin: 0px;
-    padding: 1px;
-    overflow: hidden;
-    background-color: #5a8592;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 3vh;
-   }
-   
-   
-   li {
-    float: left;
-    border-right: 2px solid white;
-   }
-   
-   /* Add a border to all( but not the last) list items */
-   li:last-child { 
-    border-right: none;
-   }
-   
-   li a {
-    display: block;
-    color: white;
-    text-align: left;
-    padding: 15px 17px;
-    text-decoration: none;
-   }
+.tooltip-inner {
+  white-space: nowrap;
+}
+#zoom-restore {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: white;
+  font-size: 1.14em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: .4em;
+  background-color: rgba(0,60,136,0.5);
+}
 
 /*# sourceMappingURL=/style.78032849.css.map */

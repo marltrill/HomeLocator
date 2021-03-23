@@ -11,15 +11,17 @@ import Overlay from 'ol/Overlay';
 import {toStringHDMS} from 'ol/coordinate';
 import {ScaleLine, ZoomToExtent, defaults as defaultControls} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
+import Geocoder from 'ol-geocoder';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
 // Home Icon for default extent button
-var home_icon = document.createElement('span');
+var home_icon = document.createElement('home');
 home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">';
-
+  
+/*
 // Return to Default Extent Button
 var homeExtent = new ZoomToExtent({ // Zoom to Country Extent
   extent: [
@@ -29,9 +31,11 @@ var homeExtent = new ZoomToExtent({ // Zoom to Country Extent
     1726865.343019,
     7959234.881279
   ],
-  label: home_icon
+  label: home_icon,
 });
+*/
 
+// Municipalities Boundary Style
 var style = new Style({
   fill: new Fill({
     color: 'rgba(255, 255, 255, 0.6)'
@@ -52,6 +56,7 @@ var style = new Style({
   })
 });
 
+// DK Boundary Style
 var dk_style = new Style({
   fill: new Fill({
     color: 'rgba(220, 241, 247, 0.6)'
@@ -111,9 +116,24 @@ var layers = [
   dk_boundary
 ];
 
+//Instantiate Geocoder
+var geocoder = new Geocoder('nominatim', {
+  provider: 'osm',
+  lang: 'en',
+  placeholder: 'Enter Address...',
+  limit: 5,
+  keepOpen: false,
+  debug: true,
+  autoComplete: true,
+  countrycodes: 'dk'
+});
+
+// Display pin for geocoding result
+geocoder.getLayer().setVisible(true);
+
 // Define map
 var map = new Map({
-  controls: defaultControls().extend([homeExtent, scaleline]),
+  controls: defaultControls().extend([scaleline, geocoder]),
   layers: layers,
   view: new View({
     center: denmarkWebMercator,
@@ -145,3 +165,12 @@ map.on('click', function (evt) {
   });
   $(element).popover('show');
 });
+
+var view = map.getView();
+var zoom = view.getZoom();
+var center = view.getCenter();
+
+document.getElementById('zoom-restore').onclick = function() {
+  view.setCenter(center);
+  view.setZoom(zoom);
+};

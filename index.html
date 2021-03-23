@@ -12,24 +12,54 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
     <link rel="icon" type="image/png" href="https://www.favicon.cc/logo3d/173976.png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/ol-geocoder@latest/dist/ol-geocoder.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ol-geocoder"></script>
   </head>
   <body>
     <h2>Real Estate Map (WORK IN PROGRESS)</h2>
     <div class="topnav">
       <a class="active" href="#home">Home</a>
       <a href="html/about.html">About</a>
+      <!-- Old Search Bar Replaced by OSM Geocoder on Map
       <div class="search-container">
         <form action="/action_page.php">
           <input type="text" placeholder="Address Search..." name="search">
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
       </div>
+    -->
     </div>
     <div id="map"></div>
+    <div id="menu">
+       <button id="zoom-restore">H</button>
+    </div>
     <div style="display: none;">
       <!-- Popup -->
       <div id="popup" title="Welcome to OpenLayers"></div>
     </div>
     <script src="./index.js"></script>
+    <div class="pane">
+      <h1>Search Criteria</h1>
+      <ul id="js-searchCriteria">
+        <li>
+          <label>
+            <input type="checkbox" checked value="optionOne">
+            <span>Option 1</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" checked value="optionTwo">
+            <span>Option 2</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" checked value="optionThree">
+            <span>Option 3</span>
+          </label>
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
