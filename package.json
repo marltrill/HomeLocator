@@ -5,9 +5,9 @@
     "ol": "^6.5.0",
     "ol-mapbox-style": "^6.3.2",
     "openrouteservice-js": "^0.1.18",
-    "proj4": "^2.7.2",
     "parcel": "^2.0.0-beta.1",
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "proj4": "^2.7.2"
   },
   "devDependencies": {
     "parcel": "^2.0.0-beta.1",
