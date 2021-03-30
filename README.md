@@ -22,7 +22,7 @@ npm start
     * Now layers are scale dependent, renders depend on zoom level. -ABP
     * Added cities from GitHub, need to clip them to Denmark -MLT
     * Tried to display features from OSM as GeoJSON files, for some reason they're not showing up. The updated
-code is here (index.js). Added the OSM GeoJSON files here 
+code is here (index.js). Added the OSM GeoJSON files here- MLT
 * Revised Home Button, added search for address functionality using OSM Geocoder. -23.03.21 ABP
     * Began Search Criteria Panel. -ABP
 
