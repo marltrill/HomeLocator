@@ -104,6 +104,63 @@ var municipalities = new VectorLayer({
   maxResolution: 400,
 });
 
+// Add cities from GitHub 
+var cities = new VectorLayer({
+  title: 'Cities',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson",
+  }),
+  style: function(feature) {
+    style.getText().setText(feature.get('CITIES'));
+    return style;
+  },
+});
+
+// Add hospitals as a GeoJSON file from OSM -polygons
+var hospital_polygons = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: 'hospital_polygons.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
+    })
+    })
+});
+
+// Add schools as a GeoJSON file from OSM -points
+var school_points = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: 'school_points.geojson',
+  }),
+  minResolution: 400,
+});
+
+// Add schools as a GeoJSON file from OSM -polygons
+var school_polygons = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: 'school_polygons.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
+    })
+    })
+});
+
+
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -112,9 +169,13 @@ var layers = [
   new TileLayer({
     source: new OSM(),
   }),
-  municipalities,
-  dk_boundary
-];
+   municipalities,
+   dk_boundary,
+   cities,
+   hospital_polygons,
+  school_points,
+  school_polygons,
+  ];
 
 //Instantiate Geocoder
 var geocoder = new Geocoder('nominatim', {
