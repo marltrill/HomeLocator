@@ -1,4 +1,6 @@
 import 'ol/ol.css';
+import 'ol-layerswitcher/dist/ol-layerswitcher.css';
+
 import Map from 'ol/Map';
 import VectorSource from 'ol/source/Vector';
 import View from 'ol/View';
@@ -12,6 +14,11 @@ import {toStringHDMS} from 'ol/coordinate';
 import {ScaleLine, ZoomToExtent, defaults as defaultControls} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
+import LayerGroup from 'ol/layer/Group';
+import SourceOSM from 'ol/source/OSM';
+import SourceStamen from 'ol/source/Stamen';
+import LayerSwitcher from 'ol-layerswitcher';
+import {BaseLayerOptions, GroupLayerOptions} from 'ol-layerswitcher';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
@@ -92,6 +99,8 @@ var dk_boundary = new VectorLayer({
 
 // Pull Municipalities Boundaries from GitHub
 var municipalities = new VectorLayer({
+  title: 'Municipalities',
+  visible: true,
   source: new VectorSource({
     format: new GeoJSON(),
     url: "https://raw.githubusercontent.com/Neogeografen/dagi/master/geojson/kommuner.geojson",
@@ -106,6 +115,12 @@ var municipalities = new VectorLayer({
 
 // Scaleline
 var scaleline = new ScaleLine();
+
+// Legend/Layer Visibilty
+var layerSwitcher = new LayerSwitcher({
+  reverse: true,
+  groupSelectStyle: 'group'
+});
 
 // Define layers to be mapped
 var layers = [
@@ -133,7 +148,7 @@ geocoder.getLayer().setVisible(true);
 
 // Define map
 var map = new Map({
-  controls: defaultControls().extend([scaleline, geocoder]),
+  controls: defaultControls().extend([scaleline, geocoder, layerSwitcher]),
   layers: layers,
   view: new View({
     center: denmarkWebMercator,
