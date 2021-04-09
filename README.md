@@ -1,7 +1,3 @@
-<p align="left">
-  <a href="https://github.com/aboestpetersen/Spring21_AAU_Project/actions/workflows/node.js.yml"><img alt="build-test status" src="https://github.com/actions/setup-node/workflows/build-test/badge.svg"></a>
-</p>
-
 # Web App Helping Homebuyers Locate Suitable Areas
 Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
 
