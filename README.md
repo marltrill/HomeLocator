@@ -35,7 +35,7 @@ schools). In order to have only one layer for each feature:
 1) Selected by Location (Intersect both layers)
 2) Switched selection in the attribute table of Points layer, selecting points that do not intersect with polygons
 3) Created a new points layer from 2)
-4) Buffered the points in layer in 2)
+4) Buffered the points in layer in 2) - 0.5 m buffer
 5) Merged buffered points layer in 4) .shp with the polygons .shp = final .shp
 6) Converted .shp to .geojson file
 
