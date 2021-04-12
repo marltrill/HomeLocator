@@ -22,7 +22,7 @@ npm start
     * Now layers are scale dependent, renders depend on zoom level. -ABP
 * Revised Home Button, added search for address functionality using OSM Geocoder. -23.03.21 ABP
     * Began Search Criteria Panel. -ABP
-* LayerSwitcher added (currently not working). -09.04.2021 ABP
+* LayerSwitcher added. -09.04.2021 ABP
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)

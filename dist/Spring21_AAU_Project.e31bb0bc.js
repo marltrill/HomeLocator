@@ -105408,21 +105408,7 @@ var denmarkLonLat = [10.835589, 56.232371];
 var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Home Icon for default extent button
 
 var home_icon = document.createElement('home');
-home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">';
-/*
-// Return to Default Extent Button
-var homeExtent = new ZoomToExtent({ // Zoom to Country Extent
-  extent: [
-    // Uses EPSG 3857 for these coordinates
-    836526.837553,
-    7249899.258792,
-    1726865.343019,
-    7959234.881279
-  ],
-  label: home_icon,
-});
-*/
-// Municipalities Boundary Style
+home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">'; // Municipalities Boundary Style
 
 var _style = new _style2.Style({
   fill: new _style2.Fill({
@@ -105463,9 +105449,11 @@ var dk_style = new _style2.Style({
       width: 3
     })
   })
-}); // Country/Regions Boundary
+}); // Regions Boundary
 
 var dk_boundary = new _layer.Vector({
+  title: 'Regions',
+  visible: true,
   source: new _Vector.default({
     format: new _TopoJSON.default(),
     url: "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/denmark/denmark-counties.json"
@@ -105502,28 +105490,36 @@ var layerSwitcher = new _olLayerswitcher2.default({
 
 var layers = [new _layer.Tile({
   source: new _OSM.default()
-}), municipalities, dk_boundary]; //Instantiate Geocoder
+}), municipalities, dk_boundary]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
   provider: 'osm',
   lang: 'en',
-  placeholder: 'Enter Address...',
+  placeholder: 'Enter Address (Denmark Only)...',
   limit: 5,
   keepOpen: false,
   debug: true,
   autoComplete: true,
   countrycodes: 'dk'
-}); // Display pin for geocoding result
+}); // Display pin for geocoding result.
 
-geocoder.getLayer().setVisible(true); // Define map
+geocoder.getLayer().setVisible(true); // Define map view.
+
+var mapView = new _View.default({
+  center: denmarkWebMercator,
+  zoom: 7
+});
+/*
+var zoomToExtentControl = new ZoomToExtent({
+  extent: [346219.65, 8159203.94, 2074586.54, 7003599.95]
+});
+*/
+// Define map
 
 var map = new _Map.default({
   controls: (0, _control.defaults)().extend([scaleline, geocoder, layerSwitcher]),
   layers: layers,
-  view: new _View.default({
-    center: denmarkWebMercator,
-    zoom: 7
-  }),
+  view: mapView,
   target: 'map'
 }); // Popup showing the position the user clicked
 
@@ -105583,7 +105579,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60996" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
