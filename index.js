@@ -21,6 +21,8 @@ import {BaseLayerOptions, GroupLayerOptions} from 'ol-layerswitcher';
 import Draw from 'ol/interaction/Draw';
 import {Vector as VectorSource} from 'ol/source';
 import XYZ from 'ol/source/XYZ';
+import Select from 'ol/interaction/Select';
+import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
@@ -70,6 +72,16 @@ var dk_style = new Style({
       width: 3
     })
   })
+});
+
+var highlightStyle = new Style({
+  fill: new Fill({
+    color: 'rgba(255,255,255,0.7)',
+  }),
+  stroke: new Stroke({
+    color: '#3399CC',
+    width: 3,
+  }),
 });
 
 // Regions Boundary
@@ -218,3 +230,18 @@ document.getElementById('zoom-restore').onclick = function() {
   view.setCenter(center);
   view.setZoom(zoom);
 };
+
+var selected = null;
+
+map.on('pointermove', function (e) {
+  if (selected !== null) {
+    selected.setStyle(undefined);
+    selected = null;
+  }
+
+  map.forEachFeatureAtPixel(e.pixel, function (f) {
+    selected = f;
+    f.setStyle(highlightStyle);
+    return true;
+  });
+});
