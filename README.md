@@ -23,6 +23,7 @@ npm start
 * Revised Home Button, added search for address functionality using OSM Geocoder. -23.03.21 ABP
     * Began Search Criteria Panel. -ABP
 * LayerSwitcher added. -09.04.2021 ABP
+* Added Basemap options and fullscreen button. -11.04.2021 ABP
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)
