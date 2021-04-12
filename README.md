@@ -39,7 +39,7 @@ schools). In order to have only one layer for each feature:
 5) Merged buffered points layer in 4) .shp with the polygons .shp = final .shp
 6) Converted .shp to .geojson file
 
-OSM Layers that we have so far: universities, schools, leisure parks and hospitals.
+OSM Layers that we have so far: universities, schools, leisure parks and hospitals (projection EPSG: 4326- WGS 84)
 
 
  
