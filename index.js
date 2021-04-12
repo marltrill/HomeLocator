@@ -7,11 +7,11 @@ import View from 'ol/View';
 import {GeoJSON, WFS, GML3, KML, GML} from 'ol/format';
 import {Text, Style, Stroke, Fill} from 'ol/style';
 import {Tile as TileLayer, Vector as VectorLayer, Image as ImageLayer} from 'ol/layer';
-import {fromLonLat, toLonLat} from 'ol/proj';
+import {fromLonLat, toLonLat, transform} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Overlay from 'ol/Overlay';
 import {toStringHDMS} from 'ol/coordinate';
-import {ScaleLine, ZoomToExtent, defaults as defaultControls} from 'ol/control';
+import {Control, ScaleLine, ZoomToExtent, defaults as defaultControls} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
 import LayerGroup from 'ol/layer/Group';
@@ -27,20 +27,6 @@ const denmarkWebMercator = fromLonLat(denmarkLonLat);
 // Home Icon for default extent button
 var home_icon = document.createElement('home');
 home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">';
-  
-/*
-// Return to Default Extent Button
-var homeExtent = new ZoomToExtent({ // Zoom to Country Extent
-  extent: [
-    // Uses EPSG 3857 for these coordinates
-    836526.837553,
-    7249899.258792,
-    1726865.343019,
-    7959234.881279
-  ],
-  label: home_icon,
-});
-*/
 
 // Municipalities Boundary Style
 var style = new Style({
@@ -84,8 +70,10 @@ var dk_style = new Style({
   })
 });
 
-// Country/Regions Boundary
+// Regions Boundary
 var dk_boundary = new VectorLayer({
+  title: 'Regions',
+  visible: true,
   source: new VectorSource({
     format: new TopoJSON(),
     url: "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/denmark/denmark-counties.json",
@@ -131,11 +119,11 @@ var layers = [
   dk_boundary
 ];
 
-//Instantiate Geocoder
+// Instantiate Geocoder.
 var geocoder = new Geocoder('nominatim', {
   provider: 'osm',
   lang: 'en',
-  placeholder: 'Enter Address...',
+  placeholder: 'Enter Address (Denmark Only)...',
   limit: 5,
   keepOpen: false,
   debug: true,
@@ -143,17 +131,26 @@ var geocoder = new Geocoder('nominatim', {
   countrycodes: 'dk'
 });
 
-// Display pin for geocoding result
+// Display pin for geocoding result.
 geocoder.getLayer().setVisible(true);
+
+// Define map view.
+var mapView = new View({
+  center: denmarkWebMercator,
+  zoom: 7
+});
+
+/*
+var zoomToExtentControl = new ZoomToExtent({
+  extent: [346219.65, 8159203.94, 2074586.54, 7003599.95]
+});
+*/
 
 // Define map
 var map = new Map({
   controls: defaultControls().extend([scaleline, geocoder, layerSwitcher]),
   layers: layers,
-  view: new View({
-    center: denmarkWebMercator,
-    zoom: 7
-  }),
+  view: mapView,
   target: 'map'
 });
 
