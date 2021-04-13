@@ -112789,7 +112789,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Designate Center of Map
+// Designate Center of Map Mvvvf
 var denmarkLonLat = [10.835589, 56.232371];
 var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Home Icon for default extent button
 
@@ -112874,6 +112874,87 @@ var municipalities = new _layer.Vector({
   },
   minResolution: 15,
   maxResolution: 400
+}); // Add cities from GitHub 
+
+var cities = new _layer.Vector({
+  title: 'Cities',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson"
+  }),
+  style: function style(feature) {
+    _style.getText().setText(feature.get('CITIES'));
+
+    return _style;
+  }
+}); // Add OSM hospitals layer
+
+var hospitals = new _layer.Vector({
+  title: 'Hospitals',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: './data/hospitals.geojson'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(255,0,0,0.5)',
+      width: 60
+    }),
+    fill: new _style2.Fill({
+      color: 'rgba(255,0,0,0.5)'
+    })
+  })
+}); // Add OSM Schools layer
+
+var schools = new _layer.Vector({
+  title: 'Schools',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: './data/schools.geojson'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(255,0,0,0.5)',
+      width: 60
+    }),
+    fill: new _style2.Fill({
+      color: 'rgba(255,0,0,0.5)'
+    })
+  })
+}); // Add OSM Universities layer
+
+var universities = new _layer.Vector({
+  title: 'Universities',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: './data/universities.geojson'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(255,0,0,0.5)',
+      width: 60
+    }),
+    fill: new _style2.Fill({
+      color: 'rgba(255,0,0,0.5)'
+    })
+  })
+}); // Add OSM Leisure/Parks layer
+
+var leisureparks = new _layer.Vector({
+  title: 'Leisure/Parks',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: './data/leisureparks.geojson'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(255,0,0,0.5)',
+      width: 60
+    }),
+    fill: new _style2.Fill({
+      color: 'rgba(255,0,0,0.5)'
+    })
+  })
 }); // Scaleline
 
 var scaleline = new _control.ScaleLine(); // Legend/Layer Visibilty
@@ -112906,7 +112987,7 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [municipalities, dk_boundary]
+  layers: [municipalities, hospitals, schools, universities, leisureparks, cities, dk_boundary]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113010,7 +113091,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65280" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55047" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

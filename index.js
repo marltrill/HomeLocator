@@ -130,9 +130,10 @@ var cities = new VectorLayer({
 
 // Add OSM hospitals layer
 var hospitals = new VectorLayer({
+  title: 'Hospitals',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: 'hospitals.geojson',
+    url: './data/hospitals.geojson',
   }),
   style:new Style({
        stroke:new Stroke({
@@ -142,7 +143,61 @@ var hospitals = new VectorLayer({
     fill:new Fill({
     color:'rgba(255,0,0,0.5)',
     })
+  })
+});
+
+// Add OSM Schools layer
+var schools = new VectorLayer({
+  title: 'Schools',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/schools.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
     })
+  })
+});
+
+// Add OSM Universities layer
+var universities = new VectorLayer({
+  title: 'Universities',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/universities.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
+    })
+  })
+});
+
+// Add OSM Leisure/Parks layer
+var leisureparks = new VectorLayer({
+  title: 'Leisure/Parks',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/leisureparks.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
+    })
+  })
 });
 
 // Scaleline
@@ -183,16 +238,15 @@ var layers = [
       }),
     ]
   }),
-  municipalities,
-  hospitals,
-  cities,
-  dk_boundary
   // Data layers
   new Group({
     title: 'Data',
     layers: [
       municipalities,
-      hositals,
+      hospitals,
+      schools,
+      universities,
+      leisureparks,
       cities,
       dk_boundary
     ]
