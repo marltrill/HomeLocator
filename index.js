@@ -24,7 +24,7 @@ import XYZ from 'ol/source/XYZ';
 import Select from 'ol/interaction/Select';
 import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 
-// Designate Center of Map
+// Designate Center of Map Mvvvf
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
@@ -115,6 +115,36 @@ var municipalities = new VectorLayer({
   maxResolution: 400,
 });
 
+// Add cities from GitHub 
+var cities = new VectorLayer({
+  title: 'Cities',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson",
+  }),
+  style: function(feature) {
+    style.getText().setText(feature.get('CITIES'));
+    return style;
+  },
+});
+
+// Add OSM hospitals layer
+var hospitals = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: 'hospitals.geojson',
+  }),
+  style:new Style({
+       stroke:new Stroke({
+        color:'rgba(255,0,0,0.5)',
+         width:60
+    }),
+    fill:new Fill({
+    color:'rgba(255,0,0,0.5)',
+    })
+    })
+});
+
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -153,12 +183,18 @@ var layers = [
       }),
     ]
   }),
+  municipalities,
+  hospitals,
+  cities,
+  dk_boundary
   // Data layers
   new Group({
     title: 'Data',
     layers: [
       municipalities,
-    dk_boundary
+      hositals,
+      cities,
+      dk_boundary
     ]
   })
 ];
