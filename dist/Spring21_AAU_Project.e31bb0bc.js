@@ -112954,6 +112954,14 @@ var leisureparks = new _layer.Vector({
       color: 'rgba(255,0,0,0.5)'
     })
   })
+}); // Add Universities from GitHub 
+
+var universities = new _layer.Vector({
+  title: 'Universities',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/abp/data/universities_epsg4326.geojson?token=AMDNRVWB2HN5ZQMT2XKO76TAQQVF6"
+  })
 }); // Scaleline
 
 var scaleline = new _control.ScaleLine(); // Legend/Layer Visibilty
@@ -112987,7 +112995,7 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [municipalities, hospitals, schools, universities, leisureparks, cities, dk_boundary]
+  layers: [universities, municipalities, hospitals, schools, leisureparks, cities, dk_boundary]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {

@@ -198,6 +198,15 @@ var leisureparks = new VectorLayer({
   })
 });
 
+// Add Universities from GitHub 
+var universities = new VectorLayer({
+  title: 'Universities',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/abp/data/universities_epsg4326.geojson?token=AMDNRVWB2HN5ZQMT2XKO76TAQQVF6",
+  }),
+});
+
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -240,10 +249,10 @@ var layers = [
   new Group({
     title: 'Data',
     layers: [
+      universities,
       municipalities,
       hospitals,
       schools,
-      universities,
       leisureparks,
       cities,
       dk_boundary
