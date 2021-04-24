@@ -17,33 +17,35 @@
     <link href="https://cdn.jsdelivr.net/npm/ol-geocoder@latest/dist/ol-geocoder.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol-geocoder"></script> <!-- Geocoder -->
     <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script> <!-- LayerSwitcher -->
+    <script src="/ors-js-client.bab4021b.js"></script> <!-- OpenRouteService -->
   <script src="/style.78032849.js"></script><link rel="stylesheet" href="/Spring21_AAU_Project.e31bb0bc.css"></head>
+
   <body>
-    <h2>Real Estate Map (WORK IN PROGRESS)</h2>
+
+    <h2>HomeLocator (WORK IN PROGRESS)</h2>
+
     <div class="topnav">
       <a class="active" href="#home">Home</a>
       <a href="/html\about.html">About</a>
-      <!-- Old Search Bar Replaced by OSM Geocoder on Map
-      <div class="search-container">
-        <form action="/action_page.php">
-          <input type="text" placeholder="Address Search..." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-      </div>
-    -->
     </div>
+
     <div id="map"></div>
-    <!--Old Restore Zoom Button (Only Working One Right Now)-->
+
     <div id="menu">
        <button id="zoom-restore">H</button>
     </div>
+
     <div style="display: none;">
       <!-- Popup -->
       <div id="popup" title="Welcome to OpenLayers"></div>
     </div>
+
     <script src="/Spring21_AAU_Project.e31bb0bc.js"></script>
+
     <div class="pane">
+
       <h1>Search Criteria</h1>
+
       <ul id="js-searchCriteria">
         <li>
           <label>
@@ -51,19 +53,78 @@
             <span>Option 1</span>
           </label>
         </li>
+
         <li>
           <label>
             <input type="checkbox" checked="" value="optionTwo">
             <span>Option 2</span>
           </label>
         </li>
+
         <li>
           <label>
             <input type="checkbox" checked="" value="optionThree">
             <span>Option 3</span>
           </label>
         </li>
+
       </ul>
+
+      <hr>
+
+      <h6>Isochrone Options:</h6>
+
+      <div>
+        Click a point on the map to see travel times.
+        Selected Location (Lat/Long):
+        <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
+        <script>alert(simple().coordinate);</script>
+      </div>
+
+      <br>
+
+      <div>
+        <form>
+          <label class="radio-inline">
+            <input type="radio" name="isoradio" value="Drive" checked="">Drive
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="isoradio" value="Bike">Bike
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="isoradio" value="Walk">Walk
+          </label>
+        </form>
+        <button type="button" onclick="displayISOValue()">
+          Submit
+        </button>
+      </div>
+
+      <br>
+
+      <div id="result"></div>
+
+      <script>function displayISOValue() {
+  var ele = document.getElementsByName('isoradio');
+
+  for (i = 0; i < ele.length; i++) {
+    if (ele[i].checked) document.getElementById("result").innerHTML = "ISO: " + ele[i].value;
+  }
+}</script>
+
+      <div class="slidecontainer">
+        <label>Max Commute Time (Minutes)</label>
+        <input type="range" min="1" max="120" value="60" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>
+
+      <script>var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function () {
+  output.innerHTML = this.value;
+};</script>
     </div>
   </body>
 </html>

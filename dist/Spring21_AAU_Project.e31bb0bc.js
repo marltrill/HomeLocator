@@ -80047,7 +80047,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"node_modules/node-libs-browser/node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -81840,7 +81840,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
+},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
 var global = arguments[3];
 var Buffer = require("buffer").Buffer;
 "use strict";
@@ -96576,7 +96576,7 @@ const visit = {
 exports.visit = visit;
 validateStyle.parsed = validateStyle;
 validateStyle.latest = validateStyle;
-},{"buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
+},{"buffer":"node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -112791,10 +112791,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Designate Center of Map Mvvvf
 var denmarkLonLat = [10.835589, 56.232371];
-var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Home Icon for default extent button
-
-var home_icon = document.createElement('home');
-home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">'; // Municipalities Boundary Style
+var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Municipalities Boundary Style
 
 var _style = new _style2.Style({
   fill: new _style2.Fill({
@@ -112886,7 +112883,9 @@ var cities = new _layer.Vector({
     _style.getText().setText(feature.get('CITIES'));
 
     return _style;
-  }
+  },
+  minResolution: 15,
+  maxResolution: 400
 }); // Add OSM hospitals layer
 
 var hospitals = new _layer.Vector({
@@ -112955,6 +112954,14 @@ var leisureparks = new _layer.Vector({
       color: 'rgba(255,0,0,0.5)'
     })
   })
+}); // Add Universities from GitHub 
+
+var universities = new _layer.Vector({
+  title: 'Universities',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/abp/data/universities_epsg4326.geojson?token=AMDNRVWB2HN5ZQMT2XKO76TAQQVF6"
+  })
 }); // Scaleline
 
 var scaleline = new _control.ScaleLine(); // Legend/Layer Visibilty
@@ -112963,7 +112970,8 @@ var layerSwitcher = new _olLayerswitcher2.default({
   reverse: true,
   groupSelectStyle: 'group'
 });
-var key = 'XtxbqBNbF5eQwYXV37Ym';
+var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
+
 var attributions = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'; // Define layers to be mapped
 
 var layers = [// Basemaps
@@ -112987,7 +112995,7 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [municipalities, hospitals, schools, universities, leisureparks, cities, dk_boundary]
+  layers: [universities, municipalities, hospitals, schools, leisureparks, cities, dk_boundary]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113091,7 +113099,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58921" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56148" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

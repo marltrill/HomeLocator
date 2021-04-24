@@ -28,10 +28,6 @@ import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
-// Home Icon for default extent button
-var home_icon = document.createElement('home');
-home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">';
-
 // Municipalities Boundary Style
 var style = new Style({
   fill: new Fill({
@@ -126,6 +122,8 @@ var cities = new VectorLayer({
     style.getText().setText(feature.get('CITIES'));
     return style;
   },
+  minResolution: 15,
+  maxResolution: 400,
 });
 
 // Add OSM hospitals layer
@@ -200,6 +198,15 @@ var leisureparks = new VectorLayer({
   })
 });
 
+// Add Universities from GitHub 
+var universities = new VectorLayer({
+  title: 'Universities',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/abp/data/universities_epsg4326.geojson?token=AMDNRVWB2HN5ZQMT2XKO76TAQQVF6",
+  }),
+});
+
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -209,7 +216,7 @@ var layerSwitcher = new LayerSwitcher({
   groupSelectStyle: 'group'
 });
 
-var key = 'XtxbqBNbF5eQwYXV37Ym';
+var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
 var attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
@@ -242,10 +249,10 @@ var layers = [
   new Group({
     title: 'Data',
     layers: [
+      universities,
       municipalities,
       hospitals,
       schools,
-      universities,
       leisureparks,
       cities,
       dk_boundary
