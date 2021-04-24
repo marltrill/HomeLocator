@@ -131,17 +131,8 @@ var hospitals = new VectorLayer({
   title: 'Hospitals',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: './data/hospitals.geojson',
+    url: 'https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/hospitals_epsg4326.geojson?token=AMDNRVRQJLPIOBH7Z2JIKFLAQQWKC',
   }),
-  style:new Style({
-       stroke:new Stroke({
-        color:'rgba(255,0,0,0.5)',
-         width:60
-    }),
-    fill:new Fill({
-    color:'rgba(255,0,0,0.5)',
-    })
-  })
 });
 
 // Add OSM Schools layer
@@ -150,24 +141,6 @@ var schools = new VectorLayer({
   source: new VectorSource({
     format: new GeoJSON(),
     url: './data/schools.geojson',
-  }),
-  style:new Style({
-       stroke:new Stroke({
-        color:'rgba(255,0,0,0.5)',
-         width:60
-    }),
-    fill:new Fill({
-    color:'rgba(255,0,0,0.5)',
-    })
-  })
-});
-
-// Add OSM Universities layer
-var universities = new VectorLayer({
-  title: 'Universities',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: './data/universities.geojson',
   }),
   style:new Style({
        stroke:new Stroke({
@@ -203,7 +176,7 @@ var universities = new VectorLayer({
   title: 'Universities',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/abp/data/universities_epsg4326.geojson?token=AMDNRVWB2HN5ZQMT2XKO76TAQQVF6",
+    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/universities_epsg4326.geojson?token=AMDNRVS2UMMTO23MYVBY2BDAQQWFE",
   }),
 });
 
