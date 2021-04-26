@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
-    <img src="images/realestatelogo.jpeg" alt="Logo" width="300" height="300">
+    <img src="images/realestatelogo.jpg" alt="Logo" width="300" height="300">
   </a>
   <p align="center">https://i.pinimg.com/736x/08/d8/8e/08d88e71ca24aa04b5ed3ddb6b77824f.jpg</p>
 
