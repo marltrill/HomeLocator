@@ -112736,7 +112736,15 @@ var _XYZ = _interopRequireDefault(require("./source/XYZ.js"));
 var _Zoomify = _interopRequireDefault(require("./source/Zoomify.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./source/BingMaps.js":"node_modules/ol/source/BingMaps.js","./source/CartoDB.js":"node_modules/ol/source/CartoDB.js","./source/Cluster.js":"node_modules/ol/source/Cluster.js","./source/IIIF.js":"node_modules/ol/source/IIIF.js","./source/Image.js":"node_modules/ol/source/Image.js","./source/ImageArcGISRest.js":"node_modules/ol/source/ImageArcGISRest.js","./source/ImageCanvas.js":"node_modules/ol/source/ImageCanvas.js","./source/ImageMapGuide.js":"node_modules/ol/source/ImageMapGuide.js","./source/ImageStatic.js":"node_modules/ol/source/ImageStatic.js","./source/ImageWMS.js":"node_modules/ol/source/ImageWMS.js","./source/OSM.js":"node_modules/ol/source/OSM.js","./source/Raster.js":"node_modules/ol/source/Raster.js","./source/Source.js":"node_modules/ol/source/Source.js","./source/Stamen.js":"node_modules/ol/source/Stamen.js","./source/Tile.js":"node_modules/ol/source/Tile.js","./source/TileArcGISRest.js":"node_modules/ol/source/TileArcGISRest.js","./source/TileDebug.js":"node_modules/ol/source/TileDebug.js","./source/TileImage.js":"node_modules/ol/source/TileImage.js","./source/TileJSON.js":"node_modules/ol/source/TileJSON.js","./source/TileWMS.js":"node_modules/ol/source/TileWMS.js","./source/UrlTile.js":"node_modules/ol/source/UrlTile.js","./source/UTFGrid.js":"node_modules/ol/source/UTFGrid.js","./source/Vector.js":"node_modules/ol/source/Vector.js","./source/VectorTile.js":"node_modules/ol/source/VectorTile.js","./source/WMTS.js":"node_modules/ol/source/WMTS.js","./source/XYZ.js":"node_modules/ol/source/XYZ.js","./source/Zoomify.js":"node_modules/ol/source/Zoomify.js"}],"index.js":[function(require,module,exports) {
+},{"./source/BingMaps.js":"node_modules/ol/source/BingMaps.js","./source/CartoDB.js":"node_modules/ol/source/CartoDB.js","./source/Cluster.js":"node_modules/ol/source/Cluster.js","./source/IIIF.js":"node_modules/ol/source/IIIF.js","./source/Image.js":"node_modules/ol/source/Image.js","./source/ImageArcGISRest.js":"node_modules/ol/source/ImageArcGISRest.js","./source/ImageCanvas.js":"node_modules/ol/source/ImageCanvas.js","./source/ImageMapGuide.js":"node_modules/ol/source/ImageMapGuide.js","./source/ImageStatic.js":"node_modules/ol/source/ImageStatic.js","./source/ImageWMS.js":"node_modules/ol/source/ImageWMS.js","./source/OSM.js":"node_modules/ol/source/OSM.js","./source/Raster.js":"node_modules/ol/source/Raster.js","./source/Source.js":"node_modules/ol/source/Source.js","./source/Stamen.js":"node_modules/ol/source/Stamen.js","./source/Tile.js":"node_modules/ol/source/Tile.js","./source/TileArcGISRest.js":"node_modules/ol/source/TileArcGISRest.js","./source/TileDebug.js":"node_modules/ol/source/TileDebug.js","./source/TileImage.js":"node_modules/ol/source/TileImage.js","./source/TileJSON.js":"node_modules/ol/source/TileJSON.js","./source/TileWMS.js":"node_modules/ol/source/TileWMS.js","./source/UrlTile.js":"node_modules/ol/source/UrlTile.js","./source/UTFGrid.js":"node_modules/ol/source/UTFGrid.js","./source/Vector.js":"node_modules/ol/source/Vector.js","./source/VectorTile.js":"node_modules/ol/source/VectorTile.js","./source/WMTS.js":"node_modules/ol/source/WMTS.js","./source/XYZ.js":"node_modules/ol/source/XYZ.js","./source/Zoomify.js":"node_modules/ol/source/Zoomify.js"}],"data/hospitals_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/hospitals_epsg4326.a20bf3fc.geojson";
+},{}],"data/schools_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/schools_epsg4326.618f3280.geojson";
+},{}],"data/leisureparks_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/leisureparks_epsg4326.e6b07c6f.geojson";
+},{}],"data/universities_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/universities_epsg4326.62bb3425.geojson";
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("ol/ol.css");
@@ -112789,7 +112797,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Designate Center of Map Mvvvf
+// Designate Center of Map
 var denmarkLonLat = [10.835589, 56.232371];
 var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Municipalities Boundary Style
 
@@ -112871,70 +112879,62 @@ var municipalities = new _layer.Vector({
   },
   minResolution: 15,
   maxResolution: 400
-}); // Add cities from GitHub 
-
-var cities = new _layer.Vector({
+});
+/*
+// Add cities from GitHub 
+var cities = new VectorLayer({
   title: 'Cities',
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson"
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson",
   }),
-  style: function style(feature) {
-    _style.getText().setText(feature.get('CITIES'));
-
-    return _style;
+  style: function(feature) {
+    style.getText().setText(feature.get('CITIES'));
+    return style;
   },
   minResolution: 15,
-  maxResolution: 400
-}); // Add OSM hospitals layer
+  maxResolution: 400,
+});
+*/
+// Add OSM hospitals layer
+
+var hospitals_geojson = require('./data/hospitals_epsg4326.geojson');
 
 var hospitals = new _layer.Vector({
   title: 'Hospitals',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: 'https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/hospitals_epsg4326.geojson?token=AMDNRVRQJLPIOBH7Z2JIKFLAQQWKC'
+    url: hospitals_geojson
   })
 }); // Add OSM Schools layer
+
+var schools_geojson = require('./data/schools_epsg4326.geojson');
 
 var schools = new _layer.Vector({
   title: 'Schools',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: './data/schools.geojson'
-  }),
-  style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
-    }),
-    fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
-    })
+    url: schools_geojson
   })
 }); // Add OSM Leisure/Parks layer
+
+var leisureparks_geojson = require('./data/leisureparks_epsg4326.geojson');
 
 var leisureparks = new _layer.Vector({
   title: 'Leisure/Parks',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: './data/leisureparks.geojson'
-  }),
-  style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
-    }),
-    fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
-    })
+    url: leisureparks_geojson
   })
 }); // Add Universities from GitHub 
+
+var universities_geojson = require('./data/universities_epsg4326.geojson');
 
 var universities = new _layer.Vector({
   title: 'Universities',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/universities_epsg4326.geojson?token=AMDNRVS2UMMTO23MYVBY2BDAQQWFE"
+    url: universities_geojson
   })
 }); // Scaleline
 
@@ -112969,7 +112969,8 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [universities, municipalities, hospitals, schools, leisureparks, cities, dk_boundary]
+  layers: [universities, municipalities, hospitals, schools, leisureparks, //cities,
+  dk_boundary]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113045,7 +113046,7 @@ map.on('pointermove', function (e) {
     return true;
   });
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol/layer/Group":"node_modules/ol/layer/Group.js","ol/source/Stamen":"node_modules/ol/source/Stamen.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/interaction/Draw":"node_modules/ol/interaction/Draw.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/interaction/Select":"node_modules/ol/interaction/Select.js","ol/events/condition":"node_modules/ol/events/condition.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol/layer/Group":"node_modules/ol/layer/Group.js","ol/source/Stamen":"node_modules/ol/source/Stamen.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/interaction/Draw":"node_modules/ol/interaction/Draw.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/interaction/Select":"node_modules/ol/interaction/Select.js","ol/events/condition":"node_modules/ol/events/condition.js","./data/hospitals_epsg4326.geojson":"data/hospitals_epsg4326.geojson","./data/schools_epsg4326.geojson":"data/schools_epsg4326.geojson","./data/leisureparks_epsg4326.geojson":"data/leisureparks_epsg4326.geojson","./data/universities_epsg4326.geojson":"data/universities_epsg4326.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -113073,7 +113074,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56148" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51593" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

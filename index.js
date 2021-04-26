@@ -24,7 +24,7 @@ import XYZ from 'ol/source/XYZ';
 import Select from 'ol/interaction/Select';
 import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 
-// Designate Center of Map Mvvvf
+// Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
@@ -111,6 +111,7 @@ var municipalities = new VectorLayer({
   maxResolution: 400,
 });
 
+/*
 // Add cities from GitHub 
 var cities = new VectorLayer({
   title: 'Cities',
@@ -125,58 +126,49 @@ var cities = new VectorLayer({
   minResolution: 15,
   maxResolution: 400,
 });
+*/
 
 // Add OSM hospitals layer
+var hospitals_geojson = require('./data/hospitals_epsg4326.geojson')
+
 var hospitals = new VectorLayer({
   title: 'Hospitals',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: 'https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/hospitals_epsg4326.geojson?token=AMDNRVRQJLPIOBH7Z2JIKFLAQQWKC',
+    url: hospitals_geojson,
   }),
 });
 
 // Add OSM Schools layer
+var schools_geojson = require('./data/schools_epsg4326.geojson')
+
 var schools = new VectorLayer({
   title: 'Schools',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: './data/schools.geojson',
+    url: schools_geojson,
   }),
-  style:new Style({
-       stroke:new Stroke({
-        color:'rgba(255,0,0,0.5)',
-         width:60
-    }),
-    fill:new Fill({
-    color:'rgba(255,0,0,0.5)',
-    })
-  })
 });
 
 // Add OSM Leisure/Parks layer
+var leisureparks_geojson = require('./data/leisureparks_epsg4326.geojson')
+
 var leisureparks = new VectorLayer({
   title: 'Leisure/Parks',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: './data/leisureparks.geojson',
+    url: leisureparks_geojson,
   }),
-  style:new Style({
-       stroke:new Stroke({
-        color:'rgba(255,0,0,0.5)',
-         width:60
-    }),
-    fill:new Fill({
-    color:'rgba(255,0,0,0.5)',
-    })
-  })
 });
 
 // Add Universities from GitHub 
+var universities_geojson = require('./data/universities_epsg4326.geojson')
+
 var universities = new VectorLayer({
   title: 'Universities',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: "https://raw.githubusercontent.com/aboestpetersen/Spring21_AAU_Project/main/data/universities_epsg4326.geojson?token=AMDNRVS2UMMTO23MYVBY2BDAQQWFE",
+    url: universities_geojson,
   }),
 });
 
@@ -227,7 +219,7 @@ var layers = [
       hospitals,
       schools,
       leisureparks,
-      cities,
+      //cities,
       dk_boundary
     ]
   })
