@@ -137,6 +137,16 @@ var hospitals = new VectorLayer({
     format: new GeoJSON(),
     url: hospitals_geojson,
   }),
+  maxResolution: 15,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 230, 161, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#b58604',
+      width: 1,
+    }),
+  }),
 });
 
 // Add OSM Schools layer
@@ -147,6 +157,16 @@ var schools = new VectorLayer({
   source: new VectorSource({
     format: new GeoJSON(),
     url: schools_geojson,
+  }),
+  maxResolution: 15,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(216, 193, 227, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#ad31e8',
+      width: 1,
+    }),
   }),
 });
 
@@ -159,6 +179,16 @@ var leisureparks = new VectorLayer({
     format: new GeoJSON(),
     url: leisureparks_geojson,
   }),
+  maxResolution: 15,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(173, 237, 182, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#08961b',
+      width: 1,
+    }),
+  }),
 });
 
 // Add Universities from GitHub 
@@ -169,6 +199,16 @@ var universities = new VectorLayer({
   source: new VectorSource({
     format: new GeoJSON(),
     url: universities_geojson,
+  }),
+  maxResolution: 15,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(121, 131, 242, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#1420a3',
+      width: 1,
+    }),
   }),
 });
 

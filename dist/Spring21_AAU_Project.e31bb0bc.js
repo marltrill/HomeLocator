@@ -112905,6 +112905,16 @@ var hospitals = new _layer.Vector({
   source: new _source.Vector({
     format: new _format.GeoJSON(),
     url: hospitals_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(255, 230, 161, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#b58604',
+      width: 1
+    })
   })
 }); // Add OSM Schools layer
 
@@ -112915,6 +112925,16 @@ var schools = new _layer.Vector({
   source: new _source.Vector({
     format: new _format.GeoJSON(),
     url: schools_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(216, 193, 227, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#ad31e8',
+      width: 1
+    })
   })
 }); // Add OSM Leisure/Parks layer
 
@@ -112925,6 +112945,16 @@ var leisureparks = new _layer.Vector({
   source: new _source.Vector({
     format: new _format.GeoJSON(),
     url: leisureparks_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(173, 237, 182, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#08961b',
+      width: 1
+    })
   })
 }); // Add Universities from GitHub 
 
@@ -112935,6 +112965,16 @@ var universities = new _layer.Vector({
   source: new _source.Vector({
     format: new _format.GeoJSON(),
     url: universities_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(121, 131, 242, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#1420a3',
+      width: 1
+    })
   })
 }); // Scaleline
 
