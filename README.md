@@ -1,5 +1,24 @@
-# Web App Helping Homebuyers Locate Suitable Areas
-Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
+    <img src="images/realestatelogo.jpeg" alt="Logo" width="300" height="300">
+  </a>
+  <p align="center">https://i.pinimg.com/736x/08/d8/8e/08d88e71ca24aa04b5ed3ddb6b77824f.jpg</p>
+
+  <h3 align="center">HomeLocator (Temp. Name)</h3>
+
+  <p align="center">
+    Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
+    <br />
+    <br />
+    <a href="https://realestate-aauspring2021.herokuapp.com/">View Demo</a>
+    ·
+    <a href="https://github.com/aboestpetersen/Spring21_AAU_Project/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/aboestpetersen/Spring21_AAU_Project/issues">Request Feature</a>
+  </p>
+</p>
 
 #### Run App Locally:
 1. Open Command Prompt/Terminal.
@@ -27,6 +46,7 @@ code is here (index.js). Added the OSM GeoJSON files here- MLT
     * Began Search Criteria Panel. -ABP
 * LayerSwitcher added. -09.04.2021 ABP
 * Added Basemap options and fullscreen button. -11.04.2021 ABP
+* Read local GeoJSON files. -26.04.2021 ABP
 
 ### Data Processing- MLT: 
 
