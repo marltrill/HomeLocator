@@ -4,7 +4,7 @@
   <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
     <img src="images/realestatelogo.jpg" alt="Logo" width="500" height="333">
   </a>
-  <p align="center" style="font-size:1vw;">https://i.pinimg.com/736x/08/d8/8e/08d88e71ca24aa04b5ed3ddb6b77824f.jpg</p>
+  <p align="center">https://i.pinimg.com/736x/08/d8/8e/08d88e71ca24aa04b5ed3ddb6b77824f.jpg</p>
 
   <h3 align="center">HomeLocator (Temp. Name)</h3>
 
