@@ -112744,6 +112744,14 @@ module.exports = "/schools_epsg4326.618f3280.geojson";
 module.exports = "/leisureparks_epsg4326.e6b07c6f.geojson";
 },{}],"data/universities_epsg4326.geojson":[function(require,module,exports) {
 module.exports = "/universities_epsg4326.62bb3425.geojson";
+},{}],"data/coastline_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/coastline_epsg4326.2a744d10.geojson";
+},{}],"data/weighted_grid100km.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid100km.513b3371.geojson";
+},{}],"data/weighted_grid30km.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid30km.6360b504.geojson";
+},{}],"data/weighted_grid1km.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km.fac40e5b.geojson";
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -112976,6 +112984,84 @@ var universities = new _layer.Vector({
       width: 1
     })
   })
+}); // Add Coast Lines from GeoDanmark
+
+var coasts_geojson = require('./data/coastline_epsg4326.geojson');
+
+var coasts = new _layer.Vector({
+  title: 'Coast Lines',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: coasts_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: '#000000',
+      width: 3
+    })
+  })
+}); // Add Weighted Grid (100km Resolution)
+
+var grid100km_geojson = require('./data/weighted_grid100km.geojson');
+
+var grid100km = new _layer.Vector({
+  title: 'Weighted Grid (100km)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid100km_geojson
+  }),
+  minResolution: 400,
+  fill: new _style2.Fill({
+    color: 'rgba(158, 240, 255, 0.6)'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: '#0095b0',
+      width: 1
+    })
+  })
+}); // Add Weighted Grid (100km Resolution)
+
+var grid30km_geojson = require('./data/weighted_grid30km.geojson');
+
+var grid30km = new _layer.Vector({
+  title: 'Weighted Grid (30km)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid30km_geojson
+  }),
+  minResolution: 15,
+  maxResolution: 400,
+  fill: new _style2.Fill({
+    color: 'rgba(158, 240, 255, 0.6)'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: '#0095b0',
+      width: 1
+    })
+  })
+}); // Add Weighted Grid (1km Resolution)
+
+var grid1km_geojson = require('./data/weighted_grid1km.geojson');
+
+var grid1km = new _layer.Vector({
+  title: 'Weighted Grid (1km)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_geojson
+  }),
+  maxResolution: 15,
+  fill: new _style2.Fill({
+    color: 'rgba(158, 240, 255, 0.6)'
+  }),
+  style: new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: '#0095b0',
+      width: 1
+    })
+  })
 }); // Scaleline
 
 var scaleline = new _control.ScaleLine(); // Legend/Layer Visibilty
@@ -112986,7 +113072,7 @@ var layerSwitcher = new _olLayerswitcher2.default({
 });
 var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
 
-var attributions = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'; // Define layers to be mapped
+var attributions = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a> ' + '<a href="https://eng.sdfe.dk/" target="_blank">&copy; SDFE</a> '; // Define layers to be mapped
 
 var layers = [// Basemaps
 new _layer.Group({
@@ -113009,7 +113095,7 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [universities, municipalities, hospitals, schools, leisureparks, //cities,
+  layers: [grid100km, grid30km, grid1km, coasts, universities, municipalities, hospitals, schools, leisureparks, //cities,
   dk_boundary]
 })]; // Instantiate Geocoder.
 
@@ -113086,7 +113172,7 @@ map.on('pointermove', function (e) {
     return true;
   });
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol/layer/Group":"node_modules/ol/layer/Group.js","ol/source/Stamen":"node_modules/ol/source/Stamen.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/interaction/Draw":"node_modules/ol/interaction/Draw.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/interaction/Select":"node_modules/ol/interaction/Select.js","ol/events/condition":"node_modules/ol/events/condition.js","./data/hospitals_epsg4326.geojson":"data/hospitals_epsg4326.geojson","./data/schools_epsg4326.geojson":"data/schools_epsg4326.geojson","./data/leisureparks_epsg4326.geojson":"data/leisureparks_epsg4326.geojson","./data/universities_epsg4326.geojson":"data/universities_epsg4326.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol/layer/Group":"node_modules/ol/layer/Group.js","ol/source/Stamen":"node_modules/ol/source/Stamen.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/interaction/Draw":"node_modules/ol/interaction/Draw.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/interaction/Select":"node_modules/ol/interaction/Select.js","ol/events/condition":"node_modules/ol/events/condition.js","./data/hospitals_epsg4326.geojson":"data/hospitals_epsg4326.geojson","./data/schools_epsg4326.geojson":"data/schools_epsg4326.geojson","./data/leisureparks_epsg4326.geojson":"data/leisureparks_epsg4326.geojson","./data/universities_epsg4326.geojson":"data/universities_epsg4326.geojson","./data/coastline_epsg4326.geojson":"data/coastline_epsg4326.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km.geojson":"data/weighted_grid1km.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -113114,7 +113200,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51593" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50095" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
