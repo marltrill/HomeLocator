@@ -212,6 +212,88 @@ var universities = new VectorLayer({
   }),
 });
 
+// Add Coast Lines from GeoDanmark
+var coasts_geojson = require('./data/coastline_epsg4326.geojson')
+
+var coasts = new VectorLayer({
+  title: 'Coast Lines',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: coasts_geojson,
+  }),
+  maxResolution: 15,
+  style: new Style({
+    stroke: new Stroke({
+      color: '#000000',
+      width: 3,
+    }),
+  }),
+});
+
+// Add Weighted Grid (100km Resolution)
+var grid100km_geojson = require('./data/weighted_grid100km.geojson')
+
+var grid100km = new VectorLayer({
+  title: 'Weighted Grid (100km)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid100km_geojson,
+  }),
+  minResolution: 400,
+  fill: new Fill({
+    color: 'rgba(158, 240, 255, 0.6)',
+  }),
+  style: new Style({
+    stroke: new Stroke({
+      color: '#0095b0',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Weighted Grid (100km Resolution)
+var grid30km_geojson = require('./data/weighted_grid30km.geojson')
+
+var grid30km = new VectorLayer({
+  title: 'Weighted Grid (30km)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid30km_geojson,
+  }),
+  minResolution: 15,
+  maxResolution: 400,
+  fill: new Fill({
+    color: 'rgba(158, 240, 255, 0.6)',
+  }),
+  style: new Style({
+    stroke: new Stroke({
+      color: '#0095b0',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Weighted Grid (1km Resolution)
+var grid1km_geojson = require('./data/weighted_grid1km.geojson')
+
+var grid1km = new VectorLayer({
+  title: 'Weighted Grid (1km)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_geojson,
+  }),
+  maxResolution: 15,
+  fill: new Fill({
+    color: 'rgba(158, 240, 255, 0.6)',
+  }),
+  style: new Style({
+    stroke: new Stroke({
+      color: '#0095b0',
+      width: 1,
+    }),
+  }),
+});
+
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -224,7 +306,8 @@ var layerSwitcher = new LayerSwitcher({
 var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
 var attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
-  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a> ' +
+  '<a href="https://eng.sdfe.dk/" target="_blank">&copy; SDFE</a> ';
 
 // Define layers to be mapped
 var layers = [
@@ -254,6 +337,10 @@ var layers = [
   new Group({
     title: 'Data',
     layers: [
+      grid100km,
+      grid30km,
+      grid1km,
+      coasts,
       universities,
       municipalities,
       hospitals,
