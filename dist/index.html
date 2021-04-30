@@ -78,22 +78,22 @@
       <div>
         Click a point on the map to see travel times.
         Selected Location (Lat/Long):
-        <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
+
         <script>alert(simple().coordinate);</script>
       </div>
 
       <br>
 
-      <div>
+      <!-- <div>
         <form>
           <label class="radio-inline">
-            <input type="radio" name="isoradio" value="Drive" checked="">Drive
+            <input type="radio" name="isoradio" value='Drive' checked>Drive
           </label>
           <label class="radio-inline">
-            <input type="radio" name="isoradio" value="Bike">Bike
+            <input type="radio" name="isoradio" value='Bike'>Bike
           </label>
           <label class="radio-inline">
-            <input type="radio" name="isoradio" value="Walk">Walk
+            <input type="radio" name="isoradio" value='Walk'>Walk
           </label>
         </form>
         <button type="button" onclick="displayISOValue()">
@@ -105,13 +105,45 @@
 
       <div id="result"></div>
 
-      <script>function displayISOValue() {
-  var ele = document.getElementsByName('isoradio');
+      <script>
+        function displayISOValue() {
+            var ele = document.getElementsByName('isoradio');
 
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].checked) document.getElementById("result").innerHTML = "ISO: " + ele[i].value;
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                document.getElementById("result").innerHTML
+                        = "ISO: "+ele[i].value;
+            }
+        }
+      </script> -->
+
+      <form name="IsoClicker">
+        <input type="radio" name="isoradio" value="driving-car">Car
+        <input type="radio" name="isoradio" value="cycling-regular">Bike
+        <input type="radio" name="isoradio" value="foot-walking">Walk
+        <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
+    </form>
+
+    <script>function getRadioValue(groupName) {
+  var radios = IsoClicker.elements[groupName];
+  window.rdValue; // declares the global variable 'rdValue'
+
+  for (var i = 0; i < radios.length; i++) {
+    var someRadio = radios[i];
+
+    if (someRadio.checked) {
+      rdValue = someRadio.value;
+      break;
+    } else rdValue = 'noRadioChecked';
+  }
+
+  if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue == "foot-walking") {
+    or: console.log("Isoradio action");
+  } else if (rdValue == 'noRadioChecked') {
+    alert('no radio checked');
   }
 }</script>
+
 
       <div class="slidecontainer">
         <label>Max Commute Time (Minutes)</label>
@@ -126,6 +158,12 @@ output.innerHTML = slider.value;
 slider.oninput = function () {
   output.innerHTML = this.value;
 };</script>
+      <div>
+        <button type="button" id="isochroneActivate">
+          Activate isochrone request
+        </button>
+
+      <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
     </div>
-  </body>
+  </div></body>
 </html>
