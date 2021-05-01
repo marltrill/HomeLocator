@@ -1,3 +1,22 @@
+.banner {
+  background-image: linear-gradient(rgba(176, 161, 186, 0.5), rgba(191, 240, 212, 0.5)), url("/images/banner.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 40%;
+}
+
+.banner-text{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #343a40;
+}
 .topnav {
     overflow: hidden;
     background-color: rgb(90, 133, 146);
@@ -23,4 +42,15 @@
   }
 p.ex1{
     margin: 35px;
+}
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}
+.flex-parent {
+  display: flex;
+}
+.flex-child {
+  flex: 1;
 }

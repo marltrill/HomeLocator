@@ -32,7 +32,7 @@ npm start
 ```
 4. Navigate to http://localhost:1234 (or wherever NPM tells you navigate to).
 
-#### Progress Notes:
+### Progress Notes:
 * Added Municipalities boundaries from GitHub (NOT GML, couldn't get that working...). -22.03.2021 ABP
     * Added "Home" button to return user to default extent as well as a scaleline. -ABP
     * Added navigation bar at the top, the buttons don't do anything yet. -ABP
@@ -48,6 +48,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Added Basemap options and fullscreen button. -11.04.2021 ABP
 * Read local GeoJSON files. -26.04.2021 ABP
 * Created proximity rasters for each of the features (50x50m grids). -30.04.2021 MLT
+* Edit "About" page. -01.05.2021 ABP
 
 ### Data Processing-20.03.21 MLT : 
 
