@@ -1,3 +1,7 @@
+body, html {
+  height: 100%;
+}
+
 #map {
     width: 78%;
     height: 89.4vh;
@@ -11,7 +15,7 @@
 
 .topnav {
     overflow: hidden;
-    background-color: rgb(90, 133, 146);
+    background-color: #5d5c61;
   }
 
 .topnav a {
@@ -29,7 +33,7 @@
   }
 
 .topnav a.active {
-    background-color: #4CAF50;
+    background-color: #7395ae;
     color: white;
   }
 

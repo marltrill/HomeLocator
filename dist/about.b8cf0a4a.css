@@ -1,25 +1,34 @@
-.banner {
-  background-image: linear-gradient(rgba(176, 161, 186, 0.5), rgba(191, 240, 212, 0.5)), url("/banner.46fef006.jpeg");
+body, html {
+  height: 100%;
+}
+
+/* The hero image */
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/architecture.65dacef5.jpg");
+
+  /* Set a specific height */
+  height: 25%;
+
+  /* Position and center the image to scale nicely on all screens */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  height: 40%;
 }
 
-.banner-text{
+/* Place text in the middle of the image */
+.hero-text {
   text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2rem;
-  font-weight: bold;
-  color: #343a40;
+  color: white;
 }
 .topnav {
     overflow: hidden;
-    background-color: rgb(90, 133, 146);
+    background-color: #5d5c61;
   }
 
 .topnav a {
@@ -37,7 +46,7 @@
   }
 
 .topnav a.active {
-    background-color: #4CAF50;
+    background-color: #7395ae;
     color: white;
   }
 p.ex1{
@@ -50,9 +59,17 @@ p.ex1{
 }
 .flex-parent {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .flex-child {
   flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  text-align: center;
 }
 
 /*# sourceMappingURL=/about.b8cf0a4a.css.map */
