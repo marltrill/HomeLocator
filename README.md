@@ -49,6 +49,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Read local GeoJSON files. -26.04.2021 ABP
 * Created proximity rasters for each of the features (50x50m grids). -30.04.2021 MLT
 * Edit "About" page. -01.05.2021 ABP
+* Switch to Bootstrap Navbar. -02.05.2021 ABP
 
 ### Data Processing-20.03.21 MLT : 
 
