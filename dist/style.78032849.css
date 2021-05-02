@@ -4,7 +4,7 @@ body, html {
 
 #map {
     width: 78%;
-    height: 89.4vh;
+    height: 94vh;
     position: absolute; 
     bottom: 0px;
   }
@@ -13,6 +13,7 @@ body, html {
     min-width: 276px;
   }
 
+  /*
 .topnav {
     overflow: hidden;
     background-color: #5d5c61;
@@ -36,10 +37,11 @@ body, html {
     background-color: #7395ae;
     color: white;
   }
+  */
 
 .pane {
   position: absolute;
-  top: 10.6vh;
+  top: 6vh;
   bottom: 0;
   right: 0;
   width: 22%;
@@ -52,7 +54,7 @@ body, html {
 #menu {
   float: left;
 	position: absolute;
-	bottom: 74.6vh;
+	bottom: 79.2vh;
   left: 1vh;
 	z-index: 2000;
 }
