@@ -9,6 +9,7 @@ body, html {
 
   /* Set a specific height */
   height: 25%;
+  top: 6vh;
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
@@ -26,6 +27,8 @@ body, html {
   transform: translate(-50%, -50%);
   color: white;
 }
+
+/*
 .topnav {
     overflow: hidden;
     background-color: #5d5c61;
@@ -49,6 +52,8 @@ body, html {
     background-color: #7395ae;
     color: white;
   }
+*/
+
 p.ex1{
     margin: 35px;
 }

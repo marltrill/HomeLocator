@@ -22,13 +22,32 @@
   <script src="/style.78032849.js"></script><link rel="stylesheet" href="/Spring21_AAU_Project.e31bb0bc.css"></head>
 
   <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">HomeLocator </a>
+      <!-- The button tag is for when we change dimensions of the window, so as if there isn't enough space for all the tabs to be shown, the ''wrap'' inside a button-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <h2>HomeLocator (WORK IN PROGRESS)</h2>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
 
+          <li class="nav-item">
+            <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          Find your future neighborhood.
+        </span>
+      </div>
+    </nav>
+
+    <!--
     <div class="topnav">
       <a class="active" href="#home">HomeLocator</a>
-      <a href="/html\about.html">About</a>
+      <a href="html/about.html">About</a>
     </div>
+  -->
 
     <div id="map"></div>
 
