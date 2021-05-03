@@ -82,7 +82,7 @@ C)) Merged grids (1km, 30km, 100km) with hospitals feature -as a sample -03.05.2
 
 * (stored in OneDrive -same link above-: Under ProximityRasterGrids_shp folder)
 
-Sample of average distance to hospitals- 100km grid:
+Sample of average distance to hospitals- 1km grid:
 [ProximityGridsHospitals](images/zs_grid1_hospitals.png)
 
 Sample of app so far:
