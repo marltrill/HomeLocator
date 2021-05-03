@@ -50,6 +50,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Created proximity rasters for each of the features (50x50m grids). -30.04.2021 MLT
 * Edit "About" page. -01.05.2021 ABP
 * Switch to Bootstrap Navbar. -02.05.2021 ABP
+* Replaced custom home button with OL 'ZoomToExtent' button, so map controls stay within map instead of being attached to the html element. -03.05.2021 ABP
 
 ### Data Processing-20.03.21 MLT : 
 

@@ -10,7 +10,7 @@ import {fromLonLat, toLonLat, transform} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Overlay from 'ol/Overlay';
 import {toStringHDMS} from 'ol/coordinate';
-import {Control, ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen} from 'ol/control';
+import {Control, ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen, Zoom} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
 import LayerGroup from 'ol/layer/Group';
@@ -400,7 +400,13 @@ var zoomToExtentControl = new ZoomToExtent({
 
 // Define map
 var map = new Map({
-  controls: defaultControls().extend([scaleline, geocoder, layerSwitcher, new FullScreen()]),
+  controls: defaultControls().extend([scaleline, geocoder, layerSwitcher, new FullScreen(), new ZoomToExtent({
+    extent: [
+      346219.65,
+      8159203.94,
+      2074586.54,
+      7003599.95],
+  })]),
   layers: layers,
   view: mapView,
   target: 'map'

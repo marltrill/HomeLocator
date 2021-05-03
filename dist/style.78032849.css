@@ -7,6 +7,7 @@ body, html {
     height: 94vh;
     position: absolute; 
     bottom: 0px;
+    transition: margin-right .5s;
   }
 
 .popover-body {
@@ -76,6 +77,10 @@ body, html {
   width: 1.375em;
   line-height: .4em;
   background-color: rgba(0,60,136,0.5);
+}
+
+.ol-zoom-extent{
+  margin-top: 35px;
 }
 
 /*# sourceMappingURL=/style.78032849.css.map */
