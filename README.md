@@ -50,6 +50,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Edit "About" page. -01.05.2021 ABP
 * Switch to Bootstrap Navbar. -02.05.2021 ABP
 * Replaced custom home button with OL 'ZoomToExtent' button, so map controls stay within map instead of being attached to the html element. -03.05.2021 ABP
+* Merged grids (1km, 30km, 100km) with hospital features -as a sample -03.05.2021 MLT
 * Built splash screen for general info/tutorial for end user. -04.05.2021 ABP
     * Updated Logos & Favicon.
 
@@ -75,8 +76,15 @@ B)) Created proximity rasters for each of the features- 30.04.21 MLT:
 * Schools, Universities, Hospitals and Leisure Parks.
 Projection is ETRS 1989- UTM Zone 32 N (can be reprojected)
 
-* (stored in OneDrive:)
+* (stored in OneDrive: Under Proximity_Rasters folder)
  https://aaudk-my.sharepoint.com/personal/aboest20_student_aau_dk/_layouts/15/onedrive.aspx?csf=1&web=1&e=vfrd64&cid=f45853db%2D5a9a%2D45bc%2D8650%2D1b7274a60f8b&id=%2Fpersonal%2Faboest20%5Fstudent%5Faau%5Fdk%2FDocuments%2FSpring%202021%2FSpring%202021%20Semester%20Project%2FData&FolderCTID=0x012000691A31CA3428DA419A23C4A93D1B75C9
+
+C)) Merged grids (1km, 30km, 100km) with hospitals feature -as a sample -03.05.2021 MLT
+
+* (stored in OneDrive -same link above-: Under ProximityRasterGrids_shp folder)
+
+Sample of average distance to hospitals- 1km grid:
+[ProximityGridsHospitals](images/zs_grid1_hospitals.png)
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)
