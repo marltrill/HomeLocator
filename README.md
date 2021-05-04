@@ -2,11 +2,10 @@
 <br />
 <p align="center">
   <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
-    <img src="images/realestatelogo.jpg" alt="Logo" width="500" height="333">
+    <img src="images/HomeLocator Logo.png" alt="Logo" width="500" height="333">
   </a>
-  <p align="center">Image source: https://i.pinimg.com/736x/08/d8/8e/08d88e71ca24aa04b5ed3ddb6b77824f.jpg</p>
 
-  <h3 align="center">HomeLocator (Temp. Name)</h3>
+  <h3 align="center">HomeLocator</h3>
 
   <p align="center">
     Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
@@ -51,6 +50,8 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Edit "About" page. -01.05.2021 ABP
 * Switch to Bootstrap Navbar. -02.05.2021 ABP
 * Replaced custom home button with OL 'ZoomToExtent' button, so map controls stay within map instead of being attached to the html element. -03.05.2021 ABP
+* Built splash screen for general info/tutorial for end user. -04.05.2021 ABP
+    * Updated Logos & Favicon.
 
 ### Data Processing-20.03.21 MLT : 
 
