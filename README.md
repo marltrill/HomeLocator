@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
-    <img src="images/HomeLocator Logo.png" alt="Logo" width="500" height="333">
+    <img src="images/HomeLocator Logo.png" alt="Logo" width="500" height="500">
   </a>
 
   <h3 align="center">HomeLocator</h3>
