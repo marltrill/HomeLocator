@@ -402,10 +402,10 @@ var zoomToExtentControl = new ZoomToExtent({
 var map = new Map({
   controls: defaultControls().extend([scaleline, geocoder, layerSwitcher, new FullScreen(), new ZoomToExtent({
     extent: [
-      346219.65,
-      8159203.94,
-      2074586.54,
-      7003599.95],
+      644247.2179725806,
+      7066697.228365138,
+      1768177.2818778122,
+      8142930.58662042],
   })]),
   layers: layers,
   view: mapView,
@@ -442,15 +442,6 @@ map.on('click', function (evt) {
   });
   $(element).popover('show');
 });
-
-var view = map.getView();
-var zoom = view.getZoom();
-var center = view.getCenter();
-
-document.getElementById('zoom-restore').onclick = function() {
-  view.setCenter(center);
-  view.setZoom(zoom);
-};
 
 var selected = null;
 
@@ -503,3 +494,7 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
+
+// Find Features in Extent (TESTING)
+var extent = map.getView().calculateExtent()
+console.log(extent)

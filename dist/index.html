@@ -79,45 +79,74 @@
       </div>
     </div>
 
-    <!--
-    <div class="topnav">
-      <a class="active" href="#home">HomeLocator</a>
-      <a href="html/about.html">About</a>
-    </div>
-    -->
-
     <div id="map"></div>
-
-    <!--
-    <div id="menu">
-      <button id="zoom-restore">H</button>
-    </div>
-    -->
 
     <div class="pane">
 
       <h1>Search Criteria</h1>
 
       <ul id="js-searchCriteria">
+        <!--Toggle Universities Slider-->
         <li>
           <label>
-            <input type="checkbox" checked="" value="optionOne">
-            <span>Option 1</span>
+            <input type="checkbox" class="uniToggle">
+            <span>Universities</span>
           </label>
+          <div id="uniSlider">
+            <p>Distance from Universities (0 to 180 Km)</p>
+            <input type="range" min="0" max="180" value="90" id="uniDistance" step="1" oninput="uniOutputUpdate(value)">
+            <output for="fader" id="uniRange">90</output>
+            <script>function uniOutputUpdate(uniKilometers) {
+  document.querySelector('#uniRange').value = uniKilometers;
+}</script>
+          </div>
+          <script>$(function () {
+  $('.uniToggle').change(function () {
+    $('#uniSlider').toggle(this.checked);
+  }).change(); //ensure visible state matches initially
+});</script>
         </li>
 
+        <!--Toggle Schools Slider-->
         <li>
           <label>
-            <input type="checkbox" checked="" value="optionTwo">
-            <span>Option 2</span>
+            <input type="checkbox" class="schoolToggle">
+            <span>Schools</span>
           </label>
+          <div id="schoolSlider">
+            <p>Distance from Schools (0 to 90 Km)</p>
+            <input type="range" min="0" max="90" value="45" id="schoolDistance" step="1" oninput="schoolsOutputUpdate(value)">
+            <output for="fader" id="schoolRange">45</output>
+            <script>function schoolsOutputUpdate(schoolKilometers) {
+  document.querySelector('#schoolRange').value = schoolKilometers;
+}</script>
+          </div>
+          <script>$(function () {
+  $('.schoolToggle').change(function () {
+    $('#schoolSlider').toggle(this.checked);
+  }).change(); //ensure visible state matches initially
+});</script>
         </li>
 
+        <!--Toggle Parks Slider-->
         <li>
           <label>
-            <input type="checkbox" checked="" value="optionThree">
-            <span>Option 3</span>
+            <input type="checkbox" class="parksToggle">
+            <span>Parks</span>
           </label>
+          <div id="parksSlider">
+            <p>Distance from Parks (0 to 40 Km)</p>
+            <input type="range" min="0" max="40" value="20" id="parksDistance" step="1" oninput="parksOutputUpdate(value)">
+            <output for="fader" id="parksRange">20</output>
+            <script>function parksOutputUpdate(parksKilometers) {
+  document.querySelector('#parksRange').value = parksKilometers;
+}</script>
+          </div>
+          <script>$(function () {
+  $('.parksToggle').change(function () {
+    $('#parksSlider').toggle(this.checked);
+  }).change(); //ensure visible state matches initially
+});</script>
         </li>
 
       </ul>
