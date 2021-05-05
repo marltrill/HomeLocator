@@ -54,6 +54,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Built splash screen for general info/tutorial for end user. -04.05.2021 ABP
     * Updated Logos & Favicon.
 * Merged grids (1km, 30km, 100km) with all features individually and then created the final weighted grids, with the features we have so far -04.05.2021 MLT
+* Added distance sliders that are toggled by checked options. -05.05.2021 ABP
 
 ### Data Processing-20.03.21 MLT : 
 
