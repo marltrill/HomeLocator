@@ -53,6 +53,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Merged grids (1km, 30km, 100km) with hospital features -as a sample -03.05.2021 MLT
 * Built splash screen for general info/tutorial for end user. -04.05.2021 ABP
     * Updated Logos & Favicon.
+* Merged grids (1km, 30km, 100km) with all features individually and then created the final weighted grids, with the features we have so far -04.05.2021 MLT
 
 ### Data Processing-20.03.21 MLT : 
 
@@ -81,7 +82,13 @@ Projection is ETRS 1989- UTM Zone 32 N (can be reprojected)
 
 C)) Merged grids (1km, 30km, 100km) with hospitals feature -as a sample -03.05.2021 MLT
 
-* (stored in OneDrive -same link above-: Under ProximityRasterGrids_shp folder)
+* (stored in OneDrive -same link above-: Under ProximityGrids_Individual_shp folder)
+
+D)) Merged grids with all features individually, (hospitals, schools, universities and leisure parks), -04.05.2021 MLT
+and then combined them to get the final layer for each grid size.
+
+* (stored in OneDrive -same link above-: Under ProximityGrids_Individual_shp folder)
+* (stored in OneDrive -same link above-: Under ProximityGrids_Final_shp folder)
 
 Sample of average distance to hospitals- 1km grid:
 [ProximityGridsHospitals](images/zs_grid1_hospitals.png)
