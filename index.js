@@ -212,6 +212,7 @@ var universities = new VectorLayer({
   }),
 });
 
+/*
 // Add Coast Lines from GeoDanmark
 var coasts_geojson = require('./data/coastline_epsg4326.geojson')
 
@@ -229,6 +230,38 @@ var coasts = new VectorLayer({
     }),
   }),
 });
+*/
+
+// Get University Search Distance from user input
+var uniRangejs = document.getElementsByName('#uniRange');
+console.log('Uni JS: '+uniRangejs.value);
+
+// Create Dynamic Styling for Grid
+var gridStyle = function (feature, resolution) {
+  const dist = feature.get('_unimean')
+  var layerColor
+  if (dist < 45000) {
+    layerColor='#57d478';
+  }
+  else if (dist < 90000) {
+    layerColor='#edff78';
+  }
+  else if (dist < 135000) {
+    layerColor='#ff9830';
+  }
+  else {
+    layerColor='#ff3030';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 0)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layerColor
+    })
+  })
+};
 
 // Add Weighted Grid (100km Resolution)
 var grid100km_geojson = require('./data/weighted_grid100km.geojson')
@@ -243,12 +276,7 @@ var grid100km = new VectorLayer({
   fill: new Fill({
     color: 'rgba(158, 240, 255, 0.6)',
   }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: gridStyle
 });
 
 // Add Weighted Grid (100km Resolution)
@@ -265,14 +293,10 @@ var grid30km = new VectorLayer({
   fill: new Fill({
     color: 'rgba(158, 240, 255, 0.6)',
   }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: gridStyle
 });
 
+/*
 // Add Weighted Grid (1km Resolution)
 var grid1km_geojson = require('./data/weighted_grid1km.geojson')
 
@@ -286,13 +310,9 @@ var grid1km = new VectorLayer({
   fill: new Fill({
     color: 'rgba(158, 240, 255, 0.6)',
   }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: gridStyle
 });
+*/
 
 var isolayer = new VectorLayer({
   title: 'isolayer',
@@ -357,8 +377,8 @@ var layers = [
     layers: [
       grid100km,
       grid30km,
-      grid1km,
-      coasts,
+      //grid1km,
+      //coasts,
       universities,
       municipalities,
       hospitals,
@@ -391,12 +411,6 @@ var mapView = new View({
   center: denmarkWebMercator,
   zoom: 7
 });
-
-/*
-var zoomToExtentControl = new ZoomToExtent({
-  extent: [346219.65, 8159203.94, 2074586.54, 7003599.95]
-});
-*/
 
 // Define map
 var map = new Map({
@@ -498,3 +512,23 @@ document.getElementById('isochroneActivate').onclick = function() {
 // Find Features in Extent (TESTING)
 var extent = map.getView().calculateExtent()
 console.log(extent)
+
+var uniSource = grid100km.getSource();
+var features = uniSource.getFeatures();
+var value = 40000;
+var property = '_unimax';
+var found;
+for (var i = 0, ii = features.length; i < ii; i++) {
+  if (features[i].get(property) <= value) {
+    found = features[i];
+    break;
+  }
+}
+console.log(found);
+
+if (grid100km.get('_unimax') <= 40000 ) {
+  console.log("Found")
+}
+else {
+  return console.log("Not Found")
+};
