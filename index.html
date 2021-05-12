@@ -22,7 +22,12 @@
     <script src="dist/ors-js-client.js"></script> <!-- OpenRouteService -->
     <script data-main="index" src="require.js"></script> <!-- RequireJS -->
     <script src="https://d3js.org/d3.v6.js"></script> <!--D3.js-->
+    <!--jQuery Below-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
 
   <body>
@@ -85,6 +90,31 @@
 
     <div class="pane">
 
+      <!--jQuery Range Sliders Testing-->
+      <script>
+        $( function() {
+          var handle = $( "#custom-handle" );
+          $( "#slider" ).slider({
+            animate: "fast",
+            min: 0,
+            max: 180,
+            value: 90,
+            create: function() {
+              handle.text( $( this ).slider( "value" ) );
+            },
+            slide: function( event, ui ) {
+              handle.text( ui.value );
+            }
+          });
+        } );
+      </script>
+      
+      <!--
+      <div id="slider">
+        <div id="custom-handle" class="ui-slider-handle"></div>
+      </div>
+      -->
+
       <h1>Search Criteria</h1>
 
       <ul id="js-searchCriteria">
@@ -94,24 +124,35 @@
             <input type="checkbox" class="uniToggle">
             <span>Universities</span>
           </label>
+          <!--Build Universities Distance Slider-->
           <div id="uniSlider">
             <p>Distance from Universities (0 to 180 Km)</p>
             <input type="range" min="0" max="180" value="90" id="uniDistance" name="uniDistance"
               step="1" oninput="uniOutputUpdate(value)">
             <output for="fader" id="uniRange" name="uniRange">90</output>
+            <!--Update Range When Sliding-->
             <script>
               function uniOutputUpdate(uniKilometers) {
                 document.querySelector('#uniRange').value = uniKilometers;
                 console.log("Uni: "+uniRange.value)
               }
             </script>
-            <input type="button" value="Apply" id="uniApply" name="uniApply" onclick="uniApplySearch(value)">
-            <script>
-              function uniApplySearch(uniSearching) {
-                document.querySelector('#uniRange').value=uniSearching;
-                console.log('Uni Search: '+uniRange.value)
-                }
-            </script>
+
+            <br />
+
+            <!--jQuery University Slider-->
+            <div id="slider">
+              <div id="custom-handle" class="ui-slider-handle"></div>
+              <br>
+              <button id="find_match">Search</button>
+              <script>
+                $("#find_match").click(function(){
+                  var uniSearchDist = $('#slider').slider('option', 'value');
+                  //alert(['Uni Search Dist: '+uniSearchDist]);
+                  console.log('Uni Search Dist: '+uniSearchDist);
+                  }); 
+              </script>
+            </div>
           </div>
           <script>
             $(function () {
@@ -121,6 +162,8 @@
             });
           </script>
         </li>
+
+        <br>
 
         <!--Toggle Schools Slider-->
         <li>
