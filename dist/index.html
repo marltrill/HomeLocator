@@ -22,16 +22,20 @@
     <script src="/ors-js-client.bab4021b.js"></script> <!-- OpenRouteService -->
     <script data-main="index" src="/require.9e574cb4.js"></script> <!-- RequireJS -->
     <script src="https://d3js.org/d3.v6.js"></script> <!--D3.js-->
+    <!--jQuery Below-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="/style.78032849.js"></script><link rel="stylesheet" href="/Spring21_AAU_Project.e31bb0bc.css"></head>
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="/">
         <img src="/favicon-32x32.a89af6ed.png" height="32" alt="HomeLocator">
-        HomeLocator 
+        HomeLocator
       </a>
-      <!-- The button tag is for when we change dimensions of the window, so as if there isn't enough space for all the tabs to be shown, the ''wrap'' inside a button-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -44,7 +48,7 @@
           </li>
         </ul>
         <span class="navbar-text">
-          Find your future neighborhood.
+          Find your way home.
         </span>
       </div>
     </nav>
@@ -65,7 +69,7 @@
     return false;
   });
 });</script>
-  
+
     <div class="popup">
       <div class="cnt223">
         <h1>Welcome/Tutorial</h1>
@@ -83,6 +87,33 @@
 
     <div class="pane">
 
+      <!--jQuery Range Sliders Testing-->
+      <!--
+      <script>
+        $( function() {
+          var handle = $( "#custom-handle" );
+          $( "#slider" ).slider({
+            animate: "fast",
+            min: 0,
+            max: 180,
+            value: 90,
+            create: function() {
+              handle.text( $( this ).slider( "value" ) );
+            },
+            slide: function( event, ui ) {
+              handle.text( ui.value );
+            }
+          });
+        } );
+      </script>
+      -->
+      
+      <!--
+      <div id="slider">
+        <div id="custom-handle" class="ui-slider-handle"></div>
+      </div>
+      -->
+
       <h1>Search Criteria</h1>
 
       <ul id="js-searchCriteria">
@@ -93,12 +124,9 @@
             <span>Universities</span>
           </label>
           <div id="uniSlider">
-            <p>Distance from Universities (0 to 180 Km)</p>
-            <input type="range" min="0" max="180" value="90" id="uniDistance" step="1" oninput="uniOutputUpdate(value)">
-            <output for="fader" id="uniRange">90</output>
-            <script>function uniOutputUpdate(uniKilometers) {
-  document.querySelector('#uniRange').value = uniKilometers;
-}</script>
+            <p class="sliders-title"><b>Distance from Universities (1 to 180 Km)</b></p>
+            <input type="range" min="1" max="180" value="90" class="slider" id="uniDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outUni"></span> km</p>
           </div>
           <script>$(function () {
   $('.uniToggle').change(function () {
@@ -114,12 +142,18 @@
             <span>Schools</span>
           </label>
           <div id="schoolSlider">
-            <p>Distance from Schools (0 to 90 Km)</p>
-            <input type="range" min="0" max="90" value="45" id="schoolDistance" step="1" oninput="schoolsOutputUpdate(value)">
-            <output for="fader" id="schoolRange">45</output>
-            <script>function schoolsOutputUpdate(schoolKilometers) {
-  document.querySelector('#schoolRange').value = schoolKilometers;
-}</script>
+            <p class="sliders-title"><b>Distance from Schools (1 to 90 Km)</b></p>
+            <input type="range" min="1" max="90" value="45" class="slider" id="schoolDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outSchool"></span> km</p>
+            <!--
+            <output for="fader" id="schoolRange" name="schoolsRange">45</output>
+            <script>
+              function schoolsOutputUpdate(schoolKilometers) {
+                document.querySelector('#schoolRange').value = schoolKilometers;
+                //console.log("Schools: "+schoolRange.value)
+              }
+            </script>
+            -->
           </div>
           <script>$(function () {
   $('.schoolToggle').change(function () {
@@ -135,12 +169,9 @@
             <span>Parks</span>
           </label>
           <div id="parksSlider">
-            <p>Distance from Parks (0 to 40 Km)</p>
-            <input type="range" min="0" max="40" value="20" id="parksDistance" step="1" oninput="parksOutputUpdate(value)">
-            <output for="fader" id="parksRange">20</output>
-            <script>function parksOutputUpdate(parksKilometers) {
-  document.querySelector('#parksRange').value = parksKilometers;
-}</script>
+            <p class="sliders-title"><b>Distance from Parks (1 to 90 Km)</b></p>
+            <input type="range" min="1" max="90" value="45" class="slider" id="parksDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outParks"></span> km</p>
           </div>
           <script>$(function () {
   $('.parksToggle').change(function () {
@@ -148,6 +179,10 @@
   }).change(); //ensure visible state matches initially
 });</script>
         </li>
+
+        <!-- Commit Button -->
+        <button type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+        <br>
 
       </ul>
 

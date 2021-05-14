@@ -28,6 +28,37 @@ import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
+var classification_search = function (feature, resolution){
+  const fuzzyvalue = feature.get('fuzzyvalue')
+  var layercolor
+  if (fuzzyvalue < 0.2) {
+  layercolor='rgb(0, 100, 0)';
+  }
+  else if (fuzzyvalue < 0.4) {
+  layercolor='rgb(0, 150, 0)';
+  }
+  else if (fuzzyvalue < 0.6) {
+  layercolor='rgb(0, 200, 0)';
+  }
+  else if (fuzzyvalue < 0.8) {
+  layercolor='rgb(133, 200, 0)';
+  }
+  else if (fuzzyvalue < 1) {
+  layercolor='rgb(217, 200, 0)';
+  }
+  else { layercolor='#ABD3DF';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 1)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layercolor
+    })
+  })
+};
+
 // Municipalities Boundary Style
 var style = new Style({
   fill: new Fill({
@@ -212,6 +243,7 @@ var universities = new VectorLayer({
   }),
 });
 
+/*
 // Add Coast Lines from GeoDanmark
 var coasts_geojson = require('./data/coastline_epsg4326.geojson')
 
@@ -229,6 +261,38 @@ var coasts = new VectorLayer({
     }),
   }),
 });
+*/
+
+// Get University Search Distance from user input
+var uniRangejs = document.getElementsByName('#uniRange');
+console.log('Uni JS: '+uniRangejs.value);
+
+// Create Dynamic Styling for Grid
+var gridStyle = function (feature, resolution) {
+  const dist = feature.get('_universit')
+  var layerColor
+  if (dist < 45000) {
+    layerColor='#57d478';
+  }
+  else if (dist < 90000) {
+    layerColor='#edff78';
+  }
+  else if (dist < 135000) {
+    layerColor='#ff9830';
+  }
+  else {
+    layerColor='#ff3030';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 0)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layerColor
+    })
+  })
+};
 
 // Add Weighted Grid (100km Resolution)
 var grid100km_geojson = require('./data/weighted_grid100km.geojson')
@@ -240,15 +304,7 @@ var grid100km = new VectorLayer({
     url: grid100km_geojson,
   }),
   minResolution: 400,
-  fill: new Fill({
-    color: 'rgba(158, 240, 255, 0.6)',
-  }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: classification_search
 });
 
 // Add Weighted Grid (100km Resolution)
@@ -265,14 +321,10 @@ var grid30km = new VectorLayer({
   fill: new Fill({
     color: 'rgba(158, 240, 255, 0.6)',
   }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: gridStyle
 });
 
+/*
 // Add Weighted Grid (1km Resolution)
 var grid1km_geojson = require('./data/weighted_grid1km.geojson')
 
@@ -286,13 +338,9 @@ var grid1km = new VectorLayer({
   fill: new Fill({
     color: 'rgba(158, 240, 255, 0.6)',
   }),
-  style: new Style({
-    stroke: new Stroke({
-      color: '#0095b0',
-      width: 1,
-    }),
-  }),
+  style: gridStyle
 });
+*/
 
 var isolayer = new VectorLayer({
   title: 'isolayer',
@@ -357,8 +405,8 @@ var layers = [
     layers: [
       grid100km,
       grid30km,
-      grid1km,
-      coasts,
+      //grid1km,
+      //coasts,
       universities,
       municipalities,
       hospitals,
@@ -391,12 +439,6 @@ var mapView = new View({
   center: denmarkWebMercator,
   zoom: 7
 });
-
-/*
-var zoomToExtentControl = new ZoomToExtent({
-  extent: [346219.65, 8159203.94, 2074586.54, 7003599.95]
-});
-*/
 
 // Define map
 var map = new Map({
@@ -495,6 +537,44 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
 
-// Find Features in Extent (TESTING)
-var extent = map.getView().calculateExtent()
-console.log(extent)
+// Universities Slider
+var sliderUni = document.getElementById("uniDistance");
+var outputUni = document.getElementById("outUni");
+outputUni.innerHTML = sliderUni.value*1
+
+// Update the current slider value (each time you drag the slider handle)
+sliderUni.oninput = function() {
+  outputUni.innerHTML = this.value*1;
+};
+
+// School Slider
+var sliderSchools = document.getElementById("schoolDistance");
+var outputSchools = document.getElementById("outSchool");
+outputSchools.innerHTML = sliderSchools.value*1
+
+// Update the current slider value (each time you drag the slider handle)
+sliderSchools.oninput = function() {
+  outputSchools.innerHTML = this.value*1;
+};
+
+// Parks Slider
+var sliderParks = document.getElementById("parksDistance");
+var outputParks = document.getElementById("outParks");
+outputParks.innerHTML = sliderParks.value*1
+
+// Update the current slider value (each time you drag the slider handle)
+sliderParks.oninput = function() {
+  outputParks.innerHTML = this.value*1;
+};
+
+function commitSearchFunction() {
+  var source = grid100km.getSource();
+  var features = source.getFeatures();
+
+  features.forEach(function(feature){
+    var new_fuzzy_value = (feature.get("_universit") * sliderUni.value/1000) + (feature.get("_schoolsme") * sliderSchools.value/1000) + (feature.get("_leisurepa") * sliderParks.value/1000)
+    console.log(new_fuzzy_value.value)
+    feature.set("fuzzyvalue", new_fuzzy_value)
+    console.log("Done")
+  });
+};
