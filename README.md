@@ -55,44 +55,43 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
     * Updated Logos & Favicon.
 * Merged grids (1km, 30km, 100km) with all features individually and then created the final weighted grids, with the features we have so far -04.05.2021 MLT
 * Added distance sliders that are toggled by checked options. -05.05.2021 ABP
+* Added coastline, roads and water bodies to the weighted grids -05.07.2021 MLT
+* Re-doing weighted grids with proximity rasters at finer resolution (15mx15m) and adding supermarkets -05.10.2021 MLT
+* Finished weighted grids with proximity rasters at finer resolution (15mx15m) and added supermarkets data. Working on processing public transport data -05.11.2021 MLT
+* Added public transport stations, public transport stops, restaurants and theatres to the weighted grids. Working on adding cinemas. Got crime rate data -05.14.2021 MLT
 
 ### Data Processing-20.03.21 MLT : 
 
-A)) Most of the features in OSM are divided into a points layer and a polygons layer within the same feature (e.g.
-schools). In order to have only one layer for each feature:
+A) Processed OSM raw data to get a unique layer per feature (they're combined in point and polygon layers)
 
-1) Selected by Location (Intersect both layers)
-2) Switched selection in the attribute table of Points layer, selecting points that do not intersect with polygons
-3) Created a new points layer from 2)
-4) Buffered the points in layer in 2) - 0.5 m buffer
-5) Merged buffered points layer in 4) .shp with the polygons .shp = final .shp
-6) Converted .shp to .geojson file
-
-OSM Layers that we have so far:
--  universities, schools, leisure parks and hospitals (projection EPSG: 4326- WGS 84-
-Last Accessed: 04-12-21)
-- roads (projection EPSG: 4326- WGS 84- Last Accessed: 04-13-21)
-
-B)) Created proximity rasters for each of the features- 30.04.21 MLT:
-
+B) Created proximity rasters for each of the features- 30.04.21 MLT:
 * Schools, Universities, Hospitals and Leisure Parks.
 Projection is ETRS 1989- UTM Zone 32 N (can be reprojected)
-
 * (stored in OneDrive: Under Proximity_Rasters folder)
  https://aaudk-my.sharepoint.com/personal/aboest20_student_aau_dk/_layouts/15/onedrive.aspx?csf=1&web=1&e=vfrd64&cid=f45853db%2D5a9a%2D45bc%2D8650%2D1b7274a60f8b&id=%2Fpersonal%2Faboest20%5Fstudent%5Faau%5Fdk%2FDocuments%2FSpring%202021%2FSpring%202021%20Semester%20Project%2FData&FolderCTID=0x012000691A31CA3428DA419A23C4A93D1B75C9
 
-C)) Merged grids (1km, 30km, 100km) with hospitals feature -as a sample -03.05.2021 MLT
+C) Merged grids (1km, 30km, 100km) with hospitals feature -as a sample -03.05.2021 MLT
 
 * (stored in OneDrive -same link above-: Under ProximityGrids_Individual_shp folder)
 
-D)) Merged grids with all features individually, (hospitals, schools, universities and leisure parks), -04.05.2021 MLT
+D) Merged grids with all features individually, (hospitals, schools, universities and leisure parks), -04.05.2021 MLT
 and then combined them to get the final layer for each grid size.
 
 * (stored in OneDrive -same link above-: Under ProximityGrids_Individual_shp folder)
 * (stored in OneDrive -same link above-: Under ProximityGrids_Final_shp folder)
 
-Sample of average distance to hospitals- 1km grid:
-[ProximityGridsHospitals](images/zs_grid1_hospitals.png)
+E) Added coastline, roads and water bodies to the weighted grids -05.07.2021 MLT
+
+Roads: based on primary and secondary roads (tertiary was a little too much I think)
+Water Bodies: excluded wetlands and filtered water bodies equal or greater than 2000 m2
+
+F) Re-did weighted grids with proximity rasters at a finer resolution and added supermarkets data 05.10/11.2021 MLT
+
+### FEATURES THAT ARE INCLUDED IN THE WEIGHTED GRID SO FAR: 
+Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies. 
+
+Sample of average distance to roads- 1km grid:
+[ProximityGridRoads](images/roads1km.png)
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)
