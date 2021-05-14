@@ -44,7 +44,7 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
-            <a class="nav-link" href="/html/about.html">About<span class="sr-only"></span></a>
+            <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
           </li>
         </ul>
         <span class="navbar-text">
@@ -88,21 +88,25 @@
     <div class="pane">
 
       <!--jQuery Range Sliders Testing-->
-      <script>$(function () {
-  var handle = $("#custom-handle");
-  $("#slider").slider({
-    animate: "fast",
-    min: 0,
-    max: 180,
-    value: 90,
-    create: function create() {
-      handle.text($(this).slider("value"));
-    },
-    slide: function slide(event, ui) {
-      handle.text(ui.value);
-    }
-  });
-});</script>
+      <!--
+      <script>
+        $( function() {
+          var handle = $( "#custom-handle" );
+          $( "#slider" ).slider({
+            animate: "fast",
+            min: 0,
+            max: 180,
+            value: 90,
+            create: function() {
+              handle.text( $( this ).slider( "value" ) );
+            },
+            slide: function( event, ui ) {
+              handle.text( ui.value );
+            }
+          });
+        } );
+      </script>
+      -->
       
       <!--
       <div id="slider">
@@ -119,30 +123,10 @@
             <input type="checkbox" class="uniToggle">
             <span>Universities</span>
           </label>
-          <!--Build Universities Distance Slider-->
           <div id="uniSlider">
-            <p>Distance from Universities (0 to 180 Km)</p>
-            <input type="range" min="0" max="180" value="90" id="uniDistance" name="uniDistance" step="1" oninput="uniOutputUpdate(value)">
-            <output for="fader" id="uniRange" name="uniRange">90</output>
-            <!--Update Range When Sliding-->
-            <script>function uniOutputUpdate(uniKilometers) {
-  document.querySelector('#uniRange').value = uniKilometers;
-  console.log("Uni: " + uniRange.value);
-}</script>
-
-            <br>
-
-            <!--jQuery University Slider-->
-            <div id="slider">
-              <div id="custom-handle" class="ui-slider-handle"></div>
-              <br>
-              <button id="find_match">Search</button>
-              <script>$("#find_match").click(function () {
-  var uniSearchDist = $('#slider').slider('option', 'value'); //alert(['Uni Search Dist: '+uniSearchDist]);
-
-  console.log('Uni Search Dist: ' + uniSearchDist);
-});</script>
-            </div>
+            <p class="sliders-title"><b>Distance from Universities (1 to 180 Km)</b></p>
+            <input type="range" min="1" max="180" value="90" class="slider" id="uniDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outUni"></span> km</p>
           </div>
           <script>$(function () {
   $('.uniToggle').change(function () {
@@ -151,8 +135,6 @@
 });</script>
         </li>
 
-        <br>
-
         <!--Toggle Schools Slider-->
         <li>
           <label>
@@ -160,13 +142,18 @@
             <span>Schools</span>
           </label>
           <div id="schoolSlider">
-            <p>Distance from Schools (0 to 90 Km)</p>
-            <input type="range" min="0" max="90" value="45" id="schoolDistance" step="1" oninput="schoolsOutputUpdate(value)">
+            <p class="sliders-title"><b>Distance from Schools (1 to 90 Km)</b></p>
+            <input type="range" min="1" max="90" value="45" class="slider" id="schoolDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outSchool"></span> km</p>
+            <!--
             <output for="fader" id="schoolRange" name="schoolsRange">45</output>
-            <script>function schoolsOutputUpdate(schoolKilometers) {
-  document.querySelector('#schoolRange').value = schoolKilometers;
-  console.log("Schools: " + schoolRange.value);
-}</script>
+            <script>
+              function schoolsOutputUpdate(schoolKilometers) {
+                document.querySelector('#schoolRange').value = schoolKilometers;
+                //console.log("Schools: "+schoolRange.value)
+              }
+            </script>
+            -->
           </div>
           <script>$(function () {
   $('.schoolToggle').change(function () {
@@ -182,15 +169,9 @@
             <span>Parks</span>
           </label>
           <div id="parksSlider">
-            <p>Distance from Parks (0 to 40 Km)</p>
-            <input type="range" min="0" max="40" value="20" id="parksDistance" name="parksDistance" step="1" oninput="parksOutputUpdate(value)">
-            <output for="fader" id="parksRange" name="parksRange">20</output>
-            <script>function parksOutputUpdate(parksKilometers) {
-  document.querySelector('#parksRange').value = parksKilometers;
-  console.log("Parks: " + parksRange.value);
-}
-
-;</script>
+            <p class="sliders-title"><b>Distance from Parks (1 to 90 Km)</b></p>
+            <input type="range" min="1" max="90" value="45" class="slider" id="parksDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outParks"></span> km</p>
           </div>
           <script>$(function () {
   $('.parksToggle').change(function () {
@@ -198,6 +179,10 @@
   }).change(); //ensure visible state matches initially
 });</script>
         </li>
+
+        <!-- Commit Button -->
+        <button type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+        <br>
 
       </ul>
 

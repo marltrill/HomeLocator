@@ -28,6 +28,37 @@ import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
+var classification_search = function (feature, resolution){
+  const fuzzyvalue = feature.get('fuzzyvalue')
+  var layercolor
+  if (fuzzyvalue < 0.2) {
+  layercolor='rgb(0, 100, 0)';
+  }
+  else if (fuzzyvalue < 0.4) {
+  layercolor='rgb(0, 150, 0)';
+  }
+  else if (fuzzyvalue < 0.6) {
+  layercolor='rgb(0, 200, 0)';
+  }
+  else if (fuzzyvalue < 0.8) {
+  layercolor='rgb(133, 200, 0)';
+  }
+  else if (fuzzyvalue < 1) {
+  layercolor='rgb(217, 200, 0)';
+  }
+  else { layercolor='#ABD3DF';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 1)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layercolor
+    })
+  })
+};
+
 // Municipalities Boundary Style
 var style = new Style({
   fill: new Fill({
@@ -238,7 +269,7 @@ console.log('Uni JS: '+uniRangejs.value);
 
 // Create Dynamic Styling for Grid
 var gridStyle = function (feature, resolution) {
-  const dist = feature.get('_unimean')
+  const dist = feature.get('_universit')
   var layerColor
   if (dist < 45000) {
     layerColor='#57d478';
@@ -273,10 +304,7 @@ var grid100km = new VectorLayer({
     url: grid100km_geojson,
   }),
   minResolution: 400,
-  fill: new Fill({
-    color: 'rgba(158, 240, 255, 0.6)',
-  }),
-  style: gridStyle
+  style: classification_search
 });
 
 // Add Weighted Grid (100km Resolution)
@@ -509,26 +537,44 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
 
-// Find Features in Extent (TESTING)
-var extent = map.getView().calculateExtent()
-console.log(extent)
+// Universities Slider
+var sliderUni = document.getElementById("uniDistance");
+var outputUni = document.getElementById("outUni");
+outputUni.innerHTML = sliderUni.value*1
 
-var uniSource = grid100km.getSource();
-var features = uniSource.getFeatures();
-var value = 40000;
-var property = '_unimax';
-var found;
-for (var i = 0, ii = features.length; i < ii; i++) {
-  if (features[i].get(property) <= value) {
-    found = features[i];
-    break;
-  }
-}
-console.log(found);
+// Update the current slider value (each time you drag the slider handle)
+sliderUni.oninput = function() {
+  outputUni.innerHTML = this.value*1;
+};
 
-if (grid100km.get('_unimax') <= 40000 ) {
-  console.log("Found")
-}
-else {
-  return console.log("Not Found")
+// School Slider
+var sliderSchools = document.getElementById("schoolDistance");
+var outputSchools = document.getElementById("outSchool");
+outputSchools.innerHTML = sliderSchools.value*1
+
+// Update the current slider value (each time you drag the slider handle)
+sliderSchools.oninput = function() {
+  outputSchools.innerHTML = this.value*1;
+};
+
+// Parks Slider
+var sliderParks = document.getElementById("parksDistance");
+var outputParks = document.getElementById("outParks");
+outputParks.innerHTML = sliderParks.value*1
+
+// Update the current slider value (each time you drag the slider handle)
+sliderParks.oninput = function() {
+  outputParks.innerHTML = this.value*1;
+};
+
+function commitSearchFunction() {
+  var source = grid100km.getSource();
+  var features = source.getFeatures();
+
+  features.forEach(function(feature){
+    var new_fuzzy_value = (feature.get("_universit") * sliderUni.value/1000) + (feature.get("_schoolsme") * sliderSchools.value/1000) + (feature.get("_leisurepa") * sliderParks.value/1000)
+    console.log(new_fuzzy_value.value)
+    feature.set("fuzzyvalue", new_fuzzy_value)
+    console.log("Done")
+  });
 };
