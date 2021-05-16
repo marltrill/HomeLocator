@@ -28,22 +28,87 @@ import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
-var classification_search = function (feature, resolution){
+// 100km Grid Styling
+var classification_search_100km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
   if (fuzzyvalue < 0.2) {
-  layercolor='rgb(0, 100, 0)';
+  layercolor='rgba(0, 100, 0, 0.6)';
   }
   else if (fuzzyvalue < 0.4) {
-  layercolor='rgb(0, 150, 0)';
+  layercolor='rgba(0, 150, 0, 0.6)';
   }
   else if (fuzzyvalue < 0.6) {
-  layercolor='rgb(0, 200, 0)';
+  layercolor='rgba(0, 200, 0, 0.6)';
   }
   else if (fuzzyvalue < 0.8) {
-  layercolor='rgb(133, 200, 0)';
+  layercolor='rgba(133, 200, 0, 0.6)';
   }
   else if (fuzzyvalue < 1) {
+  layercolor='rgba(217, 200, 0, 0.6)';
+  }
+  else { layercolor='rgba(217, 200, 0, 0)';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 1)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layercolor
+    })
+  })
+};
+
+// 30km Grid Styling
+var classification_search_30km = function (feature, resolution){
+  const fuzzyvalue_30km = feature.get('fuzzyvalue')
+  var layercolor
+  if (fuzzyvalue_30km < 0.2) {
+  layercolor='rgba(0, 100, 0, 0.6)';
+  }
+  else if (fuzzyvalue_30km < 0.4) {
+  layercolor='rgba(0, 150, 0, 0.6)';
+  }
+  else if (fuzzyvalue_30km < 0.6) {
+  layercolor='rgba(0, 200, 0, 0.6)';
+  }
+  else if (fuzzyvalue_30km < 0.8) {
+  layercolor='rgba(133, 200, 0, 0.6)';
+  }
+  else if (fuzzyvalue_30km < 1) {
+  layercolor='rgba(217, 200, 0, 0.6)';
+  }
+  else { layercolor='rgba(217, 200, 0, 0)';
+  }
+  return new Style({
+    stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 1)',
+      width: 0.1
+    }),
+    fill: new Fill({
+      color: layercolor
+    })
+  })
+};
+
+// 1km Grid Styling
+var classification_search_1km = function (feature, resolution){
+  const fuzzyvalue_1km = feature.get('fuzzyvalue')
+  var layercolor
+  if (fuzzyvalue_1km < 0.2) {
+  layercolor='rgb(0, 100, 0)';
+  }
+  else if (fuzzyvalue_1km < 0.4) {
+  layercolor='rgb(0, 150, 0)';
+  }
+  else if (fuzzyvalue_1km < 0.6) {
+  layercolor='rgb(0, 200, 0)';
+  }
+  else if (fuzzyvalue_1km < 0.8) {
+  layercolor='rgb(133, 200, 0)';
+  }
+  else if (fuzzyvalue_1km < 1) {
   layercolor='rgb(217, 200, 0)';
   }
   else { layercolor='#ABD3DF';
@@ -263,37 +328,6 @@ var coasts = new VectorLayer({
 });
 */
 
-// Get University Search Distance from user input
-var uniRangejs = document.getElementsByName('#uniRange');
-console.log('Uni JS: '+uniRangejs.value);
-
-// Create Dynamic Styling for Grid
-var gridStyle = function (feature, resolution) {
-  const dist = feature.get('_universit')
-  var layerColor
-  if (dist < 45000) {
-    layerColor='#57d478';
-  }
-  else if (dist < 90000) {
-    layerColor='#edff78';
-  }
-  else if (dist < 135000) {
-    layerColor='#ff9830';
-  }
-  else {
-    layerColor='#ff3030';
-  }
-  return new Style({
-    stroke: new Stroke({
-      color: 'rgba(0, 0, 0, 0)',
-      width: 0.1
-    }),
-    fill: new Fill({
-      color: layerColor
-    })
-  })
-};
-
 // Add Weighted Grid (100km Resolution)
 var grid100km_geojson = require('./data/weighted_grid100km.geojson')
 
@@ -304,7 +338,7 @@ var grid100km = new VectorLayer({
     url: grid100km_geojson,
   }),
   minResolution: 400,
-  style: classification_search
+  style: classification_search_100km
 });
 
 // Add Weighted Grid (100km Resolution)
@@ -318,10 +352,7 @@ var grid30km = new VectorLayer({
   }),
   minResolution: 15,
   maxResolution: 400,
-  fill: new Fill({
-    color: 'rgba(158, 240, 255, 0.6)',
-  }),
-  style: gridStyle
+  style: classification_search_30km
 });
 
 /*
@@ -540,41 +571,55 @@ document.getElementById('isochroneActivate').onclick = function() {
 // Universities Slider
 var sliderUni = document.getElementById("uniDistance");
 var outputUni = document.getElementById("outUni");
-outputUni.innerHTML = sliderUni.value*1
+outputUni.innerHTML = sliderUni.value;
 
 // Update the current slider value (each time you drag the slider handle)
 sliderUni.oninput = function() {
-  outputUni.innerHTML = this.value*1;
+  outputUni.innerHTML = this.value;
 };
 
 // School Slider
 var sliderSchools = document.getElementById("schoolDistance");
 var outputSchools = document.getElementById("outSchool");
-outputSchools.innerHTML = sliderSchools.value*1
+outputSchools.innerHTML = sliderSchools.value;
 
 // Update the current slider value (each time you drag the slider handle)
 sliderSchools.oninput = function() {
-  outputSchools.innerHTML = this.value*1;
+  outputSchools.innerHTML = this.value;
 };
 
 // Parks Slider
 var sliderParks = document.getElementById("parksDistance");
 var outputParks = document.getElementById("outParks");
-outputParks.innerHTML = sliderParks.value*1
+outputParks.innerHTML = sliderParks.value;
 
 // Update the current slider value (each time you drag the slider handle)
 sliderParks.oninput = function() {
-  outputParks.innerHTML = this.value*1;
+  outputParks.innerHTML = this.value;
 };
 
 function commitSearchFunction() {
-  var source = grid100km.getSource();
-  var features = source.getFeatures();
+  var source_100km = grid100km.getSource();
+  var features_100km = source_100km.getFeatures();
 
-  features.forEach(function(feature){
-    var new_fuzzy_value = (feature.get("_universit") * sliderUni.value/1000) + (feature.get("_schoolsme") * sliderSchools.value/1000) + (feature.get("_leisurepa") * sliderParks.value/1000)
-    console.log(new_fuzzy_value.value)
-    feature.set("fuzzyvalue", new_fuzzy_value)
-    console.log("Done")
+  features_100km.forEach(function(feature){
+    var new_fuzzy_value_100km = (((feature.get("_universit")/1000) / sliderUni.value) * 0.3) + (((feature.get("_schoolsme")/1000) / sliderSchools.value) * 0.3) + (((feature.get("_leisurepa")/1000) / sliderParks.value) * 0.3);
+    console.log(new_fuzzy_value_100km);
+    feature.set("fuzzyvalue", new_fuzzy_value_100km);
+    console.log("Feature " + feature.get("id") + " Done");
+  });
+
+  var source_30km = grid30km.getSource();
+  var features_30km = source_30km.getFeatures();
+
+  features_30km.forEach(function(feature){
+    var new_fuzzy_value_30km = (((feature.get("_universit")/1000) / sliderUni.value) * 0.3) + (((feature.get("_schoolsme")/1000) / sliderSchools.value) * 0.3) + (((feature.get("_leisurepa")/1000) / sliderParks.value) * 0.3);
+    console.log(new_fuzzy_value_30km);
+    feature.set("fuzzyvalue", new_fuzzy_value_30km);
+    console.log("Feature " + feature.get("id") + " Done");
   });
 };
+
+// get the DOM element with JS
+let bttn = document.getElementById("commitButton");
+bttn.addEventListener("click", commitSearchFunction, false);

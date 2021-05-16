@@ -59,6 +59,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Re-doing weighted grids with proximity rasters at finer resolution (15mx15m) and adding supermarkets -05.10.2021 MLT
 * Finished weighted grids with proximity rasters at finer resolution (15mx15m) and added supermarkets data. Working on processing public transport data -05.11.2021 MLT
 * Added public transport stations, public transport stops, restaurants and theatres to the weighted grids. Working on adding cinemas. Got crime rate data -05.14.2021 MLT
+* Built Sliders for testing. 'Commit Search' button now applies weighted grid coloring scheme (weights are random right now) -05.16.2021 ABP
 
 ### Data Processing-20.03.21 MLT : 
 
