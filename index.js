@@ -32,19 +32,19 @@ const denmarkWebMercator = fromLonLat(denmarkLonLat);
 var classification_search_100km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 0.2) {
+  if (fuzzyvalue < 0.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.4) {
+  else if (fuzzyvalue < 1.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.6) {
+  else if (fuzzyvalue < 1.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.8) {
+  else if (fuzzyvalue < 2.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 1) {
+  else if (fuzzyvalue < 3) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -64,19 +64,19 @@ var classification_search_100km = function (feature, resolution){
 var classification_search_30km = function (feature, resolution){
   const fuzzyvalue_30km = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue_30km < 0.2) {
+  if (fuzzyvalue_30km < 0.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 0.4) {
+  else if (fuzzyvalue_30km < 1.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 0.6) {
+  else if (fuzzyvalue_30km < 1.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 0.8) {
+  else if (fuzzyvalue_30km < 2.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 1) {
+  else if (fuzzyvalue_30km < 3) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -598,25 +598,30 @@ sliderParks.oninput = function() {
   outputParks.innerHTML = this.value;
 };
 
+// Commit Search Button Feature
 function commitSearchFunction() {
+  // Calculate Weights for 100km Grid
   var source_100km = grid100km.getSource();
   var features_100km = source_100km.getFeatures();
+  var counter_100 = 1; // Count features for testing
 
   features_100km.forEach(function(feature){
-    var new_fuzzy_value_100km = (((feature.get("_universit")/1000) / sliderUni.value) * 0.3) + (((feature.get("_schoolsme")/1000) / sliderSchools.value) * 0.3) + (((feature.get("_leisurepa")/1000) / sliderParks.value) * 0.3);
-    console.log(new_fuzzy_value_100km);
+    var new_fuzzy_value_100km = ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value);
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
-    console.log("Feature " + feature.get("id") + " Done");
+    console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
+    counter_100 += 1;
   });
 
+  // Calculate Weights for 30km Grid
   var source_30km = grid30km.getSource();
   var features_30km = source_30km.getFeatures();
+  var counter_30 = 1; // Count features for testing
 
   features_30km.forEach(function(feature){
-    var new_fuzzy_value_30km = (((feature.get("_universit")/1000) / sliderUni.value) * 0.3) + (((feature.get("_schoolsme")/1000) / sliderSchools.value) * 0.3) + (((feature.get("_leisurepa")/1000) / sliderParks.value) * 0.3);
-    console.log(new_fuzzy_value_30km);
+    var new_fuzzy_value_30km = ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value);
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
-    console.log("Feature " + feature.get("id") + " Done");
+    console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
+    counter_30 += 1;
   });
 };
 
