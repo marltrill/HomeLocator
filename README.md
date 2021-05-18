@@ -93,10 +93,10 @@ F) Re-did weighted grids with proximity rasters at a finer resolution and added 
 Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies, public transport stations, public transport stops, restaurants, theatres and cinemas
 
 Crime Rates:
-[Crime Rates](images/crime_rates.png)
+[Crime Rates](data/crime_rates.png)
 
 Political Parties:
-[Political Parties](images/political_party.png)
+[Political Parties](data/political_party.png)
 
 Sample of average distance to roads- 1km grid:
 [ProximityGridRoads](images/roads1km.png)
