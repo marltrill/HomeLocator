@@ -60,7 +60,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Finished weighted grids with proximity rasters at finer resolution (15mx15m) and added supermarkets data. Working on processing public transport data -05.11.2021 MLT
 * Added public transport stations, public transport stops, restaurants and theatres to the weighted grids. Working on adding cinemas. Got crime rate data -05.14.2021 MLT
 * Built Sliders for testing. 'Commit Search' button now applies weighted grid coloring scheme (weights are random right now) -05.16.2021 ABP
-* Added cinemas to the weighted grids. Filtered political parties data per municipality (see images below and feel free to check if they're ok, specially the political parties one as I'm not danish hahah) 05.18.21 MLT
+* Added cinemas and kindergartens to the weighted grids. Filtered political parties data per municipality (see images below and feel free to check if they're ok, specially the political parties one as I'm not danish hahah) 05.18.21 MLT
 
 ### Data Processing-20.03.21 MLT : 
 
@@ -90,7 +90,7 @@ Water Bodies: excluded wetlands and filtered water bodies equal or greater than 
 F) Re-did weighted grids with proximity rasters at a finer resolution and added supermarkets data 05.10/11.2021 MLT
 
 ### FEATURES THAT ARE INCLUDED IN THE WEIGHTED GRID SO FAR: 
-Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies, public transport stations, public transport stops, restaurants, theatres and cinemas
+Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies, public transport stations, public transport stops, restaurants, theatres, cinemas and kindergartens
 
 Crime Rates:
 [Crime Rates](data/crime_rates.png)
