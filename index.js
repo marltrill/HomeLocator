@@ -568,6 +568,12 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
 
+/*
+
+SLIDERS
+
+*/
+
 // Universities Slider
 var sliderUni = document.getElementById("uniDistance");
 var outputUni = document.getElementById("outUni");
