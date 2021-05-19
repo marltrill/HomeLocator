@@ -61,6 +61,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Added public transport stations, public transport stops, restaurants and theatres to the weighted grids. Working on adding cinemas. Got crime rate data -05.14.2021 MLT
 * Built Sliders for testing. 'Commit Search' button now applies weighted grid coloring scheme (weights are random right now) -05.16.2021 ABP
 * Added cinemas and kindergartens to the weighted grids. Filtered political parties data per municipality (see images below and feel free to check if they're ok, specially the political parties one as I'm not danish hahah) 05.18.21 MLT
+* * Added industries to the weighted grids. Downloaded noise data, but it's not useful for our project. Working on filtering and processing air quality data (2018) and trying to look for an updated dataset (although they're in points layer (only 6 stations in Dk) and not raster layer-the format that we need) 05.19.21 MLT
 
 ### Data Processing-20.03.21 MLT : 
 
