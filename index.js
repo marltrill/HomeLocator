@@ -3,26 +3,20 @@ import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
-import {GeoJSON, WFS, GML3, KML, GML} from 'ol/format';
+import {GeoJSON} from 'ol/format';
 import {Text, Style, Stroke, Fill} from 'ol/style';
 import {Tile as TileLayer, Vector as VectorLayer, Image as ImageLayer, Group} from 'ol/layer';
-import {fromLonLat, toLonLat, transform} from 'ol/proj';
+import {fromLonLat, toLonLat} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Overlay from 'ol/Overlay';
 import {toStringHDMS} from 'ol/coordinate';
-import {Control, ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen, Zoom} from 'ol/control';
+import {ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
-import LayerGroup from 'ol/layer/Group';
-import SourceOSM from 'ol/source/OSM';
-import SourceStamen from 'ol/source/Stamen';
 import LayerSwitcher from 'ol-layerswitcher';
-import {BaseLayerOptions, GroupLayerOptions} from 'ol-layerswitcher';
-import Draw from 'ol/interaction/Draw';
 import {Vector as VectorSource} from 'ol/source';
 import XYZ from 'ol/source/XYZ';
-import Select from 'ol/interaction/Select';
-import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
+import {bbox as bboxStrategy} from 'ol/loadingstrategy';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
@@ -32,26 +26,26 @@ const denmarkWebMercator = fromLonLat(denmarkLonLat);
 var classification_search_100km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 0.6) {
+  if (fuzzyvalue < 1.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue < 1.2) {
+  else if (fuzzyvalue < 3.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue < 1.8) {
+  else if (fuzzyvalue < 4.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 2.4) {
+  else if (fuzzyvalue < 6.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 3) {
+  else if (fuzzyvalue < 8) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
   }
   return new Style({
     stroke: new Stroke({
-      color: 'rgba(0, 0, 0, 1)',
+      color: 'rgba(0, 0, 0, 0)',
       width: 0.1
     }),
     fill: new Fill({
@@ -62,28 +56,28 @@ var classification_search_100km = function (feature, resolution){
 
 // 30km Grid Styling
 var classification_search_30km = function (feature, resolution){
-  const fuzzyvalue_30km = feature.get('fuzzyvalue')
+  const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue_30km < 0.6) {
+  if (fuzzyvalue < 1.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 1.2) {
+  else if (fuzzyvalue < 3.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 1.8) {
+  else if (fuzzyvalue < 4.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 2.4) {
+  else if (fuzzyvalue < 6.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_30km < 3) {
+  else if (fuzzyvalue < 8) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
   }
   return new Style({
     stroke: new Stroke({
-      color: 'rgba(0, 0, 0, 1)',
+      color: 'rgba(0, 0, 0, 0)',
       width: 0.1
     }),
     fill: new Fill({
@@ -94,28 +88,28 @@ var classification_search_30km = function (feature, resolution){
 
 // 1km Grid Styling
 var classification_search_1km = function (feature, resolution){
-  const fuzzyvalue_1km = feature.get('fuzzyvalue')
+  const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue_1km < 0.2) {
-  layercolor='rgb(0, 100, 0)';
+  if (fuzzyvalue < 1.6) {
+  layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 0.4) {
-  layercolor='rgb(0, 150, 0)';
+  else if (fuzzyvalue < 3.2) {
+  layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 0.6) {
-  layercolor='rgb(0, 200, 0)';
+  else if (fuzzyvalue < 4.8) {
+  layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 0.8) {
-  layercolor='rgb(133, 200, 0)';
+  else if (fuzzyvalue < 6.4) {
+  layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 1) {
-  layercolor='rgb(217, 200, 0)';
+  else if (fuzzyvalue < 8) {
+  layercolor='rgba(217, 200, 0, 0.6)';
   }
-  else { layercolor='#ABD3DF';
+  else { layercolor='rgba(217, 200, 0, 0)';
   }
   return new Style({
     stroke: new Stroke({
-      color: 'rgba(0, 0, 0, 1)',
+      color: 'rgba(0, 0, 0, 0)',
       width: 0.1
     }),
     fill: new Fill({
@@ -194,7 +188,7 @@ var dk_boundary = new VectorLayer({
 // Pull Municipalities Boundaries from GitHub
 var municipalities = new VectorLayer({
   title: 'Municipalities',
-  visible: true,
+  visible: false,
   source: new VectorSource({
     format: new GeoJSON(),
     url: "https://raw.githubusercontent.com/Neogeografen/dagi/master/geojson/kommuner.geojson",
@@ -206,23 +200,6 @@ var municipalities = new VectorLayer({
   minResolution: 15,
   maxResolution: 400,
 });
-
-/*
-// Add cities from GitHub
-var cities = new VectorLayer({
-  title: 'Cities',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson",
-  }),
-  style: function(feature) {
-    style.getText().setText(feature.get('CITIES'));
-    return style;
-  },
-  minResolution: 15,
-  maxResolution: 400,
-});
-*/
 
 // Add OSM hospitals layer
 var hospitals_geojson = require('./data/hospitals_epsg4326.geojson')
@@ -309,23 +286,9 @@ var universities = new VectorLayer({
 });
 
 /*
-// Add Coast Lines from GeoDanmark
-var coasts_geojson = require('./data/coastline_epsg4326.geojson')
 
-var coasts = new VectorLayer({
-  title: 'Coast Lines',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: coasts_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    stroke: new Stroke({
-      color: '#000000',
-      width: 3,
-    }),
-  }),
-});
+WEIGHTED GRIDS
+
 */
 
 // Add Weighted Grid (100km Resolution)
@@ -341,7 +304,7 @@ var grid100km = new VectorLayer({
   style: classification_search_100km
 });
 
-// Add Weighted Grid (100km Resolution)
+// Add Weighted Grid (30km Resolution)
 var grid30km_geojson = require('./data/weighted_grid30km.geojson')
 
 var grid30km = new VectorLayer({
@@ -355,23 +318,110 @@ var grid30km = new VectorLayer({
   style: classification_search_30km
 });
 
-/*
-// Add Weighted Grid (1km Resolution)
-var grid1km_geojson = require('./data/weighted_grid1km.geojson')
+// Add Weighted Grid (1km Resolution - Fyn)
+var grid1km_fyn_geojson = require('./data/weighted_grid1km_Fyn.geojson')
 
-var grid1km = new VectorLayer({
-  title: 'Weighted Grid (1km)',
+var grid1km_fyn = new VectorLayer({
+  title: 'Weighted Grid (1km - Fyn)',
   source: new VectorSource({
     format: new GeoJSON(),
-    url: grid1km_geojson,
+    url: grid1km_fyn_geojson,
+    strategy: bboxStrategy,
   }),
   maxResolution: 15,
-  fill: new Fill({
-    color: 'rgba(158, 240, 255, 0.6)',
-  }),
-  style: gridStyle
+  style: classification_search_1km,
+  visible: false,
 });
-*/
+
+// Add Weighted Grid (1km Resolution - Hovestadden)
+var grid1km_hovedstad_geojson = require('./data/weighted_grid1km_hovestad.geojson')
+
+var grid1km_hovestad = new VectorLayer({
+  title: 'Weighted Grid (1km - Hovedstadden)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_hovedstad_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
+
+// Add Weighted Grid (1km Resolution - Midtjylland)
+var grid1km_midtjylland_geojson = require('./data/weighted_grid1km_Midtjylland.geojson')
+
+var grid1km_midtjylland = new VectorLayer({
+  title: 'Weighted Grid (1km - Midtjylland)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_midtjylland_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
+
+// Add Weighted Grid (1km Resolution - Midtjylland W)
+var grid1km_midtjyllandw_geojson = require('./data/weighted_grid1km_MidtjyllandW.geojson')
+
+var grid1km_midtjyllandw = new VectorLayer({
+  title: 'Weighted Grid (1km - Midtjylland West)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_midtjyllandw_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
+
+// Add Weighted Grid (1km Resolution - Nordjylland)
+var grid1km_nordjylland_geojson = require('./data/weighted_grid1km_Nordjylland.geojson')
+
+var grid1km_nordjylland = new VectorLayer({
+  title: 'Weighted Grid (1km - Nordjylland)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_nordjylland_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
+
+// Add Weighted Grid (1km Resolution - Sjælland)
+var grid1km_sjælland_geojson = require('./data/weighted_grid1km_Sjælland.geojson')
+
+var grid1km_sjælland = new VectorLayer({
+  title: 'Weighted Grid (1km - Sjælland)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_sjælland_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
+
+// Add Weighted Grid (1km Resolution - Syddanmark)
+var grid1km_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson')
+
+var grid1km_syddanmark = new VectorLayer({
+  title: 'Weighted Grid (1km - Syddanmark)',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: grid1km_syddanmark_geojson,
+    strategy: bboxStrategy,
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false,
+});
 
 var isolayer = new VectorLayer({
   title: 'isolayer',
@@ -434,16 +484,26 @@ var layers = [
   new Group({
     title: 'Data',
     layers: [
-      grid100km,
-      grid30km,
-      //grid1km,
-      //coasts,
-      universities,
+      new Group({
+        title: 'Criteria Grids',
+        layers: [
+          grid100km,
+          grid30km,
+          grid1km_fyn,
+          grid1km_hovestad,
+          grid1km_midtjylland,
+          grid1km_midtjyllandw,
+          grid1km_nordjylland,
+          grid1km_sjælland,
+          grid1km_syddanmark
+        ],
+        fold: 'close',
+      }),
+      //universities,
       municipalities,
-      hospitals,
-      schools,
-      leisureparks,
-      //cities,
+      //hospitals,
+      //schools,
+      //leisureparks,
       dk_boundary,
       isolayer
     ]
@@ -568,12 +628,18 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
 
+/*
+
+DEFINE & UPDATE SLIDERS
+
+*/
+
 // Universities Slider
 var sliderUni = document.getElementById("uniDistance");
 var outputUni = document.getElementById("outUni");
 outputUni.innerHTML = sliderUni.value;
 
-// Update the current slider value (each time you drag the slider handle)
+// Update slider value
 sliderUni.oninput = function() {
   outputUni.innerHTML = this.value;
 };
@@ -583,7 +649,7 @@ var sliderSchools = document.getElementById("schoolDistance");
 var outputSchools = document.getElementById("outSchool");
 outputSchools.innerHTML = sliderSchools.value;
 
-// Update the current slider value (each time you drag the slider handle)
+// Update slider value
 sliderSchools.oninput = function() {
   outputSchools.innerHTML = this.value;
 };
@@ -593,10 +659,128 @@ var sliderParks = document.getElementById("parksDistance");
 var outputParks = document.getElementById("outParks");
 outputParks.innerHTML = sliderParks.value;
 
-// Update the current slider value (each time you drag the slider handle)
+// Update slider value
 sliderParks.oninput = function() {
   outputParks.innerHTML = this.value;
 };
+
+// Roads Slider
+var sliderRoads = document.getElementById("roadsDistance");
+var outputRoads = document.getElementById("outRoads");
+outputRoads.innerHTML = sliderRoads.value;
+
+// Update slider value
+sliderRoads.oninput = function() {
+  outputRoads.innerHTML = this.value;
+};
+
+// Coastlines Slider
+var sliderCoasts = document.getElementById("coastDistance");
+var outputCoasts = document.getElementById("outCoast");
+outputCoasts.innerHTML = sliderCoasts.value;
+
+// Update slider value
+sliderCoasts.oninput = function() {
+  outputCoasts.innerHTML = this.value;
+};
+
+// Hospitals Slider
+var sliderHospitals = document.getElementById("hospitalsDistance");
+var outputHospitals = document.getElementById("outHospitals");
+outputHospitals.innerHTML = sliderHospitals.value;
+
+// Update slider value
+sliderHospitals.oninput = function() {
+  outputHospitals.innerHTML = this.value;
+};
+
+// Supermarkets Slider
+var sliderMarkets = document.getElementById("marketsDistance");
+var outputMarkets = document.getElementById("outMarkets");
+outputMarkets.innerHTML = sliderMarkets.value;
+
+// Update slider value
+sliderMarkets.oninput = function() {
+  outputMarkets.innerHTML = this.value;
+};
+
+// Water Bodies Slider
+var sliderWater = document.getElementById("waterDistance");
+var outputWater = document.getElementById("outWater");
+outputWater.innerHTML = sliderWater.value;
+
+// Update slider value
+sliderWater.oninput = function() {
+  outputWater.innerHTML = this.value;
+};
+
+// Public Transport Stops Slider
+var sliderPstops = document.getElementById("pstopsDistance");
+var outputPstops = document.getElementById("outPstops");
+outputPstops.innerHTML = sliderPstops.value;
+
+// Update slider value
+sliderPstops.oninput = function() {
+  outputPstops.innerHTML = this.value;
+};
+
+// Public Transport Stations Slider
+var sliderPstations = document.getElementById("pstationsDistance");
+var outputPstations = document.getElementById("outPstations");
+outputPstations.innerHTML = sliderPstations.value;
+
+// Update slider value
+sliderPstations.oninput = function() {
+  outputPstations.innerHTML = this.value;
+};
+
+// Restuarants Slider
+var sliderRestuarants = document.getElementById("restuarantsDistance");
+var outputRestuarants = document.getElementById("outRestuarants");
+outputRestuarants.innerHTML = sliderRestuarants.value;
+
+// Update slider value
+sliderRestuarants.oninput = function() {
+  outputRestuarants.innerHTML = this.value;
+};
+
+// Theatres Slider
+var sliderTheatres = document.getElementById("theatreDistance");
+var outputTheatres = document.getElementById("outTheatre");
+outputTheatres.innerHTML = sliderTheatres.value;
+
+// Update slider value
+sliderTheatres.oninput = function() {
+  outputTheatres.innerHTML = this.value;
+};
+
+// Cinemas Slider
+var sliderCinemas = document.getElementById("cinemasDistance");
+var outputCinemas = document.getElementById("outCinemas");
+outputCinemas.innerHTML = sliderCinemas.value;
+
+// Update slider value
+sliderCinemas.oninput = function() {
+  outputCinemas.innerHTML = this.value;
+};
+
+// Kindergarten Slider
+var sliderKinder = document.getElementById("kinderDistance");
+var outputKinder = document.getElementById("outKinder");
+outputKinder.innerHTML = sliderKinder.value;
+
+// Update slider value
+sliderKinder.oninput = function() {
+  outputKinder.innerHTML = this.value;
+};
+
+/*
+
+STLYE GRIDS BASED ON USER INPUT
+
+Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure parks(_leisurepa), roads(_roadsmean), schools(_schoolsme), supermarkets(_supermark), universities(_universit), water bodies(_waterbodi), public transport stations(_pt_statio), public transport stops(_pt_stopsm), restuarants(_restauran), theatres(_theatresm), cinemas(_cinemasme), and kindergartens(_kindermea)
+
+*/
 
 // Commit Search Button Feature
 function commitSearchFunction() {
@@ -606,7 +790,7 @@ function commitSearchFunction() {
   var counter_100 = 1; // Count features for testing
 
   features_100km.forEach(function(feature){
-    var new_fuzzy_value_100km = ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value);
+    var new_fuzzy_value_100km = (((feature.get("_coastline")/1000) / sliderCoasts.value) + ((feature.get("_hospitals")/1000) / sliderHospitals.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value) + ((feature.get("_roadsmean")/1000) / sliderRoads.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_supermark")/1000) / sliderMarkets.value) + ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_waterbodi")/1000) / sliderWater.value) + ((feature.get("_pt_statio")/1000) / sliderPstations.value) + ((feature.get("_pt_stopsm")/1000) / sliderPstops.value) + ((feature.get("_restauran")/1000) / sliderRestuarants.value) + ((feature.get("_theatresm")/1000) / sliderTheatres.value) + ((feature.get("_cinemasme")/1000) / sliderCinemas.value) + ((feature.get("_kindermea")/1000) / sliderKinder.value) / 14);
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
     console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
     counter_100 += 1;
@@ -618,13 +802,25 @@ function commitSearchFunction() {
   var counter_30 = 1; // Count features for testing
 
   features_30km.forEach(function(feature){
-    var new_fuzzy_value_30km = ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value);
+    var new_fuzzy_value_30km = (((feature.get("_coastline")/1000) / sliderCoasts.value) + ((feature.get("_hospitals")/1000) / sliderHospitals.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value) + ((feature.get("_roadsmean")/1000) / sliderRoads.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_supermark")/1000) / sliderMarkets.value) + ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_waterbodi")/1000) / sliderWater.value) + ((feature.get("_pt_statio")/1000) / sliderPstations.value) + ((feature.get("_pt_stopsm")/1000) / sliderPstops.value) + ((feature.get("_restauran")/1000) / sliderRestuarants.value) + ((feature.get("_theatresm")/1000) / sliderTheatres.value) + ((feature.get("_cinemasme")/1000) / sliderCinemas.value) + ((feature.get("_kindermea")/1000) / sliderKinder.value) / 14);
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
     console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
     counter_30 += 1;
   });
+
+// Calculate Weights for 1km Grid
+var source_1km = grid1km_hovestad.getSource();
+var features_1km = source_1km.getFeatures();
+var counter_1 = 1; // Count features for testing
+
+features_1km.forEach(function(feature){
+  var new_fuzzy_value_1km = (((feature.get("_coastline")/1000) / sliderCoasts.value) + ((feature.get("_hospitals")/1000) / sliderHospitals.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value) + ((feature.get("_roadsmean")/1000) / sliderRoads.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_supermark")/1000) / sliderMarkets.value) + ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_waterbodi")/1000) / sliderWater.value) + ((feature.get("_pt_statio")/1000) / sliderPstations.value) + ((feature.get("_pt_stopsm")/1000) / sliderPstops.value) + ((feature.get("_restauran")/1000) / sliderRestuarants.value) + ((feature.get("_theatresm")/1000) / sliderTheatres.value) + ((feature.get("_cinemasme")/1000) / sliderCinemas.value) + ((feature.get("_kindermea")/1000) / sliderKinder.value) / 14);
+  feature.set("fuzzyvalue", new_fuzzy_value_1km);
+  console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
+  counter_1 += 1;
+  });
 };
 
-// get the DOM element with JS
+// Trigger 'Commit Search' button on click
 let bttn = document.getElementById("commitButton");
 bttn.addEventListener("click", commitSearchFunction, false);
