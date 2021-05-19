@@ -88,103 +88,154 @@
 
     <div id="map"></div>
 
-    <div class="pane">
+    <div class="pane" style="overflow-y: scroll">
 
-      <!--jQuery Range Sliders Testing-->
       <!--
-      <script>
-        $( function() {
-          var handle = $( "#custom-handle" );
-          $( "#slider" ).slider({
-            animate: "fast",
-            min: 0,
-            max: 180,
-            value: 90,
-            create: function() {
-              handle.text( $( this ).slider( "value" ) );
-            },
-            slide: function( event, ui ) {
-              handle.text( ui.value );
-            }
-          });
-        } );
-      </script>
-      -->
-      
-      <!--
-      <div id="slider">
-        <div id="custom-handle" class="ui-slider-handle"></div>
-      </div>
+        SLIDERS
       -->
 
       <h1>Search Criteria</h1>
 
       <ul id="js-searchCriteria">
-        <!--Toggle Universities Slider-->
+        <!--Accessibility Sliders-->
         <li>
           <label>
-            <input type="checkbox" class="uniToggle">
-            <span>Universities</span>
+            <input type="checkbox" class="accessToggle">
+            <span>Accessibility</span>
           </label>
+          <!--Universities Slider-->
           <div id="uniSlider">
             <p class="sliders-title"><b>Distance from Universities (1 to 180 Km)</b></p>
-            <input type="range" min="1" max="180" value="90" class="slider" id="uniDistance" step="1">
+            <input type="range" min="1" max="180" value="180" class="slider" id="uniDistance" step="1">
             <p class="sliders-bottom">Distance: <span id="outUni"></span> km</p>
           </div>
-          <script>
-            $(function () {
-              $('.uniToggle').change(function () {
-                $('#uniSlider').toggle(this.checked);
-              }).change(); //ensure visible state matches initially
-            });
-          </script>
-        </li>
-
-        <!--Toggle Schools Slider-->
-        <li>
-          <label>
-            <input type="checkbox" class="schoolToggle">
-            <span>Schools</span>
-          </label>
-          <div id="schoolSlider">
-            <p class="sliders-title"><b>Distance from Schools (1 to 90 Km)</b></p>
-            <input type="range" min="1" max="90" value="45" class="slider" id="schoolDistance" step="1">
-            <p class="sliders-bottom">Distance: <span id="outSchool"></span> km</p>
-            <!--
-            <output for="fader" id="schoolRange" name="schoolsRange">45</output>
-            <script>
-              function schoolsOutputUpdate(schoolKilometers) {
-                document.querySelector('#schoolRange').value = schoolKilometers;
-                //console.log("Schools: "+schoolRange.value)
-              }
-            </script>
-            -->
+          <!--Roads Slider-->
+          <div id="roadsSlider">
+            <p class="sliders-title"><b>Distance from Major Roads (1 to 92 Km)</b></p>
+            <input type="range" min="1" max="92" value="92" class="slider" id="roadsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outRoads"></span> km</p>
           </div>
+          <!--Public Transport Stops Slider-->
+          <div id="pstopsSlider">
+            <p class="sliders-title"><b>Distance from Public Transport Stops (1 to 94 Km)</b></p>
+            <input type="range" min="1" max="94" value="94" class="slider" id="pstopsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outPstops"></span> km</p>
+          </div>
+          <!--Public Transport Stations Slider-->
+          <div id="pstationsSlider">
+            <p class="sliders-title"><b>Distance from Public Transport Stations (1 to 94 Km)</b></p>
+            <input type="range" min="1" max="94" value="94" class="slider" id="pstationsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outPstations"></span> km</p>
+          </div>
+          <!--Toggle Accessibility Sliders-->
           <script>
             $(function () {
-              $('.schoolToggle').change(function () {
-                $('#schoolSlider').toggle(this.checked);
-              }).change(); //ensure visible state matches initially
+              $('.accessToggle').change(function () {
+                $('#uniSlider').toggle(this.checked);
+                $('#roadsSlider').toggle(this.checked);
+                $('#pstopsSlider').toggle(this.checked);
+                $('#pstationsSlider').toggle(this.checked);
+              }).change(); // Ensure visible state matches initially
             });
           </script>
         </li>
 
-        <!--Toggle Parks Slider-->
+        <!--Livability Sliders-->
         <li>
           <label>
-            <input type="checkbox" class="parksToggle">
-            <span>Parks</span>
+            <input type="checkbox" class="liveToggle">
+            <span>Livability</span>
           </label>
+          <!--Schools Slider-->
+          <div id="schoolSlider">
+            <p class="sliders-title"><b>Distance from Intermediate Schools (1 to 90 Km)</b></p>
+            <input type="range" min="1" max="90" value="90" class="slider" id="schoolDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outSchool"></span> km</p>
+          </div>
+          <!--Kindergartens Slider-->
+          <div id="kinderSlider">
+            <p class="sliders-title"><b>Distance from Kindergartens (1 to 94 Km)</b></p>
+            <input type="range" min="1" max="94" value="94" class="slider" id="kinderDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outKinder"></span> km</p>
+          </div>
+          <!--Coastline Slider-->
+          <div id="coastSlider">
+            <p class="sliders-title"><b>Distance from Coast (1 to 60 Km)</b></p>
+            <input type="range" min="1" max="60" value="60" class="slider" id="coastDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outCoast"></span> km</p>
+          </div>
+          <!--Supermarkets Slider-->
+          <div id="marketsSlider">
+            <p class="sliders-title"><b>Distance from Supermarkets (1 to 66 Km)</b></p>
+            <input type="range" min="1" max="66" value="66" class="slider" id="marketsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outMarkets"></span> km</p>
+          </div>
+          <!--Water Bodies Slider-->
+          <div id="waterSlider">
+            <p class="sliders-title"><b>Distance from Water Bodies (1 to 67 Km)</b></p>
+            <input type="range" min="1" max="67" value="67" class="slider" id="waterDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outWater"></span> km</p>
+          </div>
+          <!--Toggle Livability Sliders-->
+          <script>
+            $(function () {
+              $('.liveToggle').change(function () {
+                $('#schoolSlider').toggle(this.checked);
+                $('#kinderSlider').toggle(this.checked);
+                $('#coastSlider').toggle(this.checked);
+                $('#marketsSlider').toggle(this.checked);
+                $('#waterSlider').toggle(this.checked);
+              }).change(); // Ensure visible state matches initially
+            });
+          </script>
+        </li>
+
+        <!--Suitability Sliders-->
+        <li>
+          <label>
+            <input type="checkbox" class="suitabilityToggle">
+            <span>Suitability</span>
+          </label>
+          <!--Parks Slider-->
           <div id="parksSlider">
             <p class="sliders-title"><b>Distance from Parks (1 to 90 Km)</b></p>
-            <input type="range" min="1" max="90" value="45" class="slider" id="parksDistance" step="1">
+            <input type="range" min="1" max="90" value="90" class="slider" id="parksDistance" step="1">
             <p class="sliders-bottom">Distance: <span id="outParks"></span> km</p>
           </div>
+          <!--Hospitals Slider-->
+          <div id="hospitalsSlider">
+            <p class="sliders-title"><b>Distance from Hospitals (1 to 105 Km)</b></p>
+            <input type="range" min="1" max="105" value="105" class="slider" id="hospitalsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outHospitals"></span> km</p>
+          </div>
+          <!--Restuarants Slider-->
+          <div id="restuarantsSlider">
+            <p class="sliders-title"><b>Distance from Restuarants (1 to 61 Km)</b></p>
+            <input type="range" min="1" max="61" value="61" class="slider" id="restuarantsDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outRestuarants"></span> km</p>
+          </div>
+          <!--Theatre Slider-->
+          <div id="theatreSlider">
+            <p class="sliders-title"><b>Distance from Theatres (1 to 99 Km)</b></p>
+            <input type="range" min="1" max="99" value="99" class="slider" id="theatreDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outTheatre"></span> km</p>
+          </div>
+          <!--Cinemas Slider-->
+          <div id="cinemasSlider">
+            <p class="sliders-title"><b>Distance from Cinemas (1 to 96 Km)</b></p>
+            <input type="range" min="1" max="96" value="96" class="slider" id="cinemasDistance" step="1">
+            <p class="sliders-bottom">Distance: <span id="outCinemas"></span> km</p>
+          </div>
+          <!--Toggle Suitability Sliders-->
           <script>
             $(function () {
-              $('.parksToggle').change(function () {
+              $('.suitabilityToggle').change(function () {
                 $('#parksSlider').toggle(this.checked);
-              }).change(); //ensure visible state matches initially
+                $('#hospitalsSlider').toggle(this.checked);
+                $('#restuarantsSlider').toggle(this.checked);
+                $('#theatreSlider').toggle(this.checked);
+                $('#cinemasSlider').toggle(this.checked);
+              }).change(); // Ensure visible state matches initially
             });
           </script>
         </li>
