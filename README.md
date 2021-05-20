@@ -62,8 +62,9 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Built Sliders for testing. 'Commit Search' button now applies weighted grid coloring scheme (weights are random right now) -05.16.2021 ABP
 * Added cinemas and kindergartens to the weighted grids. Filtered political parties data per municipality (see images below and feel free to check if they're ok, specially the political parties one as I'm not danish hahah) 05.18.21 MLT
 * Added industries to the weighted grids. Downloaded noise data, but it's not useful for our project. Working on filtering and processing air quality data (2018) and trying to look for an updated dataset (although they're in points layer (only 6 stations in Dk) and not raster layer-the format that we need) 05.19.21 MLT
+* Found and processed house price data split into postal code areas (it's in dkk/m2). Combined it with the hexagon cell grids. Files can be found at the 'Grids_withHousePrices' and 'House Price Data' folder in OneDrive. Note that not all the postal code areas contained data, no data values were not considered for statistics. 05.20.2021 MLT
 
-### Data Processing-20.03.21 MLT : 
+### Data Processing: 
 
 A) Processed OSM raw data to get a unique layer per feature (they're combined in point and polygon layers)
 
