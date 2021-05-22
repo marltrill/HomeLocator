@@ -1,6 +1,7 @@
 {
   "name": "real_estate_map",
   "dependencies": {
+    "data": "^0.6.1",
     "elm-pep": "^1.0.6",
     "express": "^4.17.1",
     "jquery": "^3.6.0",

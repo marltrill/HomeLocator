@@ -91,19 +91,19 @@ var classification_search_30km = function (feature, resolution){
 var classification_search_1km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 0.2) {
+  if (fuzzyvalue < 0.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.4) {
+  else if (fuzzyvalue < 1.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.6) {
+  else if (fuzzyvalue < 1.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 0.8) {
+  else if (fuzzyvalue < 2.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 1) {
+  else if (fuzzyvalue < 3) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -349,6 +349,18 @@ var grid1km_hovestad = new VectorLayer({
   visible: false,
 });
 
+var grid1km_style = new Style({
+  fill: new Fill({
+    color: 'rgba(255, 255, 255, 0.6)',
+  }),
+  stroke: new Stroke({
+    color: '#319FD3',
+    width: 1,
+  }),
+  text: new Text(),
+});
+
+//1km Grid Testing
 var grid1km_hovedstadtest_geojson = require('./data/grid1km_testing_hovestadden.geojson')
 
 var grid1_imagevector = new VectorImageLayer({
@@ -359,10 +371,7 @@ var grid1_imagevector = new VectorImageLayer({
     url: grid1km_hovedstadtest_geojson,
     format: new GeoJSON(),
   }),
-  style: function (feature) {
-    style.getText().setText(feature.get('uid'));
-    return style;
-  },
+  style:classification_search_100km,
 });
 
 // Add Weighted Grid (1km Resolution - Midtjylland)
@@ -513,7 +522,7 @@ var layers = [
           //grid1km_nordjylland,
           //grid1km_sjælland,
           //grid1km_syddanmark, 
-          grid1_imagevector
+          grid1_imagevector,
         ],
         fold: 'open',
       }),
@@ -817,13 +826,13 @@ function commitSearchFunction() {
   // Calculate Weights for 30km Grid
   var source_30km = grid30km.getSource();
   var features_30km = source_30km.getFeatures();
-  var counter_30 = 1; // Count features for testing
+  //var counter_30 = 1; // Count features for testing
 
   features_30km.forEach(function(feature){
     var new_fuzzy_value_30km = (((feature.get("_coastline")/1000) / sliderCoasts.value) + ((feature.get("_hospitals")/1000) / sliderHospitals.value) + ((feature.get("_leisurepa")/1000) / sliderParks.value) + ((feature.get("_roadsmean")/1000) / sliderRoads.value) + ((feature.get("_schoolsme")/1000) / sliderSchools.value) + ((feature.get("_supermark")/1000) / sliderMarkets.value) + ((feature.get("_universit")/1000) / sliderUni.value) + ((feature.get("_waterbodi")/1000) / sliderWater.value) + ((feature.get("_pt_statio")/1000) / sliderPstations.value) + ((feature.get("_pt_stopsm")/1000) / sliderPstops.value) + ((feature.get("_restauran")/1000) / sliderRestuarants.value) + ((feature.get("_theatresm")/1000) / sliderTheatres.value) + ((feature.get("_cinemasme")/1000) / sliderCinemas.value) + ((feature.get("_kindermea")/1000) / sliderKinder.value) / 14);
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
-    console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
-    counter_30 += 1;
+    //console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
+    //counter_30 += 1;
   });
 
   /*
@@ -844,13 +853,13 @@ features_1km.forEach(function(feature){
 // Calculate Weights for 1km Grid
 var source_1km = grid1_imagevector.getSource();
 var features_1km = source_1km.getFeatures();
-var counter_1 = 1; // Count features for testing
+//var counter_1 = 1; // Count features for testing
 
 features_1km.forEach(function(feature){
   var new_fuzzy_value_1km = ((feature.get("coastmean") / sliderCoasts.value) + (feature.get("hospitalsm") / sliderHospitals.value) + (feature.get("parksmean") / sliderParks.value) + (feature.get("roadsmean") / sliderRoads.value) + (feature.get("schoolsmea") / sliderSchools.value) + (feature.get("marketsmea") / sliderMarkets.value) + (feature.get("unimean") / sliderUni.value) + (feature.get("watermean") / sliderWater.value) + (feature.get("ptstatmean") / sliderPstations.value) + (feature.get("ptstopmean") / sliderPstops.value) + (feature.get("foodmean") / sliderRestuarants.value) + (feature.get("theatremea") / sliderTheatres.value) + (feature.get("cinemamean") / sliderCinemas.value) + (feature.get("kindermean") / sliderKinder.value) / 14);
   feature.set("fuzzyvalue", new_fuzzy_value_1km);
-  console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("uid") + ": " + new_fuzzy_value_1km); // Log values for testing
-  counter_1 += 1;
+  //console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("uid") + ": " + new_fuzzy_value_1km); // Log values for testing
+  //counter_1 += 1;
   });
 };
 
