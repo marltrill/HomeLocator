@@ -14,9 +14,10 @@ import {ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen} from '
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
 import LayerSwitcher from 'ol-layerswitcher';
-import {Vector as VectorSource} from 'ol/source';
+import {Vector as VectorSource, ImageVector} from 'ol/source';
 import XYZ from 'ol/source/XYZ';
 import {bbox as bboxStrategy} from 'ol/loadingstrategy';
+import VectorImageLayer from 'ol/layer/VectorImage';
 
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
@@ -90,19 +91,19 @@ var classification_search_30km = function (feature, resolution){
 var classification_search_1km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 1.6) {
+  if (fuzzyvalue < 0.2) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue < 3.2) {
+  else if (fuzzyvalue < 0.4) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue < 4.8) {
+  else if (fuzzyvalue < 0.6) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 6.4) {
+  else if (fuzzyvalue < 0.8) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 8) {
+  else if (fuzzyvalue < 1) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -173,7 +174,7 @@ var highlightStyle = new Style({
 // Regions Boundary
 var dk_boundary = new VectorLayer({
   title: 'Regions',
-  visible: true,
+  visible: false,
   source: new VectorSource({
     format: new TopoJSON(),
     url: "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/denmark/denmark-counties.json",
@@ -348,6 +349,22 @@ var grid1km_hovestad = new VectorLayer({
   visible: false,
 });
 
+var grid1km_hovedstadtest_geojson = require('./data/grid1km_testing_hovestadden.geojson')
+
+var grid1_imagevector = new VectorImageLayer({
+  title: "Grid 1km Hovestadden ImageVector",
+  visible: true,
+  imageRatio: 2,
+  source: new VectorSource({
+    url: grid1km_hovedstadtest_geojson,
+    format: new GeoJSON(),
+  }),
+  style: function (feature) {
+    style.getText().setText(feature.get('uid'));
+    return style;
+  },
+});
+
 // Add Weighted Grid (1km Resolution - Midtjylland)
 var grid1km_midtjylland_geojson = require('./data/weighted_grid1km_Midtjylland.geojson')
 
@@ -489,15 +506,16 @@ var layers = [
         layers: [
           grid100km,
           grid30km,
-          grid1km_fyn,
-          grid1km_hovestad,
-          grid1km_midtjylland,
-          grid1km_midtjyllandw,
-          grid1km_nordjylland,
-          grid1km_sjælland,
-          grid1km_syddanmark
+          //grid1km_fyn,
+          //grid1km_hovestad,
+          //grid1km_midtjylland,
+          //grid1km_midtjyllandw,
+          //grid1km_nordjylland,
+          //grid1km_sjælland,
+          //grid1km_syddanmark, 
+          grid1_imagevector
         ],
-        fold: 'close',
+        fold: 'open',
       }),
       //universities,
       municipalities,
@@ -808,6 +826,7 @@ function commitSearchFunction() {
     counter_30 += 1;
   });
 
+  /*
 // Calculate Weights for 1km Grid
 var source_1km = grid1km_hovestad.getSource();
 var features_1km = source_1km.getFeatures();
@@ -820,6 +839,21 @@ features_1km.forEach(function(feature){
   counter_1 += 1;
   });
 };
+*/
+
+// Calculate Weights for 1km Grid
+var source_1km = grid1_imagevector.getSource();
+var features_1km = source_1km.getFeatures();
+var counter_1 = 1; // Count features for testing
+
+features_1km.forEach(function(feature){
+  var new_fuzzy_value_1km = ((feature.get("coastmean") / sliderCoasts.value) + (feature.get("hospitalsm") / sliderHospitals.value) + (feature.get("parksmean") / sliderParks.value) + (feature.get("roadsmean") / sliderRoads.value) + (feature.get("schoolsmea") / sliderSchools.value) + (feature.get("marketsmea") / sliderMarkets.value) + (feature.get("unimean") / sliderUni.value) + (feature.get("watermean") / sliderWater.value) + (feature.get("ptstatmean") / sliderPstations.value) + (feature.get("ptstopmean") / sliderPstops.value) + (feature.get("foodmean") / sliderRestuarants.value) + (feature.get("theatremea") / sliderTheatres.value) + (feature.get("cinemamean") / sliderCinemas.value) + (feature.get("kindermean") / sliderKinder.value) / 14);
+  feature.set("fuzzyvalue", new_fuzzy_value_1km);
+  console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("uid") + ": " + new_fuzzy_value_1km); // Log values for testing
+  counter_1 += 1;
+  });
+};
+
 
 // Trigger 'Commit Search' button on click
 let bttn = document.getElementById("commitButton");
