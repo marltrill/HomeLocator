@@ -89,21 +89,21 @@ var classification_search_30km = function (feature, resolution){
 
 // 1km Grid Styling
 var classification_search_1km = function (feature, resolution){
-  const fuzzyvalue_1km = feature.get('fuzzyvalue')
+  const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue_1km < 0.6) {
+  if (fuzzyvalue < 1.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 1.2) {
+  else if (fuzzyvalue < 3.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 1.8) {
+  else if (fuzzyvalue < 4.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 2.4) {
+  else if (fuzzyvalue < 6.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue_1km < 3) {
+  else if (fuzzyvalue < 8) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -174,7 +174,7 @@ var highlightStyle = new Style({
 // Regions Boundary
 var dk_boundary = new VectorLayer({
   title: 'Regions',
-  visible: false,
+  visible: true,
   source: new VectorSource({
     format: new TopoJSON(),
     url: "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/denmark/denmark-counties.json",
@@ -287,9 +287,7 @@ var universities = new VectorLayer({
 });
 
 /*
-
 WEIGHTED GRIDS
-
 */
 
 // Add Weighted Grid (100km Resolution)
@@ -457,7 +455,7 @@ var grid1km_vectorimage_fyn = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 
@@ -473,7 +471,7 @@ var grid1km_vectorimage_midtjylland = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 // Midtjylland West VectorImage
@@ -488,7 +486,7 @@ var grid1km_vectorimage_midtjyllandw = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 // Nordjylland VectorImage
@@ -503,7 +501,7 @@ var grid1km_vectorimage_nordjylland = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 // Sjælland VectorImage
@@ -518,7 +516,7 @@ var grid1km_vectorimage_sjælland = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 // Syddanmark VectorImage
@@ -533,7 +531,7 @@ var grid1km_vectorimage_syddanmark = new VectorImageLayer({
   }),
   visible: false,
   maxResolution: 15,
-  style: classification_search_30km,
+  style: classification_search_1km,
 });
 
 var isolayer = new VectorLayer({
@@ -563,7 +561,7 @@ var layerSwitcher = new LayerSwitcher({
   groupSelectStyle: 'group'
 });
 
-var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's MapTiler Key
+var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
 var attributions =
   '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
   '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a> ' +
@@ -617,7 +615,7 @@ var layers = [
           grid1km_vectorimage_sjælland,
           grid1km_vectorimage_syddanmark
         ],
-        fold: 'open',
+        fold: 'close',
       }),
       //universities,
       municipalities,
@@ -749,9 +747,7 @@ document.getElementById('isochroneActivate').onclick = function() {
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
 
 /*
-
 DEFINE & UPDATE SLIDERS
-
 */
 
 // Universities Slider
@@ -955,7 +951,6 @@ features_1km.forEach(function(feature){
   });
 };
 */
-
 
 // Trigger 'Commit Search' button on click
 let bttn = document.getElementById("commitButton");
