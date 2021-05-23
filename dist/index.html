@@ -72,7 +72,7 @@
 
     <div class="popup">
       <div class="cnt223">
-        <h1><b><center>Welcome to HomeLocator</center></b></h1>
+        <h1><b><center>Welcome to Your HomeLocator</center></b></h1>
         <img src="/HomeLocator Logo.46bff0d5.png" alt="HomeLocator Logo" width="200px" height="200px" class="logocenter">
         <p>
         Find your way home. Adjust sliders to your match your requirements and click 'Commit Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Commit Search' again to view areas. Please allow a few seconds for loading time.
@@ -236,8 +236,7 @@
         </li>
 
         <!-- Commit Button -->
-        <button type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
-        <br>
+        <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
 
       </ul>
 
@@ -282,7 +281,7 @@
 }</script>
 
 
-      <div class="slidecontainer">
+      <div>
         <label>Max Commute Time (Minutes)</label>
         <input type="range" min="1" max="120" value="60" class="slider" id="myRange">
         <p>Value: <span id="demo"></span></p>
@@ -302,11 +301,12 @@ slider.oninput = function () {
 
       <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
       </div>
-      
-      <p class="catchphrase"><b>Find your way home.</b></p>
-      <p class="copyright">© 2021 HomeLocator</p>
+
+      <div class="catchphrase"><b>Find your way home.</b></div>
+      <div class="copyright">© 2021 HomeLocator</div>
 
     </div>
+
   </body>
 
   <!-- Box for Graphs & Info, etc...
