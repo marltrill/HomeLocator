@@ -91,19 +91,19 @@ var classification_search_30km = function (feature, resolution){
 var classification_search_1km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 1.6) {
+  if (fuzzyvalue < 0.6) {
   layercolor='rgba(0, 100, 0, 0.6)';
   }
-  else if (fuzzyvalue < 3.2) {
+  else if (fuzzyvalue < 1.2) {
   layercolor='rgba(0, 150, 0, 0.6)';
   }
-  else if (fuzzyvalue < 4.8) {
+  else if (fuzzyvalue < 1.8) {
   layercolor='rgba(0, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 6.4) {
+  else if (fuzzyvalue < 2.4) {
   layercolor='rgba(133, 200, 0, 0.6)';
   }
-  else if (fuzzyvalue < 8) {
+  else if (fuzzyvalue < 3) {
   layercolor='rgba(217, 200, 0, 0.6)';
   }
   else { layercolor='rgba(217, 200, 0, 0)';
@@ -287,7 +287,9 @@ var universities = new VectorLayer({
 });
 
 /*
+
 WEIGHTED GRIDS
+
 */
 
 // Add Weighted Grid (100km Resolution)
