@@ -1,7 +1,6 @@
 {
   "name": "real_estate_map",
   "dependencies": {
-    "data": "^0.6.1",
     "elm-pep": "^1.0.6",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
@@ -25,13 +24,8 @@
   "scripts": {
     "test": "node module.js",
     "start": "parcel index.html",
-    "build": "parcel build --public-url . index.html",
-		"heroku-postbuild": "next build"
+    "build": "parcel build --public-url . index.html"
   },
-  "author": "Copenhagen Geoinformatics Spring 2021 Group",
-  "license": "MIT",
-
-  "engines": {
-    "node": "14.x"
-  }
+  "author": "",
+  "license": "ISC"
 }
