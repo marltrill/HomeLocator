@@ -940,7 +940,7 @@ features_1km.forEach(function(feature){
 };
 
 /*
-// Calculate Weights for 1km Grid
+// Calculate Weights for 1km Grid - CLEANED FILE
 var source_1km = grid1km_vectorimage.getSource();
 var features_1km = source_1km.getFeatures();
 //var counter_1 = 1; // Count features for testing

@@ -44,7 +44,7 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
-            <a class="nav-link" href="/html/about.html">About<span class="sr-only"></span></a>
+            <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
           </li>
         </ul>
         <span class="navbar-text">
@@ -91,7 +91,11 @@
         SLIDERS
       -->
 
-      <h1>Search Criteria</h1>
+      <h1 class="searchcenter"><b>HomeLocator</b></h1>
+
+      <p class="searchdesc">Fine tune the sliders in each of the three categories below. Click 'Commit Search' to see which areas of the country are most suitable for you and your interests. Please allow some moments for loading/rendering of data.</p>
+
+      <hr>
 
       <ul id="js-searchCriteria">
         <!--Accessibility Sliders-->
@@ -255,9 +259,9 @@
         <input type="radio" name="isoradio" value="cycling-regular">Bike
         <input type="radio" name="isoradio" value="foot-walking">Walk
         <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
-    </form>
+      </form>
 
-    <script>function getRadioValue(groupName) {
+      <script>function getRadioValue(groupName) {
   var radios = IsoClicker.elements[groupName];
   window.rdValue; // declares the global variable 'rdValue'
 
@@ -298,7 +302,12 @@ slider.oninput = function () {
 
       <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
       </div>
-  </div></body>
+      
+      <p class="catchphrase"><b>Find your way home.</b></p>
+      <p class="copyright">© 2021 HomeLocator</p>
+
+    </div>
+  </body>
 
   <!-- Box for Graphs & Info, etc...
   <div class="info-pane">
