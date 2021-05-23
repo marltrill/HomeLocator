@@ -132,6 +132,14 @@ body, html {
   padding: 10px;
 }
 
+.logocenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
+}
+
 #custom-handle {
   width: 3em;
   height: 1.6em;
