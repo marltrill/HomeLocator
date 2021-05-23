@@ -1,5 +1,5 @@
 {
-  "name": "real_estate_map",
+  "name": "HomeLocator",
   "dependencies": {
     "elm-pep": "^1.0.6",
     "express": "^4.17.1",
