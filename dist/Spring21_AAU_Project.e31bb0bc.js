@@ -113781,7 +113781,6 @@ map.on('singleclick', function (evt) {
         }
       }
     });
-    myChart.destroy();
   }
 }); // Change the cursor if on targer layer
 
