@@ -137,6 +137,12 @@ body, html {
   font-size: 16px;
 }
 
+.homelocator {
+  text-align: center;
+  padding-top: 10px;
+  font-size: 30px;
+}
+
 .searchdesc {
   text-align: center;
   font-size: 10px;
@@ -256,6 +262,7 @@ body, html {
   text-align: left;
   outline: none;
   font-size: 15px;
+  border-radius: 4px;
 }
 
 .active, .collapsible:hover {
