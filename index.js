@@ -23,6 +23,30 @@ import VectorImageLayer from 'ol/layer/VectorImage';
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
+$.getJSON('/api/data', function(data) {
+  console.log(data[0].longitude);
+  console.log(data[0].latitude);
+  var veri1=data[0].longitude;
+  var veri2=data[0].latitude;
+
+  var point;
+  var length=data.length;
+  //TODO - data haritaya ekleme işlemi
+  for (point = 0; point < data.length; point++) {
+  var lon=data[point].longitude;
+  var lat=data[point].latitude;
+
+  var lonLat = new OpenLayers.LonLat(lon,lat ).transform(new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                                                        map.getProjectionObject() // to Spherical Mercator Projection
+                                                        )
+  
+  var markers = new OpenLayers.Layer.Markers( "Markers" );
+
+  markers.addMarker(new OpenLayers.Marker(lonLat))
+
+  }
+});
+
 // 100km Grid Styling
 var classification_search_100km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
