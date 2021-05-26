@@ -45,7 +45,7 @@
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
-            <a class="nav-link" href="/html/about.html">About<span class="sr-only"></span></a>
+            <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
           </li>
         </ul>
         <span class="navbar-text">
@@ -85,6 +85,10 @@
     </div>
 
     <div id="map"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
 
     <div class="pane" style="overflow-y: scroll">
 
@@ -243,13 +247,16 @@
 
       <hr>
 
+      <!--
       <h6>Isochrone Options:</h6>
 
       <div>
         Click a point on the map to see travel times.
         Selected Location (Lat/Long):
 
-        <script>alert(simple().coordinate);</script>
+        <script>
+          alert(simple().coordinate);
+        </script>
       </div>
 
       <br>
@@ -261,25 +268,26 @@
         <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
       </form>
 
-      <script>function getRadioValue(groupName) {
-  var radios = IsoClicker.elements[groupName];
-  window.rdValue; // declares the global variable 'rdValue'
-
-  for (var i = 0; i < radios.length; i++) {
-    var someRadio = radios[i];
-
-    if (someRadio.checked) {
-      rdValue = someRadio.value;
-      break;
-    } else rdValue = 'noRadioChecked';
-  }
-
-  if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue == "foot-walking") {
-    or: console.log("Isoradio action");
-  } else if (rdValue == 'noRadioChecked') {
-    alert('no radio checked');
-  }
-}</script>
+      <script>
+          function getRadioValue(groupName) {
+              var radios = IsoClicker.elements[groupName];
+              window.rdValue; // declares the global variable 'rdValue'
+              for (var i=0; i<radios.length; i++) {
+                  var someRadio = radios[i];
+                  if (someRadio.checked) {
+                      rdValue = someRadio.value;
+                      break;
+                  }
+                  else rdValue = 'noRadioChecked';
+              }
+              if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue =="foot-walking") {
+                  or: console.log("Isoradio action")
+              }
+              else if (rdValue == 'noRadioChecked') {
+                  alert('no radio checked');
+              }
+          }
+      </script>
 
 
       <div>
@@ -288,20 +296,22 @@
         <p>Value: <span id="demo"></span></p>
       </div>
 
-      <script>var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
+      <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
 
-slider.oninput = function () {
-  output.innerHTML = this.value;
-};</script>
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+        }
+      </script>
       <div>
-        <button type="button" id="isochroneActivate">
+        <button type = "button" id = "isochroneActivate">
           Activate isochrone request
         </button>
-
-      <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
       </div>
+      -->
+      <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
 
       <div class="catchphrase"><b>Find your way home.</b></div>
       <div class="copyright">© 2021 HomeLocator</div>
