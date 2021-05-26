@@ -19,6 +19,34 @@ import XYZ from 'ol/source/XYZ';
 import {bbox as bboxStrategy} from 'ol/loadingstrategy';
 import VectorImageLayer from 'ol/layer/VectorImage';
 
+/**
+ * Elements that make up the popup.
+ */
+ var container = document.getElementById('popup');
+ var content_element = document.getElementById('popup-content');
+ var closer = document.getElementById('popup-closer');
+ 
+ /**
+  * Create an overlay to anchor the popup to the map.
+  */
+ var overlay = new Overlay({
+   element: container,
+   autoPan: true,
+   autoPanAnimation: {
+     duration: 250,
+   },
+ });
+ 
+ /**
+  * Add a click handler to hide the popup.
+  * @return {boolean} Don't follow the href.
+  */
+ closer.onclick = function () {
+   overlay.setPosition(undefined);
+   closer.blur();
+   return false;
+ };
+
 // Designate Center of Map
 const denmarkLonLat = [10.835589, 56.232371];
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
@@ -665,6 +693,7 @@ var map = new Map({
   target: 'map'
 });
 
+/*
 var outsidercoordinate;
 
 // Popup showing the position the user clicked
@@ -747,6 +776,7 @@ document.getElementById('isochroneActivate').onclick = function() {
 
 
 // LAv om med den her?? https://github.com/GIScience/openrouteservice-js
+*/
 
 /*
 DEFINE & UPDATE SLIDERS
@@ -957,3 +987,53 @@ features_1km.forEach(function(feature){
 // Trigger 'Commit Search' button on click
 let bttn = document.getElementById("commitButton");
 bttn.addEventListener("click", commitSearchFunction, false);
+
+map.addOverlay(overlay);
+
+/**
+ * Add a click handler to the map to render the popup.
+ */
+ map.on('singleclick', function (evt) {
+  var feature = map.forEachFeatureAtPixel(evt.pixel,
+    function(feature, layer) {
+      // Work only if the click on the grid layer
+      if (layer == grid100km, grid30km) {
+      return feature;
+      }
+  });
+  // Show the property of the feature
+  var content = '<b>Fuzzy Score: </b>' + (feature.get('fuzzyvalue')).toFixed(2).toString() + '<br>';
+  content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content_element.innerHTML = content;
+  overlay.setPosition(evt.coordinate);
+
+  console.info(feature.getProperties());
+});
+
+// Change the cursor if on targer layer
+map.on('pointermove', function(e) {
+  if (e.dragging) return;
+
+  var pixel = e.map.getEventPixel(e.originalEvent);
+  var hit = false;
+  e.map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+    if (layer === grid100km) {
+          hit = true;
+     }
+  });
+
+  e.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+});
