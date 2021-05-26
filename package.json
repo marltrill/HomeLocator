@@ -2,6 +2,7 @@
   "name": "HomeLocator",
   "dependencies": {
     "bluebird": "^3.7.2",
+    "bootstrap": "^5.0.1",
     "elm-pep": "^1.0.6",
     "express": "^4.17.1",
     "fs": "0.0.1-security",

@@ -127,15 +127,14 @@ body, html {
   }
 
 .center {
-  margin: auto;
-  width: 60%;
-  padding: 10px;
+  text-align: center;
+  font-size: 16px;
 }
 
 .searchcenter {
   text-align: center;
   padding-top: 10px;
-  font-size: 30px;
+  font-size: 16px;
 }
 
 .searchdesc {
@@ -177,9 +176,16 @@ body, html {
   font-size: 8px;
 }
 
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+}
+
 .commitsearch {
   border-radius: 4px;
   transition-duration: 0.4s;
+  right: 50%;
 }
 
 .commitsearch:hover {
@@ -204,6 +210,7 @@ body, html {
   min-width: 280px;
   font-size: 11px;
 }
+
 .ol-popup:after, .ol-popup:before {
   top: 100%;
   border: solid transparent;
@@ -213,24 +220,51 @@ body, html {
   position: absolute;
   pointer-events: none;
 }
+
 .ol-popup:after {
   border-top-color: white;
   border-width: 10px;
   left: 48px;
   margin-left: -10px;
 }
+
 .ol-popup:before {
   border-top-color: #cccccc;
   border-width: 11px;
   left: 48px;
   margin-left: -11px;
 }
+
 .ol-popup-closer {
   text-decoration: none;
   position: absolute;
   top: 2px;
   right: 8px;
 }
+
 .ol-popup-closer:after {
   content: "✖";
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
 }

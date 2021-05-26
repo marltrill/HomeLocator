@@ -43,6 +43,9 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/html\three_categories.html">Three Categories<span class="sr-only"></span></a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
@@ -101,14 +104,11 @@
       <p class="searchdesc">Fine tune the sliders in each of the three categories below. Click 'Commit Search' to see which areas of the country are most suitable for you and your interests. Please allow some moments for loading/rendering of data.</p>
 
       <hr>
-
-      <ul id="js-searchCriteria">
-        <!--Accessibility Sliders-->
-        <li>
-          <label>
-            <input type="checkbox" class="accessToggle">
-            <span>Accessibility</span>
-          </label>
+      <div>
+        <p class="center"><b>Categories:</b></p>
+        <button type="button" class="collapsible"><b>Accessibility</b></button>
+        <div class="content">
+          <br>
           <!--Universities Slider-->
           <div id="uniSlider">
             <p class="slidertext"><b>Distance from Universities (1 to 161 Km)</b></p>
@@ -133,23 +133,11 @@
             <input type="range" min="1" max="65" value="65" class="slider" id="pstationsDistance" step="1">
             <label class="slidertext"><span id="outPstations"></span> km</label>
           </div>
-          <!--Toggle Accessibility Sliders-->
-          <script>$(function () {
-  $('.accessToggle').change(function () {
-    $('#uniSlider').toggle(this.checked);
-    $('#roadsSlider').toggle(this.checked);
-    $('#pstopsSlider').toggle(this.checked);
-    $('#pstationsSlider').toggle(this.checked);
-  }).change(); // Ensure visible state matches initially
-});</script>
-        </li>
-
-        <!--Livability Sliders-->
-        <li>
-          <label>
-            <input type="checkbox" class="liveToggle">
-            <span>Livability</span>
-          </label>
+          <br>
+        </div>
+        <button type="button" class="collapsible"><b>Livability</b></button>
+        <div class="content">
+          <br>
           <!--Schools Slider-->
           <div id="schoolSlider">
             <p class="slidertext"><b>Distance from Intermediate Schools (1 to 37 Km)</b></p>
@@ -186,25 +174,11 @@
             <input type="range" min="1" max="5" value="5" class="slider" id="industryDistance" step="1">
             <label class="slidertext"><span id="outIndustry"></span> km</label>
           </div>
-          <!--Toggle Livability Sliders-->
-          <script>$(function () {
-  $('.liveToggle').change(function () {
-    $('#schoolSlider').toggle(this.checked);
-    $('#kinderSlider').toggle(this.checked);
-    $('#coastSlider').toggle(this.checked);
-    $('#marketsSlider').toggle(this.checked);
-    $('#waterSlider').toggle(this.checked);
-    $('#industrySlider').toggle(this.checked);
-  }).change(); // Ensure visible state matches initially
-});</script>
-        </li>
-
-        <!--Suitability Sliders-->
-        <li>
-          <label>
-            <input type="checkbox" class="suitabilityToggle">
-            <span>Suitability</span>
-          </label>
+          <br>
+        </div>
+        <button type="button" class="collapsible"><b>Suitability</b></button>
+        <div class="content">
+          <br>
           <!--Parks Slider-->
           <div id="parksSlider">
             <p class="slidertext"><b>Distance from Parks (1 to 63 Km)</b></p>
@@ -235,25 +209,31 @@
             <input type="range" min="1" max="69" value="69" class="slider" id="cinemasDistance" step="1">
             <label class="slidertext"><span id="outCinemas"></span> km</label>
           </div>
-          <!--Toggle Suitability Sliders-->
-          <script>$(function () {
-  $('.suitabilityToggle').change(function () {
-    $('#parksSlider').toggle(this.checked);
-    $('#hospitalsSlider').toggle(this.checked);
-    $('#restuarantsSlider').toggle(this.checked);
-    $('#theatreSlider').toggle(this.checked);
-    $('#cinemasSlider').toggle(this.checked);
-  }).change(); // Ensure visible state matches initially
-});</script>
-        </li>
+          <br>
+        </div>
 
-        <!-- Commit Button -->
-        <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+        <script>var coll = document.getElementsByClassName("collapsible");
+var i;
 
-      </ul>
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
 
-      <hr>
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}</script>
 
+        <div class="searchcenter">
+          <br>
+          <!-- Commit Button -->
+          <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+        </div>
+      </div>
       <!--
       <h6>Isochrone Options:</h6>
 

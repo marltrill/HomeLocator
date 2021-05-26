@@ -112841,16 +112841,18 @@ var classification_search_100km = function classification_search_100km(feature, 
   var fuzzyvalue = feature.get('fuzzyvalue');
   var layercolor;
 
-  if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(217, 200, 0, 0.6)'; //rgba(217, 200, 0, 0.6)
+  if (fuzzyvalue < 0.05) {
+    layercolor = 'rgba(0, 0, 0, 0)';
+  } else if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(133, 200, 0, 0.6)'; //rgba(133, 200, 0, 0.6)
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(0, 150, 0, 0.6)'; //rgba(0, 150, 0, 0.6)
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(0, 100, 0, 0.6)'; //rgba(0, 100, 0, 0.6)
+    layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
     layercolor = 'rgba(217, 200, 0, 0)';
   }
@@ -112871,16 +112873,18 @@ var classification_search_30km = function classification_search_30km(feature, re
   var fuzzyvalue = feature.get('fuzzyvalue');
   var layercolor;
 
-  if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(217, 200, 0, 0.6)'; //rgba(217, 200, 0, 0.6)
+  if (fuzzyvalue < 0.05) {
+    layercolor = 'rgba(0, 0, 0, 0)';
+  } else if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(133, 200, 0, 0.6)'; //rgba(133, 200, 0, 0.6)
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(0, 150, 0, 0.6)'; //rgba(0, 150, 0, 0.6)
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(0, 100, 0, 0.6)'; //rgba(0, 100, 0, 0.6)
+    layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
     layercolor = 'rgba(217, 200, 0, 0)';
   }
@@ -113383,7 +113387,8 @@ new _layer.Group({
   municipalities, //hospitals,
   //schools,
   //leisureparks,
-  dk_boundary, isolayer]
+  dk_boundary //isolayer
+  ]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113648,12 +113653,16 @@ Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure pa
 function commitSearchFunction() {
   // Calculate Weights for 100km Grid
   var source_100km = grid100km.getSource();
-  var features_100km = source_100km.getFeatures(); //var counter_100 = 1; // Count features for testing
+  var features_100km = source_100km.getFeatures();
+  var counter_100 = 1; // Count features for testing
 
   features_100km.forEach(function (feature) {
-    var new_fuzzy_value_100km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 261.23441535189943;
-    feature.set("fuzzyvalue", new_fuzzy_value_100km); //console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
-    //counter_100 += 1;
+    var new_fuzzy_value_100km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 261.23441535189943; //15.28740076513416
+
+    feature.set("fuzzyvalue", new_fuzzy_value_100km);
+    console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
+
+    counter_100 += 1;
   }); // Calculate Weights for 30km Grid
 
   var source_30km = grid30km.getSource();
@@ -113707,7 +113716,7 @@ map.on('singleclick', function (evt) {
     }
   }); // Show the property of the feature
 
-  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed(2).toString() + '%</b> Match given your inputs!<br>';
+  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed(2).toString() + '%</b> match given your inputs!<br>';
   content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
@@ -113766,7 +113775,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53791" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51277" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
