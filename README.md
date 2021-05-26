@@ -94,7 +94,7 @@ Water Bodies: excluded wetlands and filtered water bodies equal or greater than 
 F) Re-did weighted grids with proximity rasters at a finer resolution and added supermarkets data 05.10/11.2021 MLT
 
 ### FEATURES THAT ARE INCLUDED IN THE WEIGHTED GRID SO FAR: 
-Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies, public transport stations, public transport stops, restaurants, theatres, cinemas, kindergartens, industries, crimes and house prices (dkk/m2)
+Distance to: coastline, hospitals, leisure parks, roads, schools, supermarkets, universities, water bodies, public transport stations, public transport stops, restaurants, theatres, cinemas, kindergartens, industries, crimes, political party, house prices (dkk/m2), air quality data (ug/m3)
 
 Crime Rates:
 [Crime Rates](data/crime_rates.png)
