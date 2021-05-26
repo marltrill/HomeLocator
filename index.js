@@ -1117,7 +1117,6 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
             }
         }
     });
-    myChart.destroy();
   }
 });
 
