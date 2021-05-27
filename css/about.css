@@ -50,3 +50,10 @@ p.ex1{
 p {
   text-align: center;
 }
+
+.footer {
+  display: table;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -44,10 +44,10 @@ body, html {
 }
 
 .footer {
-    position: fixed;
-    bottom: 0%;
-    width: 50%;
-    text-align: center;
+  display: table;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 /*# sourceMappingURL=/three_categories.6d43114d.css.map */

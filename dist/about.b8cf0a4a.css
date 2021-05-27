@@ -51,4 +51,11 @@ p {
   text-align: center;
 }
 
+.footer {
+  display: table;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /*# sourceMappingURL=/about.b8cf0a4a.css.map */
