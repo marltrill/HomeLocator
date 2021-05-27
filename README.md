@@ -65,6 +65,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Found house price data split into postal code areas (it's in dkk/m2) from Statbank- Finans Danmark. Ongoing work: Combine this data with the hexagon cell grids. 'House Price Data' folder in OneDrive contains some files. Note that not all the postal code areas contain data. 05.20.2021 MLT
 * Processed house price data and added crime and house price data to the grids. Final grids are uploaded in the 'ProximityGrids_Final' folder as shapefiles. For data processing details have a look at the README.txt file in the same folder. The 'GeoJSON regions 1km grid' folder contains the updated grids split into regions (EPSG:4326 WGS 84). 05.24.2021 MLT
 * Processed air quality data and political party data. New grids are updated in One Drive, have a look at the README_2 file, will describe it better soon as there's a lot of info to include, new version of 1km grid split into regions files need to be uploaded. 05.26.2021 MLT
+* new version of 1km grid split into regions in OneDrive. 05.27.2021 MLT
 
 ### Data Processing: 
 
