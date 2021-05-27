@@ -105,6 +105,8 @@ Political Parties:
 
 Sample of average distance to roads- 1km grid:
 [ProximityGridRoads](images/roads1km.png)
+OSM Layers that we have so far: universities, schools, leisure parks and hospitals (projection EPSG: 4326- WGS 84-
+Last Accessed: 04-12-21)
 
 Sample of app so far:
 [Image of App Progress](images/app_progress.png)
