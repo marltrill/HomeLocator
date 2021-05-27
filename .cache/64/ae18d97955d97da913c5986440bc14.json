@@ -1,0 +1,1 @@
+{"id":"{{ url_for(filename='index.js') }}","dependencies":[{"name":"C:\\Users\\aboes\\Documents\\GitHub\\Spring21_AAU_Project\\package.json","includedInParent":true,"mtime":1620374613834}],"generated":{"js":"module.exports = {};"},"sourceMaps":null,"error":null,"hash":"81d078f04bc99cc43a38189ffe27973f","cacheData":{"env":{}}}

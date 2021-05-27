@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,19 +184,19 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/ol/ol.css":[function(require,module,exports) {
+},{"./bundle-url":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/ol/ol.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css":[function(require,module,exports) {
+},{"_css_loader":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol/Disposable.js":[function(require,module,exports) {
+},{"_css_loader":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol/Disposable.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79888,7 +79888,7 @@ module.exports = function(fonts, size, lineHeight) {
   return cssData[0] + sp + cssData[1] + sp + size + 'px' + (lineHeight ? '/' + lineHeight : '') + sp + cssData[2];
 };
 
-},{}],"node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -80040,14 +80040,101 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"node_modules/node-libs-browser/node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -81840,7 +81927,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
+},{"base64-js":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
 var global = arguments[3];
 var Buffer = require("buffer").Buffer;
 "use strict";
@@ -96576,7 +96663,7 @@ const visit = {
 exports.visit = visit;
 validateStyle.parsed = validateStyle;
 validateStyle.latest = validateStyle;
-},{"buffer":"node_modules/node-libs-browser/node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
+},{"buffer":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -104479,188 +104566,7 @@ var define;
     }, e;
   }(u.default);
 });
-},{"ol/control/Control":"node_modules/ol/control/Control.js","ol/style/Style":"node_modules/ol/style/Style.js","ol/style/Icon":"node_modules/ol/style/Icon.js","ol/layer/Vector":"node_modules/ol/layer/Vector.js","ol/source/Vector":"node_modules/ol/source/Vector.js","ol/geom/Point":"node_modules/ol/geom/Point.js","ol/Feature":"node_modules/ol/Feature.js","ol/proj":"node_modules/ol/proj.js"}],"node_modules/ol/source/Stamen.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _XYZ = _interopRequireDefault(require("./XYZ.js"));
-
-var _OSM = require("./OSM.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * @module ol/source/Stamen
- */
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-/**
- * @const
- * @type {Array<string>}
- */
-var ATTRIBUTIONS = ['Map tiles by <a href="https://stamen.com/" target="_blank">Stamen Design</a>, ' + 'under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY' + ' 3.0</a>.', _OSM.ATTRIBUTION];
-/**
- * @type {Object<string, {extension: string, opaque: boolean}>}
- */
-
-var LayerConfig = {
-  'terrain': {
-    extension: 'jpg',
-    opaque: true
-  },
-  'terrain-background': {
-    extension: 'jpg',
-    opaque: true
-  },
-  'terrain-labels': {
-    extension: 'png',
-    opaque: false
-  },
-  'terrain-lines': {
-    extension: 'png',
-    opaque: false
-  },
-  'toner-background': {
-    extension: 'png',
-    opaque: true
-  },
-  'toner': {
-    extension: 'png',
-    opaque: true
-  },
-  'toner-hybrid': {
-    extension: 'png',
-    opaque: false
-  },
-  'toner-labels': {
-    extension: 'png',
-    opaque: false
-  },
-  'toner-lines': {
-    extension: 'png',
-    opaque: false
-  },
-  'toner-lite': {
-    extension: 'png',
-    opaque: true
-  },
-  'watercolor': {
-    extension: 'jpg',
-    opaque: true
-  }
-};
-/**
- * @type {Object<string, {minZoom: number, maxZoom: number}>}
- */
-
-var ProviderConfig = {
-  'terrain': {
-    minZoom: 0,
-    maxZoom: 18
-  },
-  'toner': {
-    minZoom: 0,
-    maxZoom: 20
-  },
-  'watercolor': {
-    minZoom: 0,
-    maxZoom: 18
-  }
-};
-/**
- * @typedef {Object} Options
- * @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
- * @property {boolean} [imageSmoothing=true] Enable image smoothing.
- * @property {string} layer Layer name.
- * @property {number} [minZoom] Minimum zoom.
- * @property {number} [maxZoom] Maximum zoom.
- * @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
- * Higher values can increase reprojection performance, but decrease precision.
- * @property {import("../Tile.js").LoadFunction} [tileLoadFunction]
- * Optional function to load a tile given a URL. The default is
- * ```js
- * function(imageTile, src) {
- *   imageTile.getImage().src = src;
- * };
- * ```
- * @property {number} [transition=250] Duration of the opacity transition for rendering.
- * To disable the opacity transition, pass `transition: 0`.
- * @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
- * @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
- */
-
-/**
- * @classdesc
- * Layer source for the Stamen tile server.
- * @api
- */
-
-var Stamen =
-/** @class */
-function (_super) {
-  __extends(Stamen, _super);
-  /**
-   * @param {Options} options Stamen options.
-   */
-
-
-  function Stamen(options) {
-    var _this = this;
-
-    var i = options.layer.indexOf('-');
-    var provider = i == -1 ? options.layer : options.layer.slice(0, i);
-    var providerConfig = ProviderConfig[provider];
-    var layerConfig = LayerConfig[options.layer];
-    var url = options.url !== undefined ? options.url : 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/' + options.layer + '/{z}/{x}/{y}.' + layerConfig.extension;
-    _this = _super.call(this, {
-      attributions: ATTRIBUTIONS,
-      cacheSize: options.cacheSize,
-      crossOrigin: 'anonymous',
-      imageSmoothing: options.imageSmoothing,
-      maxZoom: options.maxZoom != undefined ? options.maxZoom : providerConfig.maxZoom,
-      minZoom: options.minZoom != undefined ? options.minZoom : providerConfig.minZoom,
-      opaque: layerConfig.opaque,
-      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
-      tileLoadFunction: options.tileLoadFunction,
-      transition: options.transition,
-      url: url,
-      wrapX: options.wrapX
-    }) || this;
-    return _this;
-  }
-
-  return Stamen;
-}(_XYZ.default);
-
-var _default = Stamen;
-exports.default = _default;
-},{"./XYZ.js":"node_modules/ol/source/XYZ.js","./OSM.js":"node_modules/ol/source/OSM.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js":[function(require,module,exports) {
+},{"ol/control/Control":"node_modules/ol/control/Control.js","ol/style/Style":"node_modules/ol/style/Style.js","ol/style/Icon":"node_modules/ol/style/Icon.js","ol/layer/Vector":"node_modules/ol/layer/Vector.js","ol/source/Vector":"node_modules/ol/source/Vector.js","ol/geom/Point":"node_modules/ol/geom/Point.js","ol/Feature":"node_modules/ol/Feature.js","ol/proj":"node_modules/ol/proj.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 (function (global, factory) {
@@ -110079,7 +109985,188 @@ function createLayer(layerOrSource) {
 
 var _default = RasterSource;
 exports.default = _default;
-},{"../Disposable.js":"node_modules/ol/Disposable.js","../events/Event.js":"node_modules/ol/events/Event.js","../events/EventType.js":"node_modules/ol/events/EventType.js","../ImageCanvas.js":"node_modules/ol/ImageCanvas.js","../layer/Image.js":"node_modules/ol/layer/Image.js","./Image.js":"node_modules/ol/source/Image.js","./Source.js":"node_modules/ol/source/Source.js","./State.js":"node_modules/ol/source/State.js","../layer/Tile.js":"node_modules/ol/layer/Tile.js","../TileQueue.js":"node_modules/ol/TileQueue.js","./Tile.js":"node_modules/ol/source/Tile.js","../obj.js":"node_modules/ol/obj.js","../dom.js":"node_modules/ol/dom.js","../transform.js":"node_modules/ol/transform.js","../extent.js":"node_modules/ol/extent.js"}],"node_modules/ol/source/TileArcGISRest.js":[function(require,module,exports) {
+},{"../Disposable.js":"node_modules/ol/Disposable.js","../events/Event.js":"node_modules/ol/events/Event.js","../events/EventType.js":"node_modules/ol/events/EventType.js","../ImageCanvas.js":"node_modules/ol/ImageCanvas.js","../layer/Image.js":"node_modules/ol/layer/Image.js","./Image.js":"node_modules/ol/source/Image.js","./Source.js":"node_modules/ol/source/Source.js","./State.js":"node_modules/ol/source/State.js","../layer/Tile.js":"node_modules/ol/layer/Tile.js","../TileQueue.js":"node_modules/ol/TileQueue.js","./Tile.js":"node_modules/ol/source/Tile.js","../obj.js":"node_modules/ol/obj.js","../dom.js":"node_modules/ol/dom.js","../transform.js":"node_modules/ol/transform.js","../extent.js":"node_modules/ol/extent.js"}],"node_modules/ol/source/Stamen.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _XYZ = _interopRequireDefault(require("./XYZ.js"));
+
+var _OSM = require("./OSM.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @module ol/source/Stamen
+ */
+var __extends = void 0 && (void 0).__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+/**
+ * @const
+ * @type {Array<string>}
+ */
+var ATTRIBUTIONS = ['Map tiles by <a href="https://stamen.com/" target="_blank">Stamen Design</a>, ' + 'under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY' + ' 3.0</a>.', _OSM.ATTRIBUTION];
+/**
+ * @type {Object<string, {extension: string, opaque: boolean}>}
+ */
+
+var LayerConfig = {
+  'terrain': {
+    extension: 'jpg',
+    opaque: true
+  },
+  'terrain-background': {
+    extension: 'jpg',
+    opaque: true
+  },
+  'terrain-labels': {
+    extension: 'png',
+    opaque: false
+  },
+  'terrain-lines': {
+    extension: 'png',
+    opaque: false
+  },
+  'toner-background': {
+    extension: 'png',
+    opaque: true
+  },
+  'toner': {
+    extension: 'png',
+    opaque: true
+  },
+  'toner-hybrid': {
+    extension: 'png',
+    opaque: false
+  },
+  'toner-labels': {
+    extension: 'png',
+    opaque: false
+  },
+  'toner-lines': {
+    extension: 'png',
+    opaque: false
+  },
+  'toner-lite': {
+    extension: 'png',
+    opaque: true
+  },
+  'watercolor': {
+    extension: 'jpg',
+    opaque: true
+  }
+};
+/**
+ * @type {Object<string, {minZoom: number, maxZoom: number}>}
+ */
+
+var ProviderConfig = {
+  'terrain': {
+    minZoom: 0,
+    maxZoom: 18
+  },
+  'toner': {
+    minZoom: 0,
+    maxZoom: 20
+  },
+  'watercolor': {
+    minZoom: 0,
+    maxZoom: 18
+  }
+};
+/**
+ * @typedef {Object} Options
+ * @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
+ * @property {boolean} [imageSmoothing=true] Enable image smoothing.
+ * @property {string} layer Layer name.
+ * @property {number} [minZoom] Minimum zoom.
+ * @property {number} [maxZoom] Maximum zoom.
+ * @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
+ * Higher values can increase reprojection performance, but decrease precision.
+ * @property {import("../Tile.js").LoadFunction} [tileLoadFunction]
+ * Optional function to load a tile given a URL. The default is
+ * ```js
+ * function(imageTile, src) {
+ *   imageTile.getImage().src = src;
+ * };
+ * ```
+ * @property {number} [transition=250] Duration of the opacity transition for rendering.
+ * To disable the opacity transition, pass `transition: 0`.
+ * @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
+ * @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
+ */
+
+/**
+ * @classdesc
+ * Layer source for the Stamen tile server.
+ * @api
+ */
+
+var Stamen =
+/** @class */
+function (_super) {
+  __extends(Stamen, _super);
+  /**
+   * @param {Options} options Stamen options.
+   */
+
+
+  function Stamen(options) {
+    var _this = this;
+
+    var i = options.layer.indexOf('-');
+    var provider = i == -1 ? options.layer : options.layer.slice(0, i);
+    var providerConfig = ProviderConfig[provider];
+    var layerConfig = LayerConfig[options.layer];
+    var url = options.url !== undefined ? options.url : 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/' + options.layer + '/{z}/{x}/{y}.' + layerConfig.extension;
+    _this = _super.call(this, {
+      attributions: ATTRIBUTIONS,
+      cacheSize: options.cacheSize,
+      crossOrigin: 'anonymous',
+      imageSmoothing: options.imageSmoothing,
+      maxZoom: options.maxZoom != undefined ? options.maxZoom : providerConfig.maxZoom,
+      minZoom: options.minZoom != undefined ? options.minZoom : providerConfig.minZoom,
+      opaque: layerConfig.opaque,
+      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
+      tileLoadFunction: options.tileLoadFunction,
+      transition: options.transition,
+      url: url,
+      wrapX: options.wrapX
+    }) || this;
+    return _this;
+  }
+
+  return Stamen;
+}(_XYZ.default);
+
+var _default = Stamen;
+exports.default = _default;
+},{"./XYZ.js":"node_modules/ol/source/XYZ.js","./OSM.js":"node_modules/ol/source/OSM.js"}],"node_modules/ol/source/TileArcGISRest.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -112736,7 +112823,33 @@ var _XYZ = _interopRequireDefault(require("./source/XYZ.js"));
 var _Zoomify = _interopRequireDefault(require("./source/Zoomify.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./source/BingMaps.js":"node_modules/ol/source/BingMaps.js","./source/CartoDB.js":"node_modules/ol/source/CartoDB.js","./source/Cluster.js":"node_modules/ol/source/Cluster.js","./source/IIIF.js":"node_modules/ol/source/IIIF.js","./source/Image.js":"node_modules/ol/source/Image.js","./source/ImageArcGISRest.js":"node_modules/ol/source/ImageArcGISRest.js","./source/ImageCanvas.js":"node_modules/ol/source/ImageCanvas.js","./source/ImageMapGuide.js":"node_modules/ol/source/ImageMapGuide.js","./source/ImageStatic.js":"node_modules/ol/source/ImageStatic.js","./source/ImageWMS.js":"node_modules/ol/source/ImageWMS.js","./source/OSM.js":"node_modules/ol/source/OSM.js","./source/Raster.js":"node_modules/ol/source/Raster.js","./source/Source.js":"node_modules/ol/source/Source.js","./source/Stamen.js":"node_modules/ol/source/Stamen.js","./source/Tile.js":"node_modules/ol/source/Tile.js","./source/TileArcGISRest.js":"node_modules/ol/source/TileArcGISRest.js","./source/TileDebug.js":"node_modules/ol/source/TileDebug.js","./source/TileImage.js":"node_modules/ol/source/TileImage.js","./source/TileJSON.js":"node_modules/ol/source/TileJSON.js","./source/TileWMS.js":"node_modules/ol/source/TileWMS.js","./source/UrlTile.js":"node_modules/ol/source/UrlTile.js","./source/UTFGrid.js":"node_modules/ol/source/UTFGrid.js","./source/Vector.js":"node_modules/ol/source/Vector.js","./source/VectorTile.js":"node_modules/ol/source/VectorTile.js","./source/WMTS.js":"node_modules/ol/source/WMTS.js","./source/XYZ.js":"node_modules/ol/source/XYZ.js","./source/Zoomify.js":"node_modules/ol/source/Zoomify.js"}],"index.js":[function(require,module,exports) {
+},{"./source/BingMaps.js":"node_modules/ol/source/BingMaps.js","./source/CartoDB.js":"node_modules/ol/source/CartoDB.js","./source/Cluster.js":"node_modules/ol/source/Cluster.js","./source/IIIF.js":"node_modules/ol/source/IIIF.js","./source/Image.js":"node_modules/ol/source/Image.js","./source/ImageArcGISRest.js":"node_modules/ol/source/ImageArcGISRest.js","./source/ImageCanvas.js":"node_modules/ol/source/ImageCanvas.js","./source/ImageMapGuide.js":"node_modules/ol/source/ImageMapGuide.js","./source/ImageStatic.js":"node_modules/ol/source/ImageStatic.js","./source/ImageWMS.js":"node_modules/ol/source/ImageWMS.js","./source/OSM.js":"node_modules/ol/source/OSM.js","./source/Raster.js":"node_modules/ol/source/Raster.js","./source/Source.js":"node_modules/ol/source/Source.js","./source/Stamen.js":"node_modules/ol/source/Stamen.js","./source/Tile.js":"node_modules/ol/source/Tile.js","./source/TileArcGISRest.js":"node_modules/ol/source/TileArcGISRest.js","./source/TileDebug.js":"node_modules/ol/source/TileDebug.js","./source/TileImage.js":"node_modules/ol/source/TileImage.js","./source/TileJSON.js":"node_modules/ol/source/TileJSON.js","./source/TileWMS.js":"node_modules/ol/source/TileWMS.js","./source/UrlTile.js":"node_modules/ol/source/UrlTile.js","./source/UTFGrid.js":"node_modules/ol/source/UTFGrid.js","./source/Vector.js":"node_modules/ol/source/Vector.js","./source/VectorTile.js":"node_modules/ol/source/VectorTile.js","./source/WMTS.js":"node_modules/ol/source/WMTS.js","./source/XYZ.js":"node_modules/ol/source/XYZ.js","./source/Zoomify.js":"node_modules/ol/source/Zoomify.js"}],"data/hospitals_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/hospitals_epsg4326.a20bf3fc.geojson";
+},{}],"data/schools_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/schools_epsg4326.618f3280.geojson";
+},{}],"data/leisureparks_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/leisureparks_epsg4326.e6b07c6f.geojson";
+},{}],"data/universities_epsg4326.geojson":[function(require,module,exports) {
+module.exports = "/universities_epsg4326.62bb3425.geojson";
+},{}],"data/weighted_grid100km.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid100km.513b3371.geojson";
+},{}],"data/weighted_grid30km.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid30km.6360b504.geojson";
+},{}],"data/weighted_grid1km_Fyn.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_Fyn.75ef7eae.geojson";
+},{}],"data/weighted_grid1km_hovestad.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_hovestad.33f5a7e6.geojson";
+},{}],"data/weighted_grid1km_Midtjylland.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_Midtjylland.35752018.geojson";
+},{}],"data/weighted_grid1km_MidtjyllandW.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_MidtjyllandW.13a41af3.geojson";
+},{}],"data/weighted_grid1km_Nordjylland.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_Nordjylland.388ee5b3.geojson";
+},{}],"data/weighted_grid1km_Sjælland.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_Sjælland.a6583bef.geojson";
+},{}],"data/weighted_grid1km_Syddanmark.geojson":[function(require,module,exports) {
+module.exports = "/weighted_grid1km_Syddanmark.dba7d878.geojson";
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("ol/ol.css");
@@ -112767,34 +112880,144 @@ var _TopoJSON = _interopRequireDefault(require("ol/format/TopoJSON"));
 
 var _olGeocoder = _interopRequireDefault(require("ol-geocoder"));
 
-var _Group = _interopRequireDefault(require("ol/layer/Group"));
-
-var _Stamen = _interopRequireDefault(require("ol/source/Stamen"));
-
-var _olLayerswitcher2 = _interopRequireWildcard(require("ol-layerswitcher"));
-
-var _Draw = _interopRequireDefault(require("ol/interaction/Draw"));
+var _olLayerswitcher2 = _interopRequireDefault(require("ol-layerswitcher"));
 
 var _source = require("ol/source");
 
 var _XYZ = _interopRequireDefault(require("ol/source/XYZ"));
 
-var _Select = _interopRequireDefault(require("ol/interaction/Select"));
+var _loadingstrategy = require("ol/loadingstrategy");
 
-var _condition = require("ol/events/condition");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _VectorImage = _interopRequireDefault(require("ol/layer/VectorImage"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Designate Center of Map Mvvvf
-var denmarkLonLat = [10.835589, 56.232371];
-var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // Home Icon for default extent button
+/**
+ * Elements that make up the popup.
+ */
+var container = document.getElementById('popup');
+var content_element = document.getElementById('popup-content');
+var info_element = document.getElementById('info-element');
+var closer = document.getElementById('popup-closer');
+/**
+ * Create an overlay to anchor the popup to the map.
+ */
 
-var home_icon = document.createElement('home');
-home_icon.innerHTML = '<img src="https://image.flaticon.com/icons/png/512/69/69524.png" width="20" height="20">'; // Municipalities Boundary Style
+var overlay = new _Overlay.default({
+  element: container,
+  autoPan: true,
+  autoPanAnimation: {
+    duration: 250
+  }
+});
+/**
+ * Add a click handler to hide the popup.
+ * @return {boolean} Don't follow the href.
+ */
+
+closer.onclick = function () {
+  overlay.setPosition(undefined);
+  closer.blur();
+  return false;
+}; // Designate Center of Map
+
+
+var denmarkLonLat = [10.835589, 56.232371];
+var denmarkWebMercator = (0, _proj.fromLonLat)(denmarkLonLat); // 100km Grid Styling
+
+var classification_search_100km = function classification_search_100km(feature, resolution) {
+  var fuzzyvalue = feature.get('fuzzyvalue');
+  var layercolor;
+
+  if (fuzzyvalue < 0.05) {
+    layercolor = 'rgba(0, 0, 0, 0)';
+  } else if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(217, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.4) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.6) {
+    layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.8) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
+  } else if (fuzzyvalue <= 1) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else {
+    layercolor = 'rgba(217, 200, 0, 0)';
+  }
+
+  return new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(0, 0, 0, 0)',
+      width: 0.1
+    }),
+    fill: new _style2.Fill({
+      color: layercolor
+    })
+  });
+}; // 30km Grid Styling
+
+
+var classification_search_30km = function classification_search_30km(feature, resolution) {
+  var fuzzyvalue = feature.get('fuzzyvalue');
+  var layercolor;
+
+  if (fuzzyvalue < 0.05) {
+    layercolor = 'rgba(0, 0, 0, 0)';
+  } else if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(217, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.4) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.6) {
+    layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.8) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
+  } else if (fuzzyvalue <= 1) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else {
+    layercolor = 'rgba(217, 200, 0, 0)';
+  }
+
+  return new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(0, 0, 0, 0)',
+      width: 0.1
+    }),
+    fill: new _style2.Fill({
+      color: layercolor
+    })
+  });
+}; // 1km Grid Styling
+
+
+var classification_search_1km = function classification_search_1km(feature, resolution) {
+  var fuzzyvalue = feature.get('fuzzyvalue');
+  var layercolor;
+
+  if (fuzzyvalue < 0.6) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else if (fuzzyvalue < 1.2) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
+  } else if (fuzzyvalue < 1.8) {
+    layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 2.4) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 3) {
+    layercolor = 'rgba(217, 200, 0, 0.6)';
+  } else {
+    layercolor = 'rgba(217, 200, 0, 0)';
+  }
+
+  return new _style2.Style({
+    stroke: new _style2.Stroke({
+      color: 'rgba(0, 0, 0, 0)',
+      width: 0.1
+    }),
+    fill: new _style2.Fill({
+      color: layercolor
+    })
+  });
+}; // Municipalities Boundary Style
+
 
 var _style = new _style2.Style({
   fill: new _style2.Fill({
@@ -112862,7 +113085,7 @@ var dk_boundary = new _layer.Vector({
 
 var municipalities = new _layer.Vector({
   title: 'Municipalities',
-  visible: true,
+  visible: false,
   source: new _source.Vector({
     format: new _format.GeoJSON(),
     url: "https://raw.githubusercontent.com/Neogeografen/dagi/master/geojson/kommuner.geojson"
@@ -112874,85 +113097,334 @@ var municipalities = new _layer.Vector({
   },
   minResolution: 15,
   maxResolution: 400
-}); // Add cities from GitHub 
-
-var cities = new _layer.Vector({
-  title: 'Cities',
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: "https://raw.githubusercontent.com/drei01/geojson-world-cities/master/cities.geojson"
-  }),
-  style: function style(feature) {
-    _style.getText().setText(feature.get('CITIES'));
-
-    return _style;
-  }
 }); // Add OSM hospitals layer
+
+var hospitals_geojson = require('./data/hospitals_epsg4326.geojson');
 
 var hospitals = new _layer.Vector({
   title: 'Hospitals',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: './data/hospitals.geojson'
+    url: hospitals_geojson
   }),
+  maxResolution: 15,
   style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
-    }),
     fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
+      color: 'rgba(255, 230, 161, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#b58604',
+      width: 1
     })
   })
 }); // Add OSM Schools layer
+
+var schools_geojson = require('./data/schools_epsg4326.geojson');
 
 var schools = new _layer.Vector({
   title: 'Schools',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: './data/schools.geojson'
+    url: schools_geojson
   }),
+  maxResolution: 15,
   style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
-    }),
     fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
-    })
-  })
-}); // Add OSM Universities layer
-
-var universities = new _layer.Vector({
-  title: 'Universities',
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: './data/universities.geojson'
-  }),
-  style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
+      color: 'rgba(216, 193, 227, 0.6)'
     }),
-    fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
+    stroke: new _style2.Stroke({
+      color: '#ad31e8',
+      width: 1
     })
   })
 }); // Add OSM Leisure/Parks layer
+
+var leisureparks_geojson = require('./data/leisureparks_epsg4326.geojson');
 
 var leisureparks = new _layer.Vector({
   title: 'Leisure/Parks',
   source: new _source.Vector({
     format: new _format.GeoJSON(),
-    url: './data/leisureparks.geojson'
+    url: leisureparks_geojson
   }),
+  maxResolution: 15,
   style: new _style2.Style({
-    stroke: new _style2.Stroke({
-      color: 'rgba(255,0,0,0.5)',
-      width: 60
-    }),
     fill: new _style2.Fill({
-      color: 'rgba(255,0,0,0.5)'
+      color: 'rgba(173, 237, 182, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#08961b',
+      width: 1
+    })
+  })
+}); // Add Universities from GitHub
+
+var universities_geojson = require('./data/universities_epsg4326.geojson');
+
+var universities = new _layer.Vector({
+  title: 'Universities',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: universities_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(121, 131, 242, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#1420a3',
+      width: 1
+    })
+  })
+});
+/*
+
+WEIGHTED GRIDS
+
+*/
+// Add Weighted Grid (100km Resolution)
+
+var grid100km_geojson = require('./data/weighted_grid100km.geojson');
+
+var grid100km = new _layer.Vector({
+  title: 'Weighted Grid (100km)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid100km_geojson
+  }),
+  minResolution: 400,
+  style: classification_search_100km
+}); // Add Weighted Grid (30km Resolution)
+
+var grid30km_geojson = require('./data/weighted_grid30km.geojson');
+
+var grid30km = new _layer.Vector({
+  title: 'Weighted Grid (30km)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid30km_geojson
+  }),
+  minResolution: 15,
+  maxResolution: 400,
+  style: classification_search_30km
+}); // Add Weighted Grid (1km Resolution - Fyn)
+
+var grid1km_fyn_geojson = require('./data/weighted_grid1km_Fyn.geojson');
+
+var grid1km_fyn = new _layer.Vector({
+  title: 'Weighted Grid (1km - Fyn)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_fyn_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Hovestadden)
+
+var grid1km_hovedstad_geojson = require('./data/weighted_grid1km_hovestad.geojson');
+
+var grid1km_hovestad = new _layer.Vector({
+  title: 'Weighted Grid (1km - Hovedstadden)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_hovedstad_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Midtjylland)
+
+var grid1km_midtjylland_geojson = require('./data/weighted_grid1km_Midtjylland.geojson');
+
+var grid1km_midtjylland = new _layer.Vector({
+  title: 'Weighted Grid (1km - Midtjylland)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_midtjylland_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Midtjylland W)
+
+var grid1km_midtjyllandw_geojson = require('./data/weighted_grid1km_MidtjyllandW.geojson');
+
+var grid1km_midtjyllandw = new _layer.Vector({
+  title: 'Weighted Grid (1km - Midtjylland West)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_midtjyllandw_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Nordjylland)
+
+var grid1km_nordjylland_geojson = require('./data/weighted_grid1km_Nordjylland.geojson');
+
+var grid1km_nordjylland = new _layer.Vector({
+  title: 'Weighted Grid (1km - Nordjylland)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_nordjylland_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Sjælland)
+
+var grid1km_sjælland_geojson = require('./data/weighted_grid1km_Sjælland.geojson');
+
+var grid1km_sjælland = new _layer.Vector({
+  title: 'Weighted Grid (1km - Sjælland)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_sjælland_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+}); // Add Weighted Grid (1km Resolution - Syddanmark)
+
+var grid1km_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson');
+
+var grid1km_syddanmark = new _layer.Vector({
+  title: 'Weighted Grid (1km - Syddanmark)',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: grid1km_syddanmark_geojson,
+    strategy: _loadingstrategy.bbox
+  }),
+  maxResolution: 15,
+  style: classification_search_1km,
+  visible: false
+});
+/*
+
+VectorImage Testing
+
+*/
+// Hovestadden VectorImage
+
+var grid1km_vectorimage_hovestad_geojson = require('./data/weighted_grid1km_hovestad.geojson');
+
+var grid1km_vectorimage_hovestad = new _VectorImage.default({
+  title: 'Hovedstadden VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_hovestad_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: true,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Fyn VectorImage
+
+var grid1km_vectorimage_fyn_geojson = require('./data/weighted_grid1km_Fyn.geojson');
+
+var grid1km_vectorimage_fyn = new _VectorImage.default({
+  title: 'Fyn VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_fyn_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Midtjylland VectorImage
+
+var grid1km_vectorimage_midtjylland_geojson = require('./data/weighted_grid1km_Midtjylland.geojson');
+
+var grid1km_vectorimage_midtjylland = new _VectorImage.default({
+  title: 'Midtjylland VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_midtjylland_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Midtjylland West VectorImage
+
+var grid1km_vectorimage_midtjyllandw_geojson = require('./data/weighted_grid1km_MidtjyllandW.geojson');
+
+var grid1km_vectorimage_midtjyllandw = new _VectorImage.default({
+  title: 'Midtjylland West VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_midtjyllandw_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Nordjylland VectorImage
+
+var grid1km_vectorimage_nordjylland_geojson = require('./data/weighted_grid1km_Nordjylland.geojson');
+
+var grid1km_vectorimage_nordjylland = new _VectorImage.default({
+  title: 'Nordjylland VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_nordjylland_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Sjælland VectorImage
+
+var grid1km_vectorimage_sjælland_geojson = require('./data/weighted_grid1km_Sjælland.geojson');
+
+var grid1km_vectorimage_sjælland = new _VectorImage.default({
+  title: 'Sjælland VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_sjælland_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+}); // Syddanmark VectorImage
+
+var grid1km_vectorimage_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson');
+
+var grid1km_vectorimage_syddanmark = new _VectorImage.default({
+  title: 'Syddanmark VectorImage',
+  imageRatio: 2,
+  source: new _source.Vector({
+    url: grid1km_vectorimage_syddanmark_geojson,
+    format: new _format.GeoJSON()
+  }),
+  visible: false,
+  maxResolution: 15,
+  style: classification_search_1km
+});
+var isolayer = new _layer.Vector({
+  title: 'isolayer',
+  source: new _source.Vector({
+    format: new _format.GeoJSON(),
+    url: universities_geojson
+  }),
+  maxResolution: 15,
+  style: new _style2.Style({
+    fill: new _style2.Fill({
+      color: 'rgba(121, 131, 242, 0.6)'
+    }),
+    stroke: new _style2.Stroke({
+      color: '#1420a3',
+      width: 1
     })
   })
 }); // Scaleline
@@ -112963,8 +113435,9 @@ var layerSwitcher = new _olLayerswitcher2.default({
   reverse: true,
   groupSelectStyle: 'group'
 });
-var key = 'XtxbqBNbF5eQwYXV37Ym';
-var attributions = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'; // Define layers to be mapped
+var key = 'XtxbqBNbF5eQwYXV37Ym'; // ABP's Key
+
+var attributions = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a> ' + '<a href="https://eng.sdfe.dk/" target="_blank">&copy; SDFE</a> '; // Define layers to be mapped
 
 var layers = [// Basemaps
 new _layer.Group({
@@ -112987,7 +113460,23 @@ new _layer.Group({
 }), // Data layers
 new _layer.Group({
   title: 'Data',
-  layers: [municipalities, hospitals, schools, universities, leisureparks, cities, dk_boundary]
+  layers: [new _layer.Group({
+    title: 'Criteria Grids',
+    layers: [grid100km, grid30km, //grid1km_fyn,
+    //grid1km_hovestad,
+    //grid1km_midtjylland,
+    //grid1km_midtjyllandw,
+    //grid1km_nordjylland,
+    //grid1km_sjælland,
+    //grid1km_syddanmark,
+    grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_nordjylland, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark],
+    fold: 'close'
+  }), //universities,
+  municipalities, //hospitals,
+  //schools,
+  //leisureparks,
+  dk_boundary //isolayer
+  ]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113006,30 +113495,36 @@ geocoder.getLayer().setVisible(true); // Define map view.
 var mapView = new _View.default({
   center: denmarkWebMercator,
   zoom: 7
-});
-/*
-var zoomToExtentControl = new ZoomToExtent({
-  extent: [346219.65, 8159203.94, 2074586.54, 7003599.95]
-});
-*/
-// Define map
+}); // Define map
 
 var map = new _Map.default({
-  controls: (0, _control.defaults)().extend([scaleline, geocoder, layerSwitcher, new _control.FullScreen()]),
+  controls: (0, _control.defaults)().extend([scaleline, geocoder, layerSwitcher, new _control.FullScreen(), new _control.ZoomToExtent({
+    extent: [644247.2179725806, 7066697.228365138, 1768177.2818778122, 8142930.58662042]
+  })]),
   layers: layers,
   view: mapView,
   target: 'map'
-}); // Popup showing the position the user clicked
-
-var popup = new _Overlay.default({
-  element: document.getElementById('popup')
 });
-map.addOverlay(popup); // Click Event for Popup (Work in Progress)
+/*
+var outsidercoordinate;
 
+// Popup showing the position the user clicked
+var popup = new Overlay({
+  element: document.getElementById('popup'),
+});
+map.addOverlay(popup);
+
+// Click Event for Popup (Work in Progress)
 map.on('click', function (evt) {
   var element = popup.getElement();
   var coordinate = evt.coordinate;
-  var hdms = (0, _coordinate.toStringHDMS)((0, _proj.toLonLat)(coordinate));
+  var coords = toLonLat(evt.coordinate);
+  window.outsidercoordinate = coords;
+  var hdms = toStringHDMS(toLonLat(coordinate));
+  console.log(coordinate);
+  console.log(coords)
+  //console.log(toStringHDMS);
+
   $(element).popover('dispose');
   popup.setPosition(coordinate);
   $(element).popover({
@@ -113037,20 +113532,13 @@ map.on('click', function (evt) {
     placement: 'top',
     animation: false,
     html: true,
-    content: '<p>(WORK IN PROGRESS) The location you clicked was:</p><code>' + hdms + '</code>'
+    content: '<p>(WORK IN PROGRESS) The location you clicked was:</p><code>' + hdms + '</code>',
   });
   $(element).popover('show');
 });
-var view = map.getView();
-var zoom = view.getZoom();
-var center = view.getCenter();
-
-document.getElementById('zoom-restore').onclick = function () {
-  view.setCenter(center);
-  view.setZoom(zoom);
-};
 
 var selected = null;
+
 map.on('pointermove', function (e) {
   if (selected !== null) {
     selected.setStyle(undefined);
@@ -113063,7 +113551,338 @@ map.on('pointermove', function (e) {
     return true;
   });
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol/layer/Group":"node_modules/ol/layer/Group.js","ol/source/Stamen":"node_modules/ol/source/Stamen.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/interaction/Draw":"node_modules/ol/interaction/Draw.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/interaction/Select":"node_modules/ol/interaction/Select.js","ol/events/condition":"node_modules/ol/events/condition.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+// API KEY 5b3ce3597851110001cf6248eff557cdb07c480cabced1a36192d99a
+
+document.getElementById('isochroneActivate').onclick = function() {
+  var isotransportation = window.rdValue;
+  var isotimelimit = document.getElementById('myRange').value;
+  var coordinate = window.outsidercoordinate;
+  var coordinaterequest = coordinate.toString();
+  console.log(coordinaterequest);
+  console.log(isotimelimit);
+  console.log(coordinate);
+  console.log(isotransportation);
+  console.log('{"locations":[[' + coordinate.toString() + ']],"range":['+ isotimelimit.toString() + ']"range_type":"time","units":"mi"}');
+
+  var request = require('request');
+
+  request({
+    method: 'POST',
+    url: 'https://api.openrouteservice.org/v2/isochrones/' + isotransportation,
+    body: '{"locations":[[' + coordinate.toString() + ']],"range":['+ isotimelimit.toString() + '],"range_type":"time","units":"mi"}',
+    headers: {
+      'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
+      'Authorization': '5b3ce3597851110001cf6248eff557cdb07c480cabced1a36192d99a',
+      'Content-Type': 'application/json; charset=utf-8'
+    }}, function (error, response, body) {
+    console.log('Status:', response.statusCode);
+    console.log('Headers:', JSON.stringify(response.headers));
+    console.log(response)
+    console.log('Response:', body);
+    var isochronejson = GeoJSON.parse(body);
+    isolayer.getSource().clear();
+    isolayer.getSource().addFeatures(isochronejson);
+  });
+};
+
+
+// LAv om med den her?? https://github.com/GIScience/openrouteservice-js
+*/
+
+/*
+DEFINE & UPDATE SLIDERS
+*/
+// Universities Slider
+
+var sliderUni = document.getElementById("uniDistance");
+var outputUni = document.getElementById("outUni");
+outputUni.innerHTML = sliderUni.value; // Update slider value
+
+sliderUni.oninput = function () {
+  outputUni.innerHTML = this.value;
+}; // School Slider
+
+
+var sliderSchools = document.getElementById("schoolDistance");
+var outputSchools = document.getElementById("outSchool");
+outputSchools.innerHTML = sliderSchools.value; // Update slider value
+
+sliderSchools.oninput = function () {
+  outputSchools.innerHTML = this.value;
+}; // Parks Slider
+
+
+var sliderParks = document.getElementById("parksDistance");
+var outputParks = document.getElementById("outParks");
+outputParks.innerHTML = sliderParks.value; // Update slider value
+
+sliderParks.oninput = function () {
+  outputParks.innerHTML = this.value;
+}; // Roads Slider
+
+
+var sliderRoads = document.getElementById("roadsDistance");
+var outputRoads = document.getElementById("outRoads");
+outputRoads.innerHTML = sliderRoads.value; // Update slider value
+
+sliderRoads.oninput = function () {
+  outputRoads.innerHTML = this.value;
+}; // Coastlines Slider
+
+
+var sliderCoasts = document.getElementById("coastDistance");
+var outputCoasts = document.getElementById("outCoast");
+outputCoasts.innerHTML = sliderCoasts.value; // Update slider value
+
+sliderCoasts.oninput = function () {
+  outputCoasts.innerHTML = this.value;
+}; // Hospitals Slider
+
+
+var sliderHospitals = document.getElementById("hospitalsDistance");
+var outputHospitals = document.getElementById("outHospitals");
+outputHospitals.innerHTML = sliderHospitals.value; // Update slider value
+
+sliderHospitals.oninput = function () {
+  outputHospitals.innerHTML = this.value;
+}; // Supermarkets Slider
+
+
+var sliderMarkets = document.getElementById("marketsDistance");
+var outputMarkets = document.getElementById("outMarkets");
+outputMarkets.innerHTML = sliderMarkets.value; // Update slider value
+
+sliderMarkets.oninput = function () {
+  outputMarkets.innerHTML = this.value;
+}; // Water Bodies Slider
+
+
+var sliderWater = document.getElementById("waterDistance");
+var outputWater = document.getElementById("outWater");
+outputWater.innerHTML = sliderWater.value; // Update slider value
+
+sliderWater.oninput = function () {
+  outputWater.innerHTML = this.value;
+}; // Public Transport Stops Slider
+
+
+var sliderPstops = document.getElementById("pstopsDistance");
+var outputPstops = document.getElementById("outPstops");
+outputPstops.innerHTML = sliderPstops.value; // Update slider value
+
+sliderPstops.oninput = function () {
+  outputPstops.innerHTML = this.value;
+}; // Public Transport Stations Slider
+
+
+var sliderPstations = document.getElementById("pstationsDistance");
+var outputPstations = document.getElementById("outPstations");
+outputPstations.innerHTML = sliderPstations.value; // Update slider value
+
+sliderPstations.oninput = function () {
+  outputPstations.innerHTML = this.value;
+}; // Restuarants Slider
+
+
+var sliderRestuarants = document.getElementById("restuarantsDistance");
+var outputRestuarants = document.getElementById("outRestuarants");
+outputRestuarants.innerHTML = sliderRestuarants.value; // Update slider value
+
+sliderRestuarants.oninput = function () {
+  outputRestuarants.innerHTML = this.value;
+}; // Theatres Slider
+
+
+var sliderTheatres = document.getElementById("theatreDistance");
+var outputTheatres = document.getElementById("outTheatre");
+outputTheatres.innerHTML = sliderTheatres.value; // Update slider value
+
+sliderTheatres.oninput = function () {
+  outputTheatres.innerHTML = this.value;
+}; // Cinemas Slider
+
+
+var sliderCinemas = document.getElementById("cinemasDistance");
+var outputCinemas = document.getElementById("outCinemas");
+outputCinemas.innerHTML = sliderCinemas.value; // Update slider value
+
+sliderCinemas.oninput = function () {
+  outputCinemas.innerHTML = this.value;
+}; // Kindergarten Slider
+
+
+var sliderKinder = document.getElementById("kinderDistance");
+var outputKinder = document.getElementById("outKinder");
+outputKinder.innerHTML = sliderKinder.value; // Update slider value
+
+sliderKinder.oninput = function () {
+  outputKinder.innerHTML = this.value;
+}; // Industry Slider
+
+
+var sliderIndustry = document.getElementById("industryDistance");
+var outputIndustry = document.getElementById("outIndustry");
+outputIndustry.innerHTML = sliderIndustry.value; // Update slider value
+
+sliderIndustry.oninput = function () {
+  outputIndustry.innerHTML = this.value;
+};
+/*
+
+STLYE GRIDS BASED ON USER INPUT
+
+Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure parks(_leisurepa), roads(_roadsmean), schools(_schoolsme), supermarkets(_supermark), universities(_universit), water bodies(_waterbodi), public transport stations(_pt_statio), public transport stops(_pt_stopsm), restuarants(_restauran), theatres(_theatresm), cinemas(_cinemasme), and kindergartens(_kindermea)
+
+*/
+// Commit Search Button Feature
+
+
+function commitSearchFunction() {
+  // Calculate Weights for 100km Grid
+  var source_100km = grid100km.getSource();
+  var features_100km = source_100km.getFeatures();
+  var counter_100 = 1; // Count features for testing
+
+  features_100km.forEach(function (feature) {
+    var new_fuzzy_value_100km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 261.23441535189943; //15.28740076513416
+
+    feature.set("fuzzyvalue", new_fuzzy_value_100km);
+    console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
+
+    counter_100 += 1;
+  }); // Calculate Weights for 30km Grid
+
+  var source_30km = grid30km.getSource();
+  var features_30km = source_30km.getFeatures(); //var counter_30 = 1; // Count features for testing
+
+  features_30km.forEach(function (feature) {
+    var new_fuzzy_value_30km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 534.6083673974823;
+    feature.set("fuzzyvalue", new_fuzzy_value_30km); //console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
+    //counter_30 += 1;
+  }); // Calculate Weights for 1km Grid
+
+  var source_1km = grid1km_vectorimage_hovestad.getSource();
+  var features_1km = source_1km.getFeatures();
+  var counter_1 = 1; // Count features for testing
+
+  features_1km.forEach(function (feature) {
+    var new_fuzzy_value_1km = feature.get("_coastline") / 1000 / sliderCoasts.value + feature.get("_hospitals") / 1000 / sliderHospitals.value + feature.get("_leisurepa") / 1000 / sliderParks.value + feature.get("_roadsmean") / 1000 / sliderRoads.value + feature.get("_schoolsme") / 1000 / sliderSchools.value + feature.get("_supermark") / 1000 / sliderMarkets.value + feature.get("_universit") / 1000 / sliderUni.value + feature.get("_waterbodi") / 1000 / sliderWater.value + feature.get("_pt_statio") / 1000 / sliderPstations.value + feature.get("_pt_stopsm") / 1000 / sliderPstops.value + feature.get("_restauran") / 1000 / sliderRestuarants.value + feature.get("_theatresm") / 1000 / sliderTheatres.value + feature.get("_cinemasme") / 1000 / sliderCinemas.value + feature.get("_kindermea") / 1000 / sliderKinder.value / 14;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km);
+    console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
+
+    counter_1 += 1;
+  });
+}
+
+;
+/*
+// Calculate Weights for 1km Grid - CLEANED FILE
+var source_1km = grid1km_vectorimage.getSource();
+var features_1km = source_1km.getFeatures();
+//var counter_1 = 1; // Count features for testing
+
+features_1km.forEach(function(feature){
+  var new_fuzzy_value_1km = ((feature.get("coastmean") / sliderCoasts.value) + (feature.get("hospitalsm") / sliderHospitals.value) + (feature.get("parksmean") / sliderParks.value) + (feature.get("roadsmean") / sliderRoads.value) + (feature.get("schoolsmea") / sliderSchools.value) + (feature.get("marketsmea") / sliderMarkets.value) + (feature.get("unimean") / sliderUni.value) + (feature.get("watermean") / sliderWater.value) + (feature.get("ptstatmean") / sliderPstations.value) + (feature.get("ptstopmean") / sliderPstops.value) + (feature.get("foodmean") / sliderRestuarants.value) + (feature.get("theatremea") / sliderTheatres.value) + (feature.get("cinemamean") / sliderCinemas.value) + (feature.get("kindermean") / sliderKinder.value) / 14);
+  feature.set("fuzzyvalue", new_fuzzy_value_1km);
+  //console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("uid") + ": " + new_fuzzy_value_1km); // Log values for testing
+  //counter_1 += 1;
+  });
+};
+*/
+// Trigger 'Commit Search' button on click
+
+var bttn = document.getElementById("commitButton");
+bttn.addEventListener("click", commitSearchFunction, false);
+map.addOverlay(overlay);
+/**
+ * Add a click handler to the map to render the popup.
+ */
+
+map.on('singleclick', function (evt) {
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+    // Work only if the click on the grid layer
+    if (layer == grid100km, grid30km) {
+      return feature;
+    }
+  }); // Show the property of the feature
+
+  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed(2).toString() + '%</b> match given your inputs!<br>';
+  content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Industry</u>: <b>' + (feature.get('_industrie') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  content_element.innerHTML = content;
+  overlay.setPosition(evt.coordinate);
+  var overall_percent = (feature.get('fuzzyvalue') * 100).toFixed(2).toString();
+  var coast_value = (feature.get('_coastline') / 1000 / sliderCoasts.value).toFixed(0).toString();
+  var hospital_value = (feature.get('_hospitals') / 1000 / sliderHospitals.value).toFixed(0).toString();
+  var parks_value = (feature.get('_leisurepa') / 1000 / sliderParks.value).toFixed(0).toString();
+  var roads_value = (feature.get('_roadsmean') / 1000 / sliderRoads.value).toFixed(0).toString();
+  var schools_value = (feature.get('_schoolsme') / 1000 / sliderSchools.value).toFixed(0).toString();
+  var markets_value = (feature.get('_supermark') / 1000 / sliderMarkets.value).toFixed(0).toString();
+  var uni_value = (feature.get('_universit') / 1000 / sliderUni.value).toFixed(0).toString();
+  var water_value = (feature.get('_waterbodi') / 1000 / sliderWater.value).toFixed(0).toString();
+  var ptstops_value = (feature.get('_pt_stopsm') / 1000 / sliderPstops.value).toFixed(0).toString();
+  var ptstat_value = (feature.get('_pt_statio') / 1000 / sliderPstations.value).toFixed(0).toString();
+  var rest_value = (feature.get('_restauran') / 1000 / sliderRestuarants.value).toFixed(0).toString();
+  var theatre_value = (feature.get('_theatresm') / 1000 / sliderTheatres.value).toFixed(0).toString();
+  var cinema_value = (feature.get('_cinemasme') / 1000 / sliderCinemas.value).toFixed(0).toString();
+  var kinder_value = (feature.get('_kindermea') / 1000 / sliderKinder.value).toFixed(0).toString();
+  var industry_value = (feature.get('_industrie') / 1000 / sliderIndustry.value).toFixed(0).toString();
+  info_element.innerHTML = overall_percent;
+  console.info(feature.getProperties());
+  var ctx = document.getElementById('myChart').getContext('2d'); // before drawing a new chart
+
+  if (myChart != null) {
+    myChart.destroy();
+  } else {
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
+        datasets: [{
+          label: 'Percent Match',
+          data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
+          backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+}); // Change the cursor if on targer layer
+
+map.on('pointermove', function (e) {
+  if (e.dragging) return;
+  var pixel = e.map.getEventPixel(e.originalEvent);
+  var hit = false;
+  e.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+    if (layer === grid100km, grid30km) {
+      hit = true;
+    }
+  });
+  e.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+});
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/coordinate":"node_modules/ol/coordinate.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/loadingstrategy":"node_modules/ol/loadingstrategy.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/hospitals_epsg4326.geojson":"data/hospitals_epsg4326.geojson","./data/schools_epsg4326.geojson":"data/schools_epsg4326.geojson","./data/leisureparks_epsg4326.geojson":"data/leisureparks_epsg4326.geojson","./data/universities_epsg4326.geojson":"data/universities_epsg4326.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Nordjylland.geojson":"data/weighted_grid1km_Nordjylland.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson","./data/weighted_grid1km_Syddanmark.geojson":"data/weighted_grid1km_Syddanmark.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -113091,7 +113910,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58921" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62453" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,17 +4,142 @@
     <title>About Us</title>
     <link href="../css/about.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="https://www.favicon.cc/logo3d/173976.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
+
   <body>
-    <h2>About Us & This Project</h2>
-    <div class="topnav">
-        <a href="../index.html">Home</a>
-        <a class="active" href="about.html">About</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">
+        <img src="../images/favicon-32x32.png" height="32" alt="HomeLocator">
+        HomeLocator 
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/html/three_categories.html">Three Categories<span class="sr-only"></span></a>
+          </li>
+
+          <li class="nav-item active">
+            <a class="nav-link" href="/html/about.html">About<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+
+        <span class="navbar-text">
+          Find your way home.
+        </span>
+        
+      </div>
+    </nav>
+
+    <div class="hero-image">
+      <div class="hero-text">
+        <h1>HomeLocator</h1>
+        <p>A Student Project</p>
+      </div>
     </div>
-    <div>
-        <p class="ex1">Testing out a paragraph to write in the about page.</p>
+
+    <div class="center">
+
+      <!--Line Breaks to shift text & images down. A bit rough.-->
+      <br><br><br>
+
+        <div>
+        <!-- What is HomeLocator? -->
+        <div class="parent flex-parent">
+          <div class="child flex-child">
+            <h3>What is HomeLocator?</h3>
+            <ul>
+              <li>Your ideal neighborhood locator based on your personal preferences.</li>
+              <li>Web application to be used in the search for your new home.</li>
+              <li>Finds the most suitable neighborhoods for you.</li>
+              <li>Adjust results to your specific criteria.</li>
+            </ul>
+          </div>
+          <div class="child flex-child">
+            <img src="/images/building.jpg" alt="Building" height="450px">
+          </div>
+      </div>
+
+      <br>
+      
+      <!-- How does our tool differ? -->
+      <div class="parent flex-parent">
+        <div class="child flex-child">
+          <img src="/images/livability.jpg" alt="livability">
+        </div>
+        <div class="child flex-child">
+          <h3>What makes HomeLocator different?</h3>
+          <ol>
+            <li>No hidden agenda.</li>
+            <ul>
+              <li>Not financed by realtors or financial institutions.</li>
+              <li>Not trying to make a profit on hidden charges.</li>
+              <li>No user payment.</li>
+            </ul>
+            <li>HomeLocator offers a visualization of areas fitted to the users demands.</li>
+            <ul>
+              <li>As opposed to some other sites where a specific address must be provided in order to see results.</li>
+            </ul>
+          </ol>
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        <!-- Info Block #3 -->
+        <div class="parent flex-parent">
+          <div class="child flex-child">
+            <h3>Finding your new neighborhood.</h3>
+            <ul>
+              <li>Accessibility</li>
+              <ul>
+                <li>Point 1.</li>
+              </ul>
+              <li>Livability</li>
+              <ul>
+                <li>Point 2.</li>
+              </ul>
+              <li>Suitability</li>
+              <ul>
+                <li>Point 3.</li>
+              </ul>
+            </ul>
+          </div>
+          <div class="child flex-child">
+            <img src="/images/neighborhood.png" alt="Suitability" width="500px" height="500px">
+          </div>
+      </div>
+
+      <br><br>
+
+      <div class="center">
+        <!-- Built By: -->
+        <h5>
+          <p>This application was designed & built by:</p>
+        </h5>
+
+        <div id="container" class="center">
+          <p><a href="https://www.linkedin.com/in/alexanderboest-petersen/">Alexander Boest-Petersen</a><br>
+            Christina Elmegaard-Fessel<br>
+            Kristoffer Knudsen Horst<br>
+            <a href="https://www.linkedin.com/in/marcia-trillo-2303a753">Marcia Trillo</a></p>
+        </div>
+      </div>
+
     </div>
+
+    <footer class="center">
+      <p>© 2021 HomeLocator · <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">GitHub Repo</a> · <a href="mailto:aboest20@student.aau.dk?cc=mtrill20@student.aau.dk, clwl17@student.aau.dk, khorst20@student.aau.dk&subject=Mail%20from%20HomeLocator">Contact</a></p>
+    </footer>
+
   </body>
+
 </html>

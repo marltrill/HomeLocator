@@ -1,69 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script type="text/javascript" src="http://openlayers.org/api/2.13.1/OpenLayers.js"></script>
-    <title>Where to Live?</title>
+    <title>HomeLocator</title>
     <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
     <script src="https://unpkg.com/elm-pep"></script>
     <link href="/style.78032849.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-    <link rel="icon" type="image/png" href="https://www.favicon.cc/logo3d/173976.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.03823372.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.a89af6ed.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.0c1f3c50.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/ol-geocoder@latest/dist/ol-geocoder.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ol-geocoder"></script> <!-- Geocoder -->
     <script src="https://unpkg.com/ol-layerswitcher@3.8.3"></script> <!-- LayerSwitcher -->
+    <script src="/ors-js-client.bab4021b.js"></script> <!-- OpenRouteService -->
+    <script data-main="index" src="/require.9e574cb4.js"></script> <!-- RequireJS -->
+    <script src="https://d3js.org/d3.v6.js"></script> <!--D3.js-->
+    <!--jQuery Below-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="/style.78032849.js"></script><link rel="stylesheet" href="/Spring21_AAU_Project.e31bb0bc.css"></head>
+
   <body>
-    <h2>Real Estate Map (WORK IN PROGRESS)</h2>
-    <div class="topnav">
-      <a class="active" href="#home">Home</a>
-      <a href="/html\about.html">About</a>
-      <!-- Old Search Bar Replaced by OSM Geocoder on Map
-      <div class="search-container">
-        <form action="/action_page.php">
-          <input type="text" placeholder="Address Search..." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">
+        <img src="/favicon-32x32.a89af6ed.png" height="32" alt="HomeLocator">
+        HomeLocator
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+  <!--<About, Three Categories and Data Sources Pages>-->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/html\three_categories.html">Three Categories<span class="sr-only"></span></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/html\about.html">About<span class="sr-only"></span></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/html\data_sources.html">Data Sources<span class="sr-only"></span></a>
+          </li>
+        </ul>
+
+        <span class="navbar-text">
+          Find your way home.
+        </span>
       </div>
-    -->
+    </nav>
+
+    <script>$(function () {
+  var overlay = $('<div id="overlay"></div>');
+  overlay.show();
+  overlay.appendTo(document.body);
+  $('.popup').show();
+  $('.close').click(function () {
+    $('.popup').hide();
+    overlay.appendTo(document.body).remove();
+    return false;
+  });
+  $('.x').click(function () {
+    $('.popup').hide();
+    overlay.appendTo(document.body).remove();
+    return false;
+  });
+});</script>
+
+    <div class="popup">
+      <div class="cnt223">
+        <h1><b><center>Welcome to Your HomeLocator</center></b></h1>
+        <img src="/HomeLocator Logo.46bff0d5.png" alt="HomeLocator Logo" width="200px" height="200px" class="logocenter">
+        <p>
+        Find your way home. Adjust sliders to your match your requirements and click 'Commit Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Commit Search' again to view areas. Please allow a few seconds for loading time.
+        <br>
+        <br>
+        <a href="" class="close">Close</a>
+        </p>
+      </div>
     </div>
+
     <div id="map"></div>
-    <!--Old Restore Zoom Button (Only Working One Right Now)-->
-    <div id="menu">
-       <button id="zoom-restore">H</button>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
     </div>
-    <div style="display: none;">
-      <!-- Popup -->
-      <div id="popup" title="Welcome to OpenLayers"></div>
+
+    <div class="pane" style="overflow-y: scroll">
+
+      <!--
+        SLIDERS
+      -->
+
+      <h1 class="homelocator"><b>HomeLocator</b></h1>
+
+      <p class="searchdesc">Fine tune the sliders in each of the three categories below. Click 'Commit Search' to see which areas of the country are most suitable for you and your interests. Please allow some moments for loading/rendering of data.</p>
+
+      <hr>
+      <div>
+        <p class="center"><b>Categories:</b></p>
+        <button type="button" class="collapsible"><b>Accessibility</b></button>
+        <div class="content">
+          <br>
+          <!--Universities Slider-->
+          <div id="uniSlider">
+            <p class="slidertext"><b>Distance from Universities (1 to 161 Km)</b></p>
+            <input type="range" min="1" max="161" value="161" class="slider" id="uniDistance" step="1">
+            <label class="slidertext"><span id="outUni"></span> km</label>
+          </div>
+          <!--Roads Slider-->
+          <div id="roadsSlider">
+            <p class="slidertext"><b>Distance from Major Roads (1 to 65 Km)</b></p>
+            <input type="range" min="1" max="65" value="65" class="slider" id="roadsDistance" step="1">
+            <label class="slidertext"><span id="outRoads"></span> km</label>
+          </div>
+          <!--Public Transport Stops Slider-->
+          <div id="pstopsSlider">
+            <p class="slidertext"><b>Distance from Public Transport Stops (1 to 65 Km)</b></p>
+            <input type="range" min="1" max="65" value="65" class="slider" id="pstopsDistance" step="1">
+            <label class="slidertext"><span id="outPstops"></span> km</label>
+          </div>
+          <!--Public Transport Stations Slider-->
+          <div id="pstationsSlider">
+            <p class="slidertext"><b>Distance from Public Transport Stations (1 to 65 Km)</b></p>
+            <input type="range" min="1" max="65" value="65" class="slider" id="pstationsDistance" step="1">
+            <label class="slidertext"><span id="outPstations"></span> km</label>
+          </div>
+          <br>
+        </div>
+        <button type="button" class="collapsible"><b>Livability</b></button>
+        <div class="content">
+          <br>
+          <!--Schools Slider-->
+          <div id="schoolSlider">
+            <p class="slidertext"><b>Distance from Intermediate Schools (1 to 37 Km)</b></p>
+            <input type="range" min="1" max="37" value="37" class="slider" id="schoolDistance" step="1">
+            <label class="slidertext"><span id="outSchool"></span> km</label>
+          </div>
+          <!--Kindergartens Slider-->
+          <div id="kinderSlider">
+            <p class="slidertext"><b>Distance from Kindergartens (1 to 66 Km)</b></p>
+            <input type="range" min="1" max="66" value="66" class="slider" id="kinderDistance" step="1">
+            <label class="slidertext"><span id="outKinder"></span> km</label>
+          </div>
+          <!--Coastline Slider-->
+          <div id="coastSlider">
+            <p class="slidertext"><b>Distance from Coast (1 to 31 Km)</b></p>
+            <input type="range" min="1" max="31" value="31" class="slider" id="coastDistance" step="1">
+            <label class="slidertext"><span id="outCoast"></span> km</label>
+          </div>
+          <!--Supermarkets Slider-->
+          <div id="marketsSlider">
+            <p class="slidertext"><b>Distance from Supermarkets (1 to 37 Km)</b></p>
+            <input type="range" min="1" max="37" value="37" class="slider" id="marketsDistance" step="1">
+            <label class="slidertext"><span id="outMarkets"></span> km</label>
+          </div>
+          <!--Water Bodies Slider-->
+          <div id="waterSlider">
+            <p class="slidertext"><b>Distance from Water Bodies (1 to 33 Km)</b></p>
+            <input type="range" min="1" max="33" value="33" class="slider" id="waterDistance" step="1">
+            <label class="slidertext"><span id="outWater"></span> km</label>
+          </div>
+          <!--Industries Slider-->
+          <div id="industrySlider">
+            <p class="slidertext"><b>Distance from Industries (1 to 5 Km)</b></p>
+            <input type="range" min="1" max="5" value="5" class="slider" id="industryDistance" step="1">
+            <label class="slidertext"><span id="outIndustry"></span> km</label>
+          </div>
+          <br>
+        </div>
+        <button type="button" class="collapsible"><b>Suitability</b></button>
+        <div class="content">
+          <br>
+          <!--Parks Slider-->
+          <div id="parksSlider">
+            <p class="slidertext"><b>Distance from Parks (1 to 63 Km)</b></p>
+            <input type="range" min="1" max="63" value="63" class="slider" id="parksDistance" step="1">
+            <label class="slidertext"><span id="outParks"></span> km</label>
+          </div>
+          <!--Hospitals Slider-->
+          <div id="hospitalsSlider">
+            <p class="slidertext"><b>Distance from Hospitals (1 to 74 Km)</b></p>
+            <input type="range" min="1" max="74" value="74" class="slider" id="hospitalsDistance" step="1">
+            <label class="slidertext"><span id="outHospitals"></span> km</label>
+          </div>
+          <!--Restuarants Slider-->
+          <div id="restuarantsSlider">
+            <p class="slidertext"><b>Distance from Restuarants (1 to 37 Km)</b></p>
+            <input type="range" min="1" max="37" value="37" class="slider" id="restuarantsDistance" step="1">
+            <label class="slidertext"><span id="outRestuarants"></span> km</label>
+          </div>
+          <!--Theatre Slider-->
+          <div id="theatreSlider">
+            <p class="slidertext"><b>Distance from Theatres (1 to 73 Km)</b></p>
+            <input type="range" min="1" max="73" value="73" class="slider" id="theatreDistance" step="1">
+            <label class="slidertext"><span id="outTheatre"></span> km</label>
+          </div>
+          <!--Cinemas Slider-->
+          <div id="cinemasSlider">
+            <p class="slidertext"><b>Distance from Cinemas (1 to 69 Km)</b></p>
+            <input type="range" min="1" max="69" value="69" class="slider" id="cinemasDistance" step="1">
+            <label class="slidertext"><span id="outCinemas"></span> km</label>
+          </div>
+          <br>
+        </div>
+
+        <script>var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}</script>
+
+        <div class="searchcenter">
+          <br>
+          <!-- Commit Button -->
+          <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+        </div>
+        <div class="catchphrase"><b>Find your way home.</b></div>
+        <div class="copyright">© 2021 HomeLocator</div>
+      </div>
+      <!--
+      <h6>Isochrone Options:</h6>
+
+      <div>
+        Click a point on the map to see travel times.
+        Selected Location (Lat/Long):
+
+        <script>
+          alert(simple().coordinate);
+        </script>
+      </div>
+
+      <br>
+
+      <form name="IsoClicker">
+        <input type="radio" name="isoradio" value="driving-car">Car
+        <input type="radio" name="isoradio" value="cycling-regular">Bike
+        <input type="radio" name="isoradio" value="foot-walking">Walk
+        <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
+      </form>
+
+      <script>
+          function getRadioValue(groupName) {
+              var radios = IsoClicker.elements[groupName];
+              window.rdValue; // declares the global variable 'rdValue'
+              for (var i=0; i<radios.length; i++) {
+                  var someRadio = radios[i];
+                  if (someRadio.checked) {
+                      rdValue = someRadio.value;
+                      break;
+                  }
+                  else rdValue = 'noRadioChecked';
+              }
+              if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue =="foot-walking") {
+                  or: console.log("Isoradio action")
+              }
+              else if (rdValue == 'noRadioChecked') {
+                  alert('no radio checked');
+              }
+          }
+      </script>
+
+
+      <div>
+        <label>Max Commute Time (Minutes)</label>
+        <input type="range" min="1" max="120" value="60" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>
+
+      <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+        }
+      </script>
+      <div>
+        <button type = "button" id = "isochroneActivate">
+          Activate isochrone request
+        </button>
+      </div>
+      -->
+
     </div>
-    <script src="/Spring21_AAU_Project.e31bb0bc.js"></script>
-    <div class="pane">
-      <h1>Search Criteria</h1>
-      <ul id="js-searchCriteria">
-        <li>
-          <label>
-            <input type="checkbox" checked="" value="optionOne">
-            <span>Option 1</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="checkbox" checked="" value="optionTwo">
-            <span>Option 2</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <input type="checkbox" checked="" value="optionThree">
-            <span>Option 3</span>
-          </label>
-        </li>
-      </ul>
+
+    <div class="info-pane">
+      <p>Overall Percentage: <span id="info-element"></span></p>
+      <canvas id="myChart" width="500" height="90"></canvas>
     </div>
+
+    <script type="text/javascript" src="/Spring21_AAU_Project.e31bb0bc.js"></script>
+
   </body>
+
+  <!--
+  <div class="info-pane">
+    <p>Overall Percentage: <span id="info-element"></span></p>
+  </div>
+-->
+
 </html>
