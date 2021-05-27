@@ -49,3 +49,7 @@ body, html {
     margin-right: auto;
     margin-left: auto;
 }
+
+.sub-points {
+  text-align: left;
+}
