@@ -44,8 +44,8 @@ body, html {
 }
 
 .footer {
-    position: fixed;
-    bottom: 0%;
-    width: 50%;
+    display: table;
     text-align: center;
+    margin-right: auto;
+    margin-left: auto;
 }
