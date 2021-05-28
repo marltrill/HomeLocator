@@ -113674,15 +113674,12 @@ function commitSearchFunction() {
   }); // Calculate Weights for 1km Grid
 
   var source_1km = grid1km_vectorimage_hovestad.getSource();
-  var features_1km = source_1km.getFeatures();
-  var counter_1 = 1; // Count features for testing
+  var features_1km = source_1km.getFeatures(); //var counter_1 = 1; // Count features for testing
 
   features_1km.forEach(function (feature) {
     var new_fuzzy_value_1km = feature.get("_coastline") / 1000 / sliderCoasts.value + feature.get("_hospitals") / 1000 / sliderHospitals.value + feature.get("_leisurepa") / 1000 / sliderParks.value + feature.get("_roadsmean") / 1000 / sliderRoads.value + feature.get("_schoolsme") / 1000 / sliderSchools.value + feature.get("_supermark") / 1000 / sliderMarkets.value + feature.get("_universit") / 1000 / sliderUni.value + feature.get("_waterbodi") / 1000 / sliderWater.value + feature.get("_pt_statio") / 1000 / sliderPstations.value + feature.get("_pt_stopsm") / 1000 / sliderPstops.value + feature.get("_restauran") / 1000 / sliderRestuarants.value + feature.get("_theatresm") / 1000 / sliderTheatres.value + feature.get("_cinemasme") / 1000 / sliderCinemas.value + feature.get("_kindermea") / 1000 / sliderKinder.value / 14;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km);
-    console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
-
-    counter_1 += 1;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km); //console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
+    //counter_1 += 1;
   });
 }
 
@@ -113718,22 +113715,22 @@ map.on('singleclick', function (evt) {
     }
   }); // Show the property of the feature
 
-  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed().toString() + '%</b> match given your inputs!<br>';
-  content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Industry</u>: <b>' + (feature.get('_industrie') / 1000).toFixed(0).toString() + ' km</b>' + '<br>';
+  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed(0).toString() + '%</b> match given your inputs!<br>';
+  content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  content += 'Avg Distance to <u>Industry</u>: <b>' + (feature.get('_industrie') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
   content_element.innerHTML = content;
   overlay.setPosition(evt.coordinate);
   var overall_percent = (feature.get('fuzzyvalue') * 100).toFixed().toString();
@@ -113755,23 +113752,24 @@ map.on('singleclick', function (evt) {
   var industry_value = ((feature.get('_industrie')/1000)/sliderIndustry.value).toFixed(0).toString();
   */
 
-  var coast_value = (feature.get('_coastline') / 1000).toFixed(0).toString();
-  var hospital_value = (feature.get('_hospitals') / 1000).toFixed(0).toString();
-  var parks_value = (feature.get('_leisurepa') / 1000).toFixed(0).toString();
-  var roads_value = (feature.get('_roadsmean') / 1000).toFixed(0).toString();
-  var schools_value = (feature.get('_schoolsme') / 1000).toFixed(0).toString();
-  var markets_value = (feature.get('_supermark') / 1000).toFixed(0).toString();
-  var uni_value = (feature.get('_universit') / 1000).toFixed(0).toString();
-  var water_value = (feature.get('_waterbodi') / 1000).toFixed(0).toString();
-  var ptstops_value = (feature.get('_pt_stopsm') / 1000).toFixed(0).toString();
-  var ptstat_value = (feature.get('_pt_statio') / 1000).toFixed(0).toString();
-  var rest_value = (feature.get('_restauran') / 1000).toFixed(0).toString();
-  var theatre_value = (feature.get('_theatresm') / 1000).toFixed(0).toString();
-  var cinema_value = (feature.get('_cinemasme') / 1000).toFixed(0).toString();
-  var kinder_value = (feature.get('_kindermea') / 1000).toFixed(0).toString();
-  var industry_value = (feature.get('_industrie') / 1000).toFixed(0).toString();
+  var coast_value = (feature.get('_coastline') / 1000).toFixed(2).toString();
+  var hospital_value = (feature.get('_hospitals') / 1000).toFixed(2).toString();
+  var parks_value = (feature.get('_leisurepa') / 1000).toFixed(2).toString();
+  var roads_value = (feature.get('_roadsmean') / 1000).toFixed(2).toString();
+  var schools_value = (feature.get('_schoolsme') / 1000).toFixed(2).toString();
+  var markets_value = (feature.get('_supermark') / 1000).toFixed(2).toString();
+  var uni_value = (feature.get('_universit') / 1000).toFixed(2).toString();
+  var water_value = (feature.get('_waterbodi') / 1000).toFixed(2).toString();
+  var ptstops_value = (feature.get('_pt_stopsm') / 1000).toFixed(2).toString();
+  var ptstat_value = (feature.get('_pt_statio') / 1000).toFixed(2).toString();
+  var rest_value = (feature.get('_restauran') / 1000).toFixed(2).toString();
+  var theatre_value = (feature.get('_theatresm') / 1000).toFixed(2).toString();
+  var cinema_value = (feature.get('_cinemasme') / 1000).toFixed(2).toString();
+  var kinder_value = (feature.get('_kindermea') / 1000).toFixed(2).toString();
+  var industry_value = (feature.get('_industrie') / 1000).toFixed(2).toString();
+  var cell_id = feature.get('id').toFixed(0).toString();
   info_element.innerHTML = overall_percent;
-  console.info(feature.getProperties());
+  console.info(feature.getProperties()); // Destroy existing chart to build new
 
   if (window.myChart instanceof Chart) {
     window.myChart.destroy();
@@ -113784,18 +113782,37 @@ map.on('singleclick', function (evt) {
     data: {
       labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
       datasets: [{
-        label: 'Percent Match',
+        label: ['Distance (Km)'],
         data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
-        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(166,206,227, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(31,120,180, 0.2)', 'rgba(178,223,138, 0.2)', 'rgba(51,160,44, 0.2)', 'rgba(251,154,153, 0.2)', 'rgba(227,26,28, 0.2)', 'rgba(253,191,111, 0.2)', 'rgba(255,127,0, 0.2)', 'rgba(202,178,214, 0.2)', 'rgba(106,61,154, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(166,206,227, 1)', 'rgba(255, 159, 64, 1)', 'rgba(31,120,180, 1)', 'rgba(178,223,138, 1)', 'rgba(51,160,44, 1)', 'rgba(251,154,153, 1)', 'rgba(227,26,28, 1)', 'rgba(253,191,111, 1)', 'rgba(255,127,0, 1)', 'rgba(202,178,214, 1)', 'rgba(106,61,154, 1)'],
         borderWidth: 1
       }]
     },
     options: {
-      responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Distance (Km)'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Criteria'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          text: 'Average Distance to Criteria for Cell ' + cell_id + ' (Km)',
+          display: true
         }
       }
     }
@@ -113841,7 +113858,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57864" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56595" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

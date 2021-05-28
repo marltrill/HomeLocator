@@ -59,12 +59,16 @@ body, html {
 
 .info-pane{
   position: absolute;
-  height: 20vh;
+  height: 23vh;
   bottom: 50px;
   right: 450px;
   left: 50px;
   background: ghostwhite;
   border: 2.5px solid black;
+}
+
+.info-canvas{
+  bottom: 0%;
 }
 
 #overlay {
