@@ -6,10 +6,9 @@ import View from 'ol/View';
 import {GeoJSON} from 'ol/format';
 import {Text, Style, Stroke, Fill} from 'ol/style';
 import {Tile as TileLayer, Vector as VectorLayer, Group} from 'ol/layer';
-import {fromLonLat, toLonLat} from 'ol/proj';
+import {fromLonLat} from 'ol/proj';
 import OSM from 'ol/source/OSM';
 import Overlay from 'ol/Overlay';
-import {toStringHDMS} from 'ol/coordinate';
 import {ScaleLine, ZoomToExtent, defaults as defaultControls, FullScreen} from 'ol/control';
 import TopoJSON from 'ol/format/TopoJSON';
 import Geocoder from 'ol-geocoder';
@@ -1019,7 +1018,7 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
     }
   });
   // Show the property of the feature
-  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue')*100).toFixed(2).toString() + '%</b> match given your inputs!<br>';
+  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue')*100).toFixed().toString() + '%</b> match given your inputs!<br>';
   content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa')/1000).toFixed(0).toString() + ' km</b>' + '<br>';
@@ -1038,7 +1037,8 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
   content_element.innerHTML = content;
   overlay.setPosition(evt.coordinate);
 
-  var overall_percent = (feature.get('fuzzyvalue')*100).toFixed(2).toString();
+  var overall_percent = (feature.get('fuzzyvalue')*100).toFixed().toString();
+  /*
   var coast_value = ((feature.get('_coastline')/1000)/sliderCoasts.value).toFixed(0).toString();
   var hospital_value = ((feature.get('_hospitals')/1000)/sliderHospitals.value).toFixed(0).toString();
   var parks_value = ((feature.get('_leisurepa')/1000)/sliderParks.value).toFixed(0).toString();
@@ -1054,70 +1054,87 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
   var cinema_value = ((feature.get('_cinemasme')/1000)/sliderCinemas.value).toFixed(0).toString();
   var kinder_value = ((feature.get('_kindermea')/1000)/sliderKinder.value).toFixed(0).toString();
   var industry_value = ((feature.get('_industrie')/1000)/sliderIndustry.value).toFixed(0).toString();
+  */
+
+  var coast_value = ((feature.get('_coastline')/1000)).toFixed(0).toString();
+  var hospital_value = ((feature.get('_hospitals')/1000)).toFixed(0).toString();
+  var parks_value = ((feature.get('_leisurepa')/1000)).toFixed(0).toString();
+  var roads_value = ((feature.get('_roadsmean')/1000)).toFixed(0).toString();
+  var schools_value = ((feature.get('_schoolsme')/1000)).toFixed(0).toString();
+  var markets_value = ((feature.get('_supermark')/1000)).toFixed(0).toString();
+  var uni_value = ((feature.get('_universit')/1000)).toFixed(0).toString();
+  var water_value = ((feature.get('_waterbodi')/1000)).toFixed(0).toString();
+  var ptstops_value = ((feature.get('_pt_stopsm')/1000)).toFixed(0).toString();
+  var ptstat_value = ((feature.get('_pt_statio')/1000)).toFixed(0).toString();
+  var rest_value = ((feature.get('_restauran')/1000)).toFixed(0).toString();
+  var theatre_value = ((feature.get('_theatresm')/1000)).toFixed(0).toString();
+  var cinema_value = ((feature.get('_cinemasme')/1000)).toFixed(0).toString();
+  var kinder_value = ((feature.get('_kindermea')/1000)).toFixed(0).toString();
+  var industry_value = ((feature.get('_industrie')/1000)).toFixed(0).toString();
 
   info_element.innerHTML = overall_percent;
 
   console.info(feature.getProperties());
 
+  if(window.myChart instanceof Chart)
+    {
+        window.myChart.destroy();
+    };
+
   var ctx = document.getElementById('myChart').getContext('2d');
-  // before drawing a new chart
-  if (myChart != null) {
-    myChart.destroy();
-  }
-  else {
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
-            datasets: [{
-                label: 'Percent Match',
-                data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-  }
+  window.myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
+        datasets: [{
+            label: 'Percent Match',
+            data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+          y: {
+              beginAtZero: true
+          }
+      }
+    }
+  });
 });
 
 // Change the cursor if on targer layer
