@@ -1087,53 +1087,71 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
     data: {
         labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
         datasets: [{
-            label: 'Percent Match',
+            label: ['Distance (Km)'],
             data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
+                'rgba(166,206,227, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
+                'rgba(31,120,180, 0.2)',
+                'rgba(178,223,138, 0.2)',
+                'rgba(51,160,44, 0.2)',
+                'rgba(251,154,153, 0.2)',
+                'rgba(227,26,28, 0.2)',
+                'rgba(253,191,111, 0.2)',
+                'rgba(255,127,0, 0.2)',
+                'rgba(202,178,214, 0.2)',
+                'rgba(106,61,154, 0.2)',
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
+                'rgba(166,206,227, 1)',
                 'rgba(255, 159, 64, 1)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
+                'rgba(31,120,180, 1)',
+                'rgba(178,223,138, 1)',
+                'rgba(51,160,44, 1)',
+                'rgba(251,154,153, 1)',
+                'rgba(227,26,28, 1)',
+                'rgba(253,191,111, 1)',
+                'rgba(255,127,0, 1)',
+                'rgba(202,178,214, 1)',
+                'rgba(106,61,154, 1)',
             ],
             borderWidth: 1
         }]
     },
     options: {
-      responsive: true,
       scales: {
           y: {
-              beginAtZero: true
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Distance (Km)'
+              }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Criteria'
+            }
           }
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          text: 'Average Distance to Criteria for Selected Cell (Km)',
+          display: true,
+        }
       }
-    }
+    },
   });
 });
 
