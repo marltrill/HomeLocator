@@ -113650,7 +113650,39 @@ Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure pa
 
 
 function commitSearchFunction() {
-  // Calculate Weights for 100km Grid
+  // Calculate Weights for 1km Grid
+  var source_1km = grid1km_vectorimage_hovestad.getSource();
+  var features_1km = source_1km.getFeatures();
+  var counter_1 = 1; // Count features for testing
+
+  features_1km.forEach(function (feature) {
+    /*
+    var new_fuzzy_value_1km = (((parseInt(sliderCoasts.value)/(feature.get("_coastline")/1000)) + (parseInt(sliderHospitals.value)/(feature.get("_hospitals")/1000)) + (parseInt(sliderParks.value)/(feature.get("_leisurepa")/1000)) + (parseInt(sliderRoads.value)/(feature.get("_roadsmean")/1000)) + (parseInt(sliderSchools.value)/(feature.get("_schoolsme")/1000)) + (parseInt(sliderMarkets.value)/(feature.get("_supermark")/1000)) + (parseInt(sliderUni.value)/(feature.get("_universit")/1000)) + (parseInt(sliderWater.value)/(feature.get("_waterbodi")/1000)) + (parseInt(sliderPstations.value)/(feature.get("_pt_statio")/1000)) + (parseInt(sliderPstops.value)/(feature.get("_pt_stopsm")/1000)) + (parseInt(sliderRestuarants.value)/(feature.get("_restauran")/1000)) + (parseInt(sliderTheatres.value)/(feature.get("_theatresm")/1000)) + (parseInt(sliderCinemas.value)/(feature.get("_cinemasme")/1000)) + (parseInt(sliderKinder.value)/feature.get("_kindermea")) + (parseInt(sliderIndustry.value)/(feature.get("_industrie")/1000))) / 534.6083673974823);
+    console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
+    counter_1 += 1;
+    */
+    var coasts_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var hospitals_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var parks_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var roads_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var schools_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var markets_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var uni_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var water_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var pstat_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var pstop_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var food_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var theatre_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var cinema_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var kinder_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var industry_1km = parseInt(sliderCoasts.value) / feature.get("_coastline") / 1000;
+    var grid1km_sum = (coasts_1km + hospitals_1km + parks_1km + roads_1km + schools_1km + markets_1km + uni_1km + water_1km + pstat_1km + pstop_1km + food_1km + theatre_1km + cinema_1km + kinder_1km + industry_1km) / 0.00034621772289338486;
+    console.log(grid1km_sum);
+    var new_fuzzy_value_1km = grid1km_sum;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km);
+    counter_1 += 1;
+  }); // Calculate Weights for 100km Grid
+
   var source_100km = grid100km.getSource();
   var features_100km = source_100km.getFeatures();
   var counter_100 = 1; // Count features for testing
@@ -113671,15 +113703,6 @@ function commitSearchFunction() {
     var new_fuzzy_value_30km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 534.6083673974823;
     feature.set("fuzzyvalue", new_fuzzy_value_30km); //console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
     //counter_30 += 1;
-  }); // Calculate Weights for 1km Grid
-
-  var source_1km = grid1km_vectorimage_hovestad.getSource();
-  var features_1km = source_1km.getFeatures(); //var counter_1 = 1; // Count features for testing
-
-  features_1km.forEach(function (feature) {
-    var new_fuzzy_value_1km = feature.get("_coastline") / 1000 / sliderCoasts.value + feature.get("_hospitals") / 1000 / sliderHospitals.value + feature.get("_leisurepa") / 1000 / sliderParks.value + feature.get("_roadsmean") / 1000 / sliderRoads.value + feature.get("_schoolsme") / 1000 / sliderSchools.value + feature.get("_supermark") / 1000 / sliderMarkets.value + feature.get("_universit") / 1000 / sliderUni.value + feature.get("_waterbodi") / 1000 / sliderWater.value + feature.get("_pt_statio") / 1000 / sliderPstations.value + feature.get("_pt_stopsm") / 1000 / sliderPstops.value + feature.get("_restauran") / 1000 / sliderRestuarants.value + feature.get("_theatresm") / 1000 / sliderTheatres.value + feature.get("_cinemasme") / 1000 / sliderCinemas.value + feature.get("_kindermea") / 1000 / sliderKinder.value / 14;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km); //console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
-    //counter_1 += 1;
   });
 }
 
