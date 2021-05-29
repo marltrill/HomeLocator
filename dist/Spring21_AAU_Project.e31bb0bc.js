@@ -113734,22 +113734,7 @@ function commitSearchFunction() {
   });
 }
 
-;
-/*
-// Calculate Weights for 1km Grid - CLEANED FILE
-var source_1km = grid1km_vectorimage.getSource();
-var features_1km = source_1km.getFeatures();
-//var counter_1 = 1; // Count features for testing
-
-features_1km.forEach(function(feature){
-  var new_fuzzy_value_1km = ((feature.get("coastmean") / sliderCoasts.value) + (feature.get("hospitalsm") / sliderHospitals.value) + (feature.get("parksmean") / sliderParks.value) + (feature.get("roadsmean") / sliderRoads.value) + (feature.get("schoolsmea") / sliderSchools.value) + (feature.get("marketsmea") / sliderMarkets.value) + (feature.get("unimean") / sliderUni.value) + (feature.get("watermean") / sliderWater.value) + (feature.get("ptstatmean") / sliderPstations.value) + (feature.get("ptstopmean") / sliderPstops.value) + (feature.get("foodmean") / sliderRestuarants.value) + (feature.get("theatremea") / sliderTheatres.value) + (feature.get("cinemamean") / sliderCinemas.value) + (feature.get("kindermean") / sliderKinder.value) / 14);
-  feature.set("fuzzyvalue", new_fuzzy_value_1km);
-  //console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("uid") + ": " + new_fuzzy_value_1km); // Log values for testing
-  //counter_1 += 1;
-  });
-};
-*/
-// Trigger 'Commit Search' button on click
+; // Trigger 'Commit Search' button on click
 
 var bttn = document.getElementById("commitButton");
 bttn.addEventListener("click", commitSearchFunction, false);
@@ -113765,9 +113750,9 @@ map.on('singleclick', function (evt) {
       return feature;
     }
   }); // Show the property of the feature
+  //var content = 'This cell is a <b>' + (feature.get('fuzzyvalue')*100).toFixed(0).toString() + '%</b> match given your inputs!<br>';
 
-  var content = 'This cell is a <b>' + (feature.get('fuzzyvalue') * 100).toFixed(0).toString() + '%</b> match given your inputs!<br>';
-  content += 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  var content = 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
   content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean') / 1000).toFixed(2).toString() + ' km</b>' + '<br>';
@@ -113785,24 +113770,6 @@ map.on('singleclick', function (evt) {
   content_element.innerHTML = content;
   overlay.setPosition(evt.coordinate);
   var overall_percent = (feature.get('fuzzyvalue') * 100).toFixed().toString();
-  /*
-  var coast_value = ((feature.get('_coastline')/1000)/sliderCoasts.value).toFixed(0).toString();
-  var hospital_value = ((feature.get('_hospitals')/1000)/sliderHospitals.value).toFixed(0).toString();
-  var parks_value = ((feature.get('_leisurepa')/1000)/sliderParks.value).toFixed(0).toString();
-  var roads_value = ((feature.get('_roadsmean')/1000)/sliderRoads.value).toFixed(0).toString();
-  var schools_value = ((feature.get('_schoolsme')/1000)/sliderSchools.value).toFixed(0).toString();
-  var markets_value = ((feature.get('_supermark')/1000)/sliderMarkets.value).toFixed(0).toString();
-  var uni_value = ((feature.get('_universit')/1000)/sliderUni.value).toFixed(0).toString();
-  var water_value = ((feature.get('_waterbodi')/1000)/sliderWater.value).toFixed(0).toString();
-  var ptstops_value = ((feature.get('_pt_stopsm')/1000)/sliderPstops.value).toFixed(0).toString();
-  var ptstat_value = ((feature.get('_pt_statio')/1000)/sliderPstations.value).toFixed(0).toString();
-  var rest_value = ((feature.get('_restauran')/1000)/sliderRestuarants.value).toFixed(0).toString();
-  var theatre_value = ((feature.get('_theatresm')/1000)/sliderTheatres.value).toFixed(0).toString();
-  var cinema_value = ((feature.get('_cinemasme')/1000)/sliderCinemas.value).toFixed(0).toString();
-  var kinder_value = ((feature.get('_kindermea')/1000)/sliderKinder.value).toFixed(0).toString();
-  var industry_value = ((feature.get('_industrie')/1000)/sliderIndustry.value).toFixed(0).toString();
-  */
-
   var coast_value = (feature.get('_coastline') / 1000).toFixed(2).toString();
   var hospital_value = (feature.get('_hospitals') / 1000).toFixed(2).toString();
   var parks_value = (feature.get('_leisurepa') / 1000).toFixed(2).toString();
@@ -113819,7 +113786,7 @@ map.on('singleclick', function (evt) {
   var kinder_value = (feature.get('_kindermea') / 1000).toFixed(2).toString();
   var industry_value = (feature.get('_industrie') / 1000).toFixed(2).toString();
   var cell_id = feature.get('id').toFixed(0).toString();
-  info_element.innerHTML = overall_percent;
+  info_element.innerHTML = 'Cell ' + cell_id + ':<br>' + overall_percent + '% Match';
   console.info(feature.getProperties()); // Destroy existing chart to build new
 
   if (window.myChart instanceof Chart) {
@@ -113909,7 +113876,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65049" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56910" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

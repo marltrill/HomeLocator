@@ -85,7 +85,7 @@
         <h1><b><center>Welcome to Your HomeLocator</center></b></h1>
         <img src="/HomeLocator Logo.46bff0d5.png" alt="HomeLocator Logo" width="200px" height="200px" class="logocenter">
         <p>
-        Find your way home. Adjust sliders to match your requirements and click 'Commit Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Commit Search' again to view areas. Please allow a few seconds for loading time.
+        Find your way home. Adjust sliders to match your requirements and click 'Commit Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Commit Search' again to view areas. Please allow a few moments for loading time.
         <br>
         <br>
         <a href="" class="close">Close</a>
@@ -111,7 +111,7 @@
 
       <hr>
       <div>
-        <p class="center"><b>Categories:</b></p>
+        <p class="center">Categories:</p>
         <button type="button" class="collapsible"><b>Accessibility</b></button>
         <div class="content">
           <br>
@@ -307,10 +307,27 @@ for (i = 0; i < coll.length; i++) {
       </div>
       -->
 
+      <hr>
+
+      <p class="center">Results:</p>
+
+      <p class="searchdesc">Click on colored grid cell on map to see further information regarding selected area.</p>
+
+      <div class="percent-match">
+        <p class="percent-center"><span id="info-element"></span></p>
+      </div>
+
+      <p><b>Legend:</b></p>
+      <div class="dark-green"></div><span class="explanation">80-100%</span>
+      <div class="green"></div><span class="explanation">60-80%</span>
+      <div class="light-green"></div><span class="explanation">40-60%</span>
+      <div class="lighter-green"></div><span class="explanation">20-40%</span>
+      <div class="yellow"></div><span class="explanation">5-20%</span>
+
     </div>
 
     <div class="info-pane" onload="OnLoad()">
-      <p>Overall Percentage: <span id="info-element"></span></p>
+      <!--<p>Overall Percentage: <span id="info-element"></span></p>-->
       <canvas id="myChart" width="490" height="50"></canvas>
     </div>
 
