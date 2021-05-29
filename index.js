@@ -74,7 +74,7 @@ var classification_search_100km = function (feature, resolution){
     layercolor='rgba(0, 100, 0, 0.6)';
     }
     else { layercolor='rgba(217, 200, 0, 0)';
-    }
+  }
   return new Style({
     stroke: new Stroke({
       color: 'rgba(0, 0, 0, 0)',
@@ -109,7 +109,7 @@ var classification_search_30km = function (feature, resolution){
     layercolor='rgba(0, 100, 0, 0.6)';
     }
     else { layercolor='rgba(217, 200, 0, 0)';
-    }
+  }
   return new Style({
     stroke: new Stroke({
       color: 'rgba(0, 0, 0, 0)',
@@ -125,22 +125,25 @@ var classification_search_30km = function (feature, resolution){
 var classification_search_1km = function (feature, resolution){
   const fuzzyvalue = feature.get('fuzzyvalue')
   var layercolor
-  if (fuzzyvalue < 0.6) {
-  layercolor='rgba(0, 100, 0, 0.6)';
-  }
-  else if (fuzzyvalue < 1.2) {
-  layercolor='rgba(0, 150, 0, 0.6)';
-  }
-  else if (fuzzyvalue < 1.8) {
-  layercolor='rgba(0, 200, 0, 0.6)';
-  }
-  else if (fuzzyvalue < 2.4) {
-  layercolor='rgba(133, 200, 0, 0.6)';
-  }
-  else if (fuzzyvalue < 3) {
-  layercolor='rgba(217, 200, 0, 0.6)';
-  }
-  else { layercolor='rgba(217, 200, 0, 0)';
+  if (fuzzyvalue < 0.05) {
+    layercolor='rgba(0, 0, 0, 0)'
+    }
+    else if (fuzzyvalue < 0.2) {
+    layercolor='rgba(217, 200, 0, 0.6)';
+    }
+    else if (fuzzyvalue < 0.4) {
+    layercolor='rgba(133, 200, 0, 0.6)';
+    }
+    else if (fuzzyvalue < 0.6) {
+    layercolor='rgba(0, 200, 0, 0.6)';
+    }
+    else if (fuzzyvalue < 0.8) {
+    layercolor='rgba(0, 150, 0, 0.6)';
+    }
+    else if (fuzzyvalue <= 1) {
+    layercolor='rgba(0, 100, 0, 0.6)';
+    }
+    else { layercolor='rgba(217, 200, 0, 0)';
   }
   return new Style({
     stroke: new Stroke({
@@ -348,121 +351,10 @@ var grid30km = new VectorLayer({
     format: new GeoJSON(),
     url: grid30km_geojson,
   }),
-  minResolution: 15,
+  minResolution: 100,
   maxResolution: 400,
   style: classification_search_30km
 });
-
-// Add Weighted Grid (1km Resolution - Fyn)
-var grid1km_fyn_geojson = require('./data/weighted_grid1km_Fyn.geojson')
-
-var grid1km_fyn = new VectorLayer({
-  title: 'Weighted Grid (1km - Fyn)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_fyn_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Hovestadden)
-var grid1km_hovedstad_geojson = require('./data/weighted_grid1km_hovestad.geojson')
-
-var grid1km_hovestad = new VectorLayer({
-  title: 'Weighted Grid (1km - Hovedstadden)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_hovedstad_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Midtjylland)
-var grid1km_midtjylland_geojson = require('./data/weighted_grid1km_Midtjylland.geojson')
-
-var grid1km_midtjylland = new VectorLayer({
-  title: 'Weighted Grid (1km - Midtjylland)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_midtjylland_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Midtjylland W)
-var grid1km_midtjyllandw_geojson = require('./data/weighted_grid1km_MidtjyllandW.geojson')
-
-var grid1km_midtjyllandw = new VectorLayer({
-  title: 'Weighted Grid (1km - Midtjylland West)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_midtjyllandw_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Nordjylland)
-var grid1km_nordjylland_geojson = require('./data/weighted_grid1km_Nordjylland.geojson')
-
-var grid1km_nordjylland = new VectorLayer({
-  title: 'Weighted Grid (1km - Nordjylland)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_nordjylland_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Sjælland)
-var grid1km_sjælland_geojson = require('./data/weighted_grid1km_Sjælland.geojson')
-
-var grid1km_sjælland = new VectorLayer({
-  title: 'Weighted Grid (1km - Sjælland)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_sjælland_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-// Add Weighted Grid (1km Resolution - Syddanmark)
-var grid1km_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson')
-
-var grid1km_syddanmark = new VectorLayer({
-  title: 'Weighted Grid (1km - Syddanmark)',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: grid1km_syddanmark_geojson,
-    strategy: bboxStrategy,
-  }),
-  maxResolution: 15,
-  style: classification_search_1km,
-  visible: false,
-});
-
-/*
-
-VectorImage Testing
-
-*/
 
 // Hovestadden VectorImage
 var grid1km_vectorimage_hovestad_geojson = require('./data/weighted_grid1km_hovestad.geojson')
@@ -475,7 +367,7 @@ var grid1km_vectorimage_hovestad = new VectorImageLayer({
     format: new GeoJSON(),
   }),
   visible: true,
-  maxResolution: 15,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -489,8 +381,8 @@ var grid1km_vectorimage_fyn = new VectorImageLayer({
     url: grid1km_vectorimage_fyn_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -505,8 +397,8 @@ var grid1km_vectorimage_midtjylland = new VectorImageLayer({
     url: grid1km_vectorimage_midtjylland_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -520,8 +412,8 @@ var grid1km_vectorimage_midtjyllandw = new VectorImageLayer({
     url: grid1km_vectorimage_midtjyllandw_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -535,8 +427,8 @@ var grid1km_vectorimage_nordjylland = new VectorImageLayer({
     url: grid1km_vectorimage_nordjylland_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -550,8 +442,8 @@ var grid1km_vectorimage_sjælland = new VectorImageLayer({
     url: grid1km_vectorimage_sjælland_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
@@ -565,11 +457,12 @@ var grid1km_vectorimage_syddanmark = new VectorImageLayer({
     url: grid1km_vectorimage_syddanmark_geojson,
     format: new GeoJSON(),
   }),
-  visible: false,
-  maxResolution: 15,
+  visible: true,
+  maxResolution: 100,
   style: classification_search_1km,
 });
 
+/*
 var isolayer = new VectorLayer({
   title: 'isolayer',
   source: new VectorSource({
@@ -587,6 +480,7 @@ var isolayer = new VectorLayer({
     }),
   }),
 });
+*/
 
 // Scaleline
 var scaleline = new ScaleLine();
@@ -636,13 +530,6 @@ var layers = [
         layers: [
           grid100km,
           grid30km,
-          //grid1km_fyn,
-          //grid1km_hovestad,
-          //grid1km_midtjylland,
-          //grid1km_midtjyllandw,
-          //grid1km_nordjylland,
-          //grid1km_sjælland,
-          //grid1km_syddanmark,
           grid1km_vectorimage_hovestad,
           grid1km_vectorimage_fyn,
           grid1km_vectorimage_midtjylland,
@@ -949,37 +836,184 @@ Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure pa
 // Commit Search Button Feature
 function commitSearchFunction() {
 
-  // Calculate Weights for 1km Grid
-  var source_1km = grid1km_vectorimage_hovestad.getSource();
-  var features_1km = source_1km.getFeatures();
-  var counter_1 = 1; // Count features for testing
+  // Calculate Weights for 1km Grid - Hovestadden
+  var source_1km_hovestad = grid1km_vectorimage_hovestad.getSource();
+  var features_1km_hovestad = source_1km_hovestad.getFeatures();
+  //var counter_1_hovestad = 1; // Count features for testing
 
-  features_1km.forEach(function(feature){
+  features_1km_hovestad.forEach(function(feature){
     /*
     var new_fuzzy_value_1km = (((parseInt(sliderCoasts.value)/(feature.get("_coastline")/1000)) + (parseInt(sliderHospitals.value)/(feature.get("_hospitals")/1000)) + (parseInt(sliderParks.value)/(feature.get("_leisurepa")/1000)) + (parseInt(sliderRoads.value)/(feature.get("_roadsmean")/1000)) + (parseInt(sliderSchools.value)/(feature.get("_schoolsme")/1000)) + (parseInt(sliderMarkets.value)/(feature.get("_supermark")/1000)) + (parseInt(sliderUni.value)/(feature.get("_universit")/1000)) + (parseInt(sliderWater.value)/(feature.get("_waterbodi")/1000)) + (parseInt(sliderPstations.value)/(feature.get("_pt_statio")/1000)) + (parseInt(sliderPstops.value)/(feature.get("_pt_stopsm")/1000)) + (parseInt(sliderRestuarants.value)/(feature.get("_restauran")/1000)) + (parseInt(sliderTheatres.value)/(feature.get("_theatresm")/1000)) + (parseInt(sliderCinemas.value)/(feature.get("_cinemasme")/1000)) + (parseInt(sliderKinder.value)/feature.get("_kindermea")) + (parseInt(sliderIndustry.value)/(feature.get("_industrie")/1000))) / 534.6083673974823);
     console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
     counter_1 += 1;
     */
-   var coasts_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var hospitals_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var parks_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var roads_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var schools_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var markets_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var uni_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var water_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var pstat_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var pstop_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var food_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var theatre_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var cinema_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var kinder_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var industry_1km = (parseInt(sliderCoasts.value)/feature.get("_coastline")/1000);
-   var grid1km_sum = (((coasts_1km + hospitals_1km + parks_1km + roads_1km + schools_1km + markets_1km + uni_1km + water_1km + pstat_1km + pstop_1km + food_1km + theatre_1km + cinema_1km + kinder_1km + industry_1km) / 0.00034621772289338486));
-   console.log(grid1km_sum);
-   var new_fuzzy_value_1km = grid1km_sum;
-   feature.set("fuzzyvalue", new_fuzzy_value_1km);
-   counter_1 += 1;
+   var new_fuzzy_value_1km_hovestad = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+   new_fuzzy_value_1km_hovestad = new_fuzzy_value_1km_hovestad/828; //20580.493788670843
+   //console.log(new_fuzzy_value_1km_hovestad);
+   feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
+   //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Sjælland
+  var source_1km_sjælland = grid1km_vectorimage_sjælland.getSource();
+  var features_1km_sjælland = source_1km_sjælland.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_sjælland.forEach(function(feature){
+    var new_fuzzy_value_1km_sjælland = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_sjælland = new_fuzzy_value_1km_sjælland/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
+    //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Fyn
+  var source_1km_fyn = grid1km_vectorimage_fyn.getSource();
+  var features_1km_fyn = source_1km_fyn.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_fyn.forEach(function(feature){
+    var new_fuzzy_value_1km_fyn = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_fyn = new_fuzzy_value_1km_fyn/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
+    //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Syddanmark
+  var source_1km_syddanmark = grid1km_vectorimage_syddanmark.getSource();
+  var features_1km_syddanmark = source_1km_syddanmark.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_syddanmark.forEach(function(feature){
+    var new_fuzzy_value_1km_syddanmark = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_syddanmark = new_fuzzy_value_1km_syddanmark/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_syddanmark);
+    //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Midtjylland
+  var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
+  var features_1km_midtjylland = source_1km_midtjylland.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_midtjylland.forEach(function(feature){
+    var new_fuzzy_value_1km_midtjylland = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjylland = new_fuzzy_value_1km_midtjylland/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
+    //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Midtjylland West
+  var source_1km_midtjyllandw = grid1km_vectorimage_midtjyllandw.getSource();
+  var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_midtjyllandw.forEach(function(feature){
+    var new_fuzzy_value_1km_midtjyllandw = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_midtjyllandw = new_fuzzy_value_1km_midtjyllandw/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
+    //counter_1_hovestad += 1;
+  });
+
+  // Calculate Weights for 1km Grid - Nordjylland
+  var source_1km_nordjylland = grid1km_vectorimage_nordjylland.getSource();
+  var features_1km_nordjylland = source_1km_nordjylland.getFeatures();
+  //var counter_1 = 1; // Count features for testing
+
+  features_1km_nordjylland.forEach(function(feature){
+    var new_fuzzy_value_1km_nordjylland = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_nordjylland = new_fuzzy_value_1km_nordjylland/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_nordjylland);
+    //counter_1_hovestad += 1;
   });
 
   // Calculate Weights for 100km Grid
