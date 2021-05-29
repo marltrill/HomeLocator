@@ -15,7 +15,6 @@ import Geocoder from 'ol-geocoder';
 import LayerSwitcher from 'ol-layerswitcher';
 import {Vector as VectorSource} from 'ol/source';
 import XYZ from 'ol/source/XYZ';
-import {bbox as bboxStrategy} from 'ol/loadingstrategy';
 import VectorImageLayer from 'ol/layer/VectorImage';
 
 /**
@@ -48,7 +47,7 @@ import VectorImageLayer from 'ol/layer/VectorImage';
  };
 
 // Designate Center of Map
-const denmarkLonLat = [10.835589, 56.232371];
+const denmarkLonLat = [10.663375, 55.601306]; //10.835589, 56.232371
 const denmarkWebMercator = fromLonLat(denmarkLonLat);
 
 // 100km Grid Styling
@@ -198,16 +197,6 @@ var dk_style = new Style({
   })
 });
 
-var highlightStyle = new Style({
-  fill: new Fill({
-    color: 'rgba(255,255,255,0.7)',
-  }),
-  stroke: new Stroke({
-    color: '#3399CC',
-    width: 3,
-  }),
-});
-
 // Regions Boundary
 var dk_boundary = new VectorLayer({
   title: 'Regions',
@@ -237,90 +226,6 @@ var municipalities = new VectorLayer({
   },
   minResolution: 15,
   maxResolution: 400,
-});
-
-// Add OSM hospitals layer
-var hospitals_geojson = require('./data/hospitals_epsg4326.geojson')
-
-var hospitals = new VectorLayer({
-  title: 'Hospitals',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: hospitals_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 230, 161, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#b58604',
-      width: 1,
-    }),
-  }),
-});
-
-// Add OSM Schools layer
-var schools_geojson = require('./data/schools_epsg4326.geojson')
-
-var schools = new VectorLayer({
-  title: 'Schools',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: schools_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(216, 193, 227, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#ad31e8',
-      width: 1,
-    }),
-  }),
-});
-
-// Add OSM Leisure/Parks layer
-var leisureparks_geojson = require('./data/leisureparks_epsg4326.geojson')
-
-var leisureparks = new VectorLayer({
-  title: 'Leisure/Parks',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: leisureparks_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(173, 237, 182, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#08961b',
-      width: 1,
-    }),
-  }),
-});
-
-// Add Universities from GitHub
-var universities_geojson = require('./data/universities_epsg4326.geojson')
-
-var universities = new VectorLayer({
-  title: 'Universities',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: universities_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(121, 131, 242, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#1420a3',
-      width: 1,
-    }),
-  }),
 });
 
 /*
@@ -462,26 +367,6 @@ var grid1km_vectorimage_syddanmark = new VectorImageLayer({
   style: classification_search_1km,
 });
 
-/*
-var isolayer = new VectorLayer({
-  title: 'isolayer',
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: universities_geojson,
-  }),
-  maxResolution: 15,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(121, 131, 242, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#1420a3',
-      width: 1,
-    }),
-  }),
-});
-*/
-
 // Scaleline
 var scaleline = new ScaleLine();
 
@@ -540,13 +425,8 @@ var layers = [
         ],
         fold: 'close',
       }),
-      //universities,
       municipalities,
-      //hospitals,
-      //schools,
-      //leisureparks,
       dk_boundary,
-      //isolayer
     ]
   })
 ];
@@ -585,91 +465,6 @@ var map = new Map({
   view: mapView,
   target: 'map'
 });
-
-/*
-var outsidercoordinate;
-
-// Popup showing the position the user clicked
-var popup = new Overlay({
-  element: document.getElementById('popup'),
-});
-map.addOverlay(popup);
-
-// Click Event for Popup (Work in Progress)
-map.on('click', function (evt) {
-  var element = popup.getElement();
-  var coordinate = evt.coordinate;
-  var coords = toLonLat(evt.coordinate);
-  window.outsidercoordinate = coords;
-  var hdms = toStringHDMS(toLonLat(coordinate));
-  console.log(coordinate);
-  console.log(coords)
-  //console.log(toStringHDMS);
-
-  $(element).popover('dispose');
-  popup.setPosition(coordinate);
-  $(element).popover({
-    container: element,
-    placement: 'top',
-    animation: false,
-    html: true,
-    content: '<p>(WORK IN PROGRESS) The location you clicked was:</p><code>' + hdms + '</code>',
-  });
-  $(element).popover('show');
-});
-
-var selected = null;
-
-map.on('pointermove', function (e) {
-  if (selected !== null) {
-    selected.setStyle(undefined);
-    selected = null;
-  }
-
-  map.forEachFeatureAtPixel(e.pixel, function (f) {
-    selected = f;
-    f.setStyle(highlightStyle);
-    return true;
-  });
-});
-
-// API KEY 5b3ce3597851110001cf6248eff557cdb07c480cabced1a36192d99a
-
-document.getElementById('isochroneActivate').onclick = function() {
-  var isotransportation = window.rdValue;
-  var isotimelimit = document.getElementById('myRange').value;
-  var coordinate = window.outsidercoordinate;
-  var coordinaterequest = coordinate.toString();
-  console.log(coordinaterequest);
-  console.log(isotimelimit);
-  console.log(coordinate);
-  console.log(isotransportation);
-  console.log('{"locations":[[' + coordinate.toString() + ']],"range":['+ isotimelimit.toString() + ']"range_type":"time","units":"mi"}');
-
-  var request = require('request');
-
-  request({
-    method: 'POST',
-    url: 'https://api.openrouteservice.org/v2/isochrones/' + isotransportation,
-    body: '{"locations":[[' + coordinate.toString() + ']],"range":['+ isotimelimit.toString() + '],"range_type":"time","units":"mi"}',
-    headers: {
-      'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
-      'Authorization': '5b3ce3597851110001cf6248eff557cdb07c480cabced1a36192d99a',
-      'Content-Type': 'application/json; charset=utf-8'
-    }}, function (error, response, body) {
-    console.log('Status:', response.statusCode);
-    console.log('Headers:', JSON.stringify(response.headers));
-    console.log(response)
-    console.log('Response:', body);
-    var isochronejson = GeoJSON.parse(body);
-    isolayer.getSource().clear();
-    isolayer.getSource().addFeatures(isochronejson);
-  });
-};
-
-
-// LAv om med den her?? https://github.com/GIScience/openrouteservice-js
-*/
 
 /*
 DEFINE & UPDATE SLIDERS
@@ -825,11 +620,11 @@ sliderIndustry.oninput = function() {
   outputIndustry.innerHTML = this.value;
 };
 
+info_element.innerHTML = 'Search<br>&<br>Select a Cell';
+
 /*
 
 STLYE GRIDS BASED ON USER INPUT
-
-Categories(field name): coastline(_coastline), hospitals(_hospitals), leisure parks(_leisurepa), roads(_roadsmean), schools(_schoolsme), supermarkets(_supermark), universities(_universit), water bodies(_waterbodi), public transport stations(_pt_statio), public transport stops(_pt_stopsm), restuarants(_restauran), theatres(_theatresm), cinemas(_cinemasme), and kindergartens(_kindermea)
 
 */
 
@@ -842,28 +637,23 @@ function commitSearchFunction() {
   //var counter_1_hovestad = 1; // Count features for testing
 
   features_1km_hovestad.forEach(function(feature){
-    /*
-    var new_fuzzy_value_1km = (((parseInt(sliderCoasts.value)/(feature.get("_coastline")/1000)) + (parseInt(sliderHospitals.value)/(feature.get("_hospitals")/1000)) + (parseInt(sliderParks.value)/(feature.get("_leisurepa")/1000)) + (parseInt(sliderRoads.value)/(feature.get("_roadsmean")/1000)) + (parseInt(sliderSchools.value)/(feature.get("_schoolsme")/1000)) + (parseInt(sliderMarkets.value)/(feature.get("_supermark")/1000)) + (parseInt(sliderUni.value)/(feature.get("_universit")/1000)) + (parseInt(sliderWater.value)/(feature.get("_waterbodi")/1000)) + (parseInt(sliderPstations.value)/(feature.get("_pt_statio")/1000)) + (parseInt(sliderPstops.value)/(feature.get("_pt_stopsm")/1000)) + (parseInt(sliderRestuarants.value)/(feature.get("_restauran")/1000)) + (parseInt(sliderTheatres.value)/(feature.get("_theatresm")/1000)) + (parseInt(sliderCinemas.value)/(feature.get("_cinemasme")/1000)) + (parseInt(sliderKinder.value)/feature.get("_kindermea")) + (parseInt(sliderIndustry.value)/(feature.get("_industrie")/1000))) / 534.6083673974823);
-    console.log("1km->" + counter_1 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_1km); // Log values for testing
-    counter_1 += 1;
-    */
-   var new_fuzzy_value_1km_hovestad = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
-   new_fuzzy_value_1km_hovestad = new_fuzzy_value_1km_hovestad/828; //20580.493788670843
-   //console.log(new_fuzzy_value_1km_hovestad);
-   feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
-   //counter_1_hovestad += 1;
+    var new_fuzzy_value_1km_hovestad = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
+    new_fuzzy_value_1km_hovestad = new_fuzzy_value_1km_hovestad/828; //20580.493788670843
+    //console.log(new_fuzzy_value_1km_hovestad);
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
+    //counter_1_hovestad += 1;
   });
 
   // Calculate Weights for 1km Grid - Sjælland
