@@ -155,20 +155,15 @@ body, html {
 }
 
 .catchphrase {
-  position: absolute;
-  bottom: 0;
-  right: 18px;
-  margin-bottom: 25px;
+  right: 0px;
   font-size: 16px;
   font-style: oblique;
-  text-align: center;
+  text-align: right;
 }
 
 .copyright {
-  position: absolute;
-  bottom: 15px;
-  right: 18px;
   font-size: 8px;
+  text-align: right;
 }
 
 .vertical-center {
@@ -274,7 +269,7 @@ body, html {
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-  padding: 3vh;
+  padding: 1.5vh;
 }
 
 .explanation {

@@ -1,0 +1,62 @@
+      <h6>Isochrone Options:</h6>
+
+      <div>
+        Click a point on the map to see travel times.
+        Selected Location (Lat/Long):
+
+        <script>
+          alert(simple().coordinate);
+        </script>
+      </div>
+
+      <br>
+
+      <form name="IsoClicker">
+        <input type="radio" name="isoradio" value="driving-car">Car
+        <input type="radio" name="isoradio" value="cycling-regular">Bike
+        <input type="radio" name="isoradio" value="foot-walking">Walk
+        <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
+      </form>
+
+      <script>
+          function getRadioValue(groupName) {
+              var radios = IsoClicker.elements[groupName];
+              window.rdValue; // declares the global variable 'rdValue'
+              for (var i=0; i<radios.length; i++) {
+                  var someRadio = radios[i];
+                  if (someRadio.checked) {
+                      rdValue = someRadio.value;
+                      break;
+                  }
+                  else rdValue = 'noRadioChecked';
+              }
+              if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue =="foot-walking") {
+                  or: console.log("Isoradio action")
+              }
+              else if (rdValue == 'noRadioChecked') {
+                  alert('no radio checked');
+              }
+          }
+      </script>
+
+
+      <div>
+        <label>Max Commute Time (Minutes)</label>
+        <input type="range" min="1" max="120" value="60" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>
+
+      <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+        }
+      </script>
+      <div>
+        <button type = "button" id = "isochroneActivate">
+          Activate isochrone request
+        </button>
+      </div>

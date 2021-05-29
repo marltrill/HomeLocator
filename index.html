@@ -88,7 +88,7 @@
         <h1><b><center>Welcome to Your HomeLocator</center></b></h1>
         <img src="images/HomeLocator Logo.png" alt="HomeLocator Logo" width="200px" height="200px" class="logocenter">
         <p>
-        Find your way home. Adjust sliders to match your requirements and click 'Commit Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Commit Search' again to view areas. Please allow a few moments for loading time.
+        Find your way home. Adjust sliders to match your requirements and click 'Search' to view areas of the country that match your criteria. As you zoom in, you may have to click 'Search' again to view areas. Please allow a few moments for loading time.
         <br/>
         <br/>
         <a href='' class='close'>Close</a>
@@ -110,7 +110,7 @@
 
       <h1 class="homelocator"><b>HomeLocator</b></h1>
 
-      <p class="searchdesc">Fine tune the sliders in each of the three categories below. Click 'Commit Search' to see which areas of the country are most suitable for you and your interests. Please allow some moments for loading/rendering of data.</p>
+      <p class="searchdesc">Fine tune the sliders in each of the three categories below. Click 'Search' to see which areas of the country are most suitable for you and your interests. Please allow some moments for loading/rendering of data.</p>
 
       <hr>
       <div>
@@ -241,75 +241,9 @@
         <div class="searchcenter">
           <br>
           <!-- Commit Button -->
-          <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Commit Search</button>
+          <button class="commitsearch" type="button" onclick="commitSearchFunction()" id="commitButton">Search</button>
         </div>
-        <div class="catchphrase"><b>Find your way home.</b></div>
-        <div class="copyright">© 2021 HomeLocator</div>
       </div>
-      <!--
-      <h6>Isochrone Options:</h6>
-
-      <div>
-        Click a point on the map to see travel times.
-        Selected Location (Lat/Long):
-
-        <script>
-          alert(simple().coordinate);
-        </script>
-      </div>
-
-      <br>
-
-      <form name="IsoClicker">
-        <input type="radio" name="isoradio" value="driving-car">Car
-        <input type="radio" name="isoradio" value="cycling-regular">Bike
-        <input type="radio" name="isoradio" value="foot-walking">Walk
-        <input type="button" value="Submit" onclick="getRadioValue('isoradio');">
-      </form>
-
-      <script>
-          function getRadioValue(groupName) {
-              var radios = IsoClicker.elements[groupName];
-              window.rdValue; // declares the global variable 'rdValue'
-              for (var i=0; i<radios.length; i++) {
-                  var someRadio = radios[i];
-                  if (someRadio.checked) {
-                      rdValue = someRadio.value;
-                      break;
-                  }
-                  else rdValue = 'noRadioChecked';
-              }
-              if (rdValue == "driving-car" || rdValue == "cycling-regular" || rdValue =="foot-walking") {
-                  or: console.log("Isoradio action")
-              }
-              else if (rdValue == 'noRadioChecked') {
-                  alert('no radio checked');
-              }
-          }
-      </script>
-
-
-      <div>
-        <label>Max Commute Time (Minutes)</label>
-        <input type="range" min="1" max="120" value="60" class="slider" id="myRange">
-        <p>Value: <span id="demo"></span></p>
-      </div>
-
-      <script>
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("demo");
-        output.innerHTML = slider.value;
-
-        slider.oninput = function() {
-          output.innerHTML = this.value;
-        }
-      </script>
-      <div>
-        <button type = "button" id = "isochroneActivate">
-          Activate isochrone request
-        </button>
-      </div>
-      -->
 
       <hr>
 
@@ -321,12 +255,17 @@
         <p class="percent-center"><span id="info-element"></span></p>
       </div>
 
+      <br>
+
       <p><b>Legend:</b></p>
-      <div class="dark-green"></div><span class="explanation">80-100%</span>
-      <div class="green"></div><span class="explanation">60-80%</span>
-      <div class="light-green"></div><span class="explanation">40-60%</span>
-      <div class="lighter-green"></div><span class="explanation">20-40%</span>
-      <div class="yellow"></div><span class="explanation">5-20%</span>
+      <div class="dark-green"></div><span class="explanation">100-80%</span>
+      <div class="green"></div><span class="explanation">80-60%</span>
+      <div class="light-green"></div><span class="explanation">60-40%</span>
+      <div class="lighter-green"></div><span class="explanation">40-20%</span>
+      <div class="yellow"></div><span class="explanation">20-5%</span>
+
+      <div class="catchphrase"><b>Find your way home.</b></div>
+      <div class="copyright">© 2021 HomeLocator</div>
 
     </div>
 
@@ -338,11 +277,5 @@
     <script type='text/javascript' src='./index.js'></script>
 
   </body>
-
-  <!--
-  <div class="info-pane">
-    <p>Overall Percentage: <span id="info-element"></span></p>
-  </div>
--->
 
 </html>
