@@ -66,7 +66,7 @@ code is here (index.js). Added the OSM GeoJSON files here-02.04.2021  MLT
 * Processed house price data and added crime and house price data to the grids. Final grids are uploaded in the 'ProximityGrids_Final' folder as shapefiles. For data processing details have a look at the README.txt file in the same folder. The 'GeoJSON regions 1km grid' folder contains the updated grids split into regions (EPSG:4326 WGS 84). 05.24.2021 MLT
 * Processed air quality data and political party data. New grids are updated in One Drive, have a look at the README_2 file, will describe it better soon as there's a lot of info to include, new version of 1km grid split into regions files need to be uploaded. 05.26.2021 MLT
 * Created and described the Data Sources page on the webapp. New (and hopefully final) version of 1km grid split into regions in OneDrive, also final .shp and .GeoJSON feature layers in OneDrive. 05.27.2021 MLT
-* Updated code to display final layers, and added .geojson final grids to data folder 05.28.2021 MLT
+* Updated code to display final layers, might have to find a way to split big 1km grid files 05.28.2021 MLT
 
 ### Data Processing: 
 

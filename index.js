@@ -228,6 +228,334 @@ var municipalities = new VectorLayer({
   maxResolution: 400,
 });
 
+//Add OSM Schools layer (Purple)
+var schools_geojson = require('./data/schools.geojson')
+
+var schools = new VectorLayer({
+  title: 'Schools',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: schools_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(216, 193, 227, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#ad31e8',
+      width: 1,
+    }),
+  }),
+});
+
+// Add OSM Leisure Parks layer (Green)
+var leisureparks_geojson = require('./data/leisureparks.geojson')
+
+var leisureparks = new VectorLayer({
+  title: 'Leisure Parks',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: leisureparks_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(173, 237, 182, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#08961b',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Universities layer (Blue)
+var universities_geojson = require('./data/universities.geojson')
+
+var universities = new VectorLayer({
+  title: 'Universities',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: universities_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(121, 131, 242, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#1420a3',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Cinemas layer (Red)
+var cinemas_geojson = require('./data/cinemas.geojson')
+
+var cinemas = new VectorLayer({
+  title: 'Cinemas',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: cinemas_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 0, 0, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ff0000',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Restaurants layer (Yellow)
+var restaurants_geojson = require('./data/restaurants.geojson')
+
+var restaurants = new VectorLayer({
+  title: 'Restaurants',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: restaurants_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 0, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffff00',
+      width: 1,
+    }),
+  }),
+});
+
+// // Add Kindergartens layer (Aqua)
+var kindergartens_geojson = require('./data/kindergartens.geojson')
+
+var kindergartens = new VectorLayer({
+  title: 'Kindergartens',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: kindergartens_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(0, 255, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#00ffff',
+      width: 1,
+    }),
+  }),
+});
+
+// Public Transport Stops (White)
+var pt_stops_geojson = require('./data/pt_stops.geojson')
+
+var pt_stops = new VectorLayer({
+  title: 'Public Transport Stops',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: pt_stops_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffffff',
+      width: 1,
+    }),
+  }),
+});
+
+// Roads (White)
+var roads_geojson = require('./data/roads.geojson')
+
+var roads = new VectorLayer({
+  title: 'Roads',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: roads_geojson,
+  }),
+  maxResolution: 1000,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffffff',
+      width: 3,
+    }),
+  }),
+});
+
+// Public Transport Stations (Lime)
+var pt_stations_geojson = require('./data/pt_stations.geojson')
+
+var pt_stations = new VectorLayer({
+  title: 'Public Transport Stations',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: pt_stations_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(0, 255, 0, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#bfff00',
+      width: 1,
+    }),
+  }),
+});
+
+//  Theatres (Pink)
+var theatres_geojson = require('./data/theatres.geojson')
+
+var theatres = new VectorLayer({
+  title: 'Theatres',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: theatres_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 193, 193, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffclcl',
+      width: 1,
+    }),
+  }),
+});
+
+// Industries (Dark Green)
+var industries_geojson = require('./data/industries.geojson')
+
+var industries = new VectorLayer({
+  title: 'Industries',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: industries_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(0, 135, 68, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#008744',
+      width: 1,
+    }),
+  }),
+});
+
+// Supermarkets (Light Blue)
+var supermarkets_geojson = require('./data/supermarkets.geojson')
+
+var supermarkets = new VectorLayer({
+  title: 'Supermarkets',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: supermarkets_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(51, 153, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#3399ff',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Water Bodies layer (Dark Blue)
+var waterbodies_geojson = require('./data/waterbodies.geojson')
+
+var waterbodies = new VectorLayer({
+  title: 'Water Bodies',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: waterbodies_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(0, 0, 204, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#0000cc',
+      width: 1,
+    }),
+  }),
+});
+
+// Add OSM hospitals layer (Orange)
+var hospitals_geojson = require('./data/hospitals.geojson')
+
+var hospitals = new VectorLayer({
+  title: 'Hospitals',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: hospitals_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 230, 161, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#b58604',
+      width: 1,
+    }),
+  }),
+});
+
+
+//Add Politicall Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+var politics_geojson = require('./data/crimes_politics.geojson')
+
+var politics = new VectorLayer({
+  title: 'Political Party- 2017',
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: politics_geojson,
+  }),
+  style: function(feature) {
+    style.getText().setText(feature.get('political_'));
+    return style;
+  },
+  minResolution: 100,
+});
+
+/*
+
+
 /*
 
 WEIGHTED GRIDS
@@ -425,8 +753,24 @@ var layers = [
         ],
         fold: 'close',
       }),
+      universities,
       municipalities,
+      hospitals,
+      schools,
+      leisureparks,
+      cinemas,
+      restaurants,
+      kindergartens,
+      pt_stops,
+      pt_stations,
+      roads,
+      theatres,
+      industries,
+      supermarkets,
+      waterbodies,
+      politics,
       dk_boundary,
+      // //isolayer,
     ]
   })
 ];
