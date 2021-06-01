@@ -112738,20 +112738,12 @@ var _Zoomify = _interopRequireDefault(require("./source/Zoomify.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./source/BingMaps.js":"node_modules/ol/source/BingMaps.js","./source/CartoDB.js":"node_modules/ol/source/CartoDB.js","./source/Cluster.js":"node_modules/ol/source/Cluster.js","./source/IIIF.js":"node_modules/ol/source/IIIF.js","./source/Image.js":"node_modules/ol/source/Image.js","./source/ImageArcGISRest.js":"node_modules/ol/source/ImageArcGISRest.js","./source/ImageCanvas.js":"node_modules/ol/source/ImageCanvas.js","./source/ImageMapGuide.js":"node_modules/ol/source/ImageMapGuide.js","./source/ImageStatic.js":"node_modules/ol/source/ImageStatic.js","./source/ImageWMS.js":"node_modules/ol/source/ImageWMS.js","./source/OSM.js":"node_modules/ol/source/OSM.js","./source/Raster.js":"node_modules/ol/source/Raster.js","./source/Source.js":"node_modules/ol/source/Source.js","./source/Stamen.js":"node_modules/ol/source/Stamen.js","./source/Tile.js":"node_modules/ol/source/Tile.js","./source/TileArcGISRest.js":"node_modules/ol/source/TileArcGISRest.js","./source/TileDebug.js":"node_modules/ol/source/TileDebug.js","./source/TileImage.js":"node_modules/ol/source/TileImage.js","./source/TileJSON.js":"node_modules/ol/source/TileJSON.js","./source/TileWMS.js":"node_modules/ol/source/TileWMS.js","./source/UrlTile.js":"node_modules/ol/source/UrlTile.js","./source/UTFGrid.js":"node_modules/ol/source/UTFGrid.js","./source/Vector.js":"node_modules/ol/source/Vector.js","./source/VectorTile.js":"node_modules/ol/source/VectorTile.js","./source/WMTS.js":"node_modules/ol/source/WMTS.js","./source/XYZ.js":"node_modules/ol/source/XYZ.js","./source/Zoomify.js":"node_modules/ol/source/Zoomify.js"}],"data/schools.geojson":[function(require,module,exports) {
 module.exports = "/schools.eaa5d835.geojson";
-},{}],"data/leisureparks.geojson":[function(require,module,exports) {
-module.exports = "/leisureparks.c0c80342.geojson";
 },{}],"data/universities.geojson":[function(require,module,exports) {
 module.exports = "/universities.b00317c3.geojson";
 },{}],"data/cinemas.geojson":[function(require,module,exports) {
 module.exports = "/cinemas.70f6ae3f.geojson";
-},{}],"data/restaurants.geojson":[function(require,module,exports) {
-module.exports = "/restaurants.d58f5290.geojson";
 },{}],"data/kindergartens.geojson":[function(require,module,exports) {
 module.exports = "/kindergartens.225ebef1.geojson";
-},{}],"data/pt_stops.geojson":[function(require,module,exports) {
-module.exports = "/pt_stops.bdbf33ec.geojson";
-},{}],"data/roads.geojson":[function(require,module,exports) {
-module.exports = "/roads.ca08acaa.geojson";
 },{}],"data/pt_stations.geojson":[function(require,module,exports) {
 module.exports = "/pt_stations.59e9fc2d.geojson";
 },{}],"data/theatres.geojson":[function(require,module,exports) {
@@ -112760,8 +112752,6 @@ module.exports = "/theatres.e28b3a2f.geojson";
 module.exports = "/industries.8817bb46.geojson";
 },{}],"data/supermarkets.geojson":[function(require,module,exports) {
 module.exports = "/supermarkets.b8960872.geojson";
-},{}],"data/waterbodies.geojson":[function(require,module,exports) {
-module.exports = "/waterbodies.d808c112.geojson";
 },{}],"data/hospitals.geojson":[function(require,module,exports) {
 module.exports = "/hospitals.1781a0aa.geojson";
 },{}],"data/crimes_politics.geojson":[function(require,module,exports) {
@@ -113043,27 +113033,6 @@ var schools = new _layer.Vector({
       width: 1
     })
   })
-}); // Add OSM Leisure Parks layer (Green)
-
-var leisureparks_geojson = require('./data/leisureparks.geojson');
-
-var leisureparks = new _layer.Vector({
-  title: 'Leisure Parks',
-  visible: false,
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: leisureparks_geojson
-  }),
-  maxResolution: 100,
-  style: new _style2.Style({
-    fill: new _style2.Fill({
-      color: 'rgba(173, 237, 182, 0.6)'
-    }),
-    stroke: new _style2.Stroke({
-      color: '#08961b',
-      width: 1
-    })
-  })
 }); // Add Universities layer (Blue)
 
 var universities_geojson = require('./data/universities.geojson');
@@ -113106,27 +113075,6 @@ var cinemas = new _layer.Vector({
       width: 1
     })
   })
-}); // Add Restaurants layer (Yellow)
-
-var restaurants_geojson = require('./data/restaurants.geojson');
-
-var restaurants = new _layer.Vector({
-  title: 'Restaurants',
-  visible: false,
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: restaurants_geojson
-  }),
-  maxResolution: 100,
-  style: new _style2.Style({
-    fill: new _style2.Fill({
-      color: 'rgba(255, 255, 0, 0.5)'
-    }),
-    stroke: new _style2.Stroke({
-      color: '#ffff00',
-      width: 1
-    })
-  })
 }); // // Add Kindergartens layer (Aqua)
 
 var kindergartens_geojson = require('./data/kindergartens.geojson');
@@ -113146,48 +113094,6 @@ var kindergartens = new _layer.Vector({
     stroke: new _style2.Stroke({
       color: '#00ffff',
       width: 1
-    })
-  })
-}); // Public Transport Stops (White)
-
-var pt_stops_geojson = require('./data/pt_stops.geojson');
-
-var pt_stops = new _layer.Vector({
-  title: 'Public Transport Stops',
-  visible: false,
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: pt_stops_geojson
-  }),
-  maxResolution: 100,
-  style: new _style2.Style({
-    fill: new _style2.Fill({
-      color: 'rgba(255, 255, 255, 0.5)'
-    }),
-    stroke: new _style2.Stroke({
-      color: '#ffffff',
-      width: 1
-    })
-  })
-}); // Roads (White)
-
-var roads_geojson = require('./data/roads.geojson');
-
-var roads = new _layer.Vector({
-  title: 'Roads',
-  visible: false,
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: roads_geojson
-  }),
-  maxResolution: 1000,
-  style: new _style2.Style({
-    fill: new _style2.Fill({
-      color: 'rgba(255, 255, 255, 0.5)'
-    }),
-    stroke: new _style2.Stroke({
-      color: '#ffffff',
-      width: 3
     })
   })
 }); // Public Transport Stations (Lime)
@@ -113274,27 +113180,6 @@ var supermarkets = new _layer.Vector({
       width: 1
     })
   })
-}); // Add Water Bodies layer (Dark Blue)
-
-var waterbodies_geojson = require('./data/waterbodies.geojson');
-
-var waterbodies = new _layer.Vector({
-  title: 'Water Bodies',
-  visible: false,
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: waterbodies_geojson
-  }),
-  maxResolution: 100,
-  style: new _style2.Style({
-    fill: new _style2.Fill({
-      color: 'rgba(0, 0, 204, 0.5)'
-    }),
-    stroke: new _style2.Stroke({
-      color: '#0000cc',
-      width: 1
-    })
-  })
 }); // Add OSM hospitals layer (Orange)
 
 var hospitals_geojson = require('./data/hospitals.geojson');
@@ -113316,7 +113201,7 @@ var hospitals = new _layer.Vector({
       width: 1
     })
   })
-}); //Add Politicall Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+}); //Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
 
 var politics_geojson = require('./data/crimes_politics.geojson');
 
@@ -113501,8 +113386,11 @@ new _layer.Group({
     title: 'Criteria Grids',
     layers: [grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_nordjylland, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark],
     fold: 'close'
-  }), universities, municipalities, hospitals, schools, leisureparks, cinemas, restaurants, kindergartens, pt_stops, pt_stations, roads, theatres, industries, supermarkets, waterbodies, politics, dk_boundary // //isolayer,
-  ]
+  }), new _layer.Group({
+    title: 'Data',
+    layers: [universities, municipalities, hospitals, schools, cinemas, kindergartens, pt_stations, theatres, industries, supermarkets, politics, dk_boundary],
+    fold: 'close'
+  })]
 })]; // Instantiate Geocoder.
 
 var geocoder = new _olGeocoder.default('nominatim', {
@@ -113978,7 +113866,7 @@ map.on('pointermove', function (e) {
   });
   e.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/leisureparks.geojson":"data/leisureparks.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/restaurants.geojson":"data/restaurants.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stops.geojson":"data/pt_stops.geojson","./data/roads.geojson":"data/roads.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/waterbodies.geojson":"data/waterbodies.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/crimes_politics.geojson":"data/crimes_politics.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Nordjylland.geojson":"data/weighted_grid1km_Nordjylland.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson","./data/weighted_grid1km_Syddanmark.geojson":"data/weighted_grid1km_Syddanmark.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/crimes_politics.geojson":"data/crimes_politics.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Nordjylland.geojson":"data/weighted_grid1km_Nordjylland.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson","./data/weighted_grid1km_Syddanmark.geojson":"data/weighted_grid1km_Syddanmark.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -114006,7 +113894,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61070" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62926" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

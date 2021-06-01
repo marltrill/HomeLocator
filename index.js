@@ -250,28 +250,6 @@ var schools = new VectorLayer({
   }),
 });
 
-// Add OSM Leisure Parks layer (Green)
-var leisureparks_geojson = require('./data/leisureparks.geojson')
-
-var leisureparks = new VectorLayer({
-  title: 'Leisure Parks',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: leisureparks_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(173, 237, 182, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#08961b',
-      width: 1,
-    }),
-  }),
-});
-
 // Add Universities layer (Blue)
 var universities_geojson = require('./data/universities.geojson')
 
@@ -316,28 +294,6 @@ var cinemas = new VectorLayer({
   }),
 });
 
-// Add Restaurants layer (Yellow)
-var restaurants_geojson = require('./data/restaurants.geojson')
-
-var restaurants = new VectorLayer({
-  title: 'Restaurants',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: restaurants_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 0, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffff00',
-      width: 1,
-    }),
-  }),
-});
-
 // // Add Kindergartens layer (Aqua)
 var kindergartens_geojson = require('./data/kindergartens.geojson')
 
@@ -356,50 +312,6 @@ var kindergartens = new VectorLayer({
     stroke: new Stroke({
       color: '#00ffff',
       width: 1,
-    }),
-  }),
-});
-
-// Public Transport Stops (White)
-var pt_stops_geojson = require('./data/pt_stops.geojson')
-
-var pt_stops = new VectorLayer({
-  title: 'Public Transport Stops',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: pt_stops_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 255, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffffff',
-      width: 1,
-    }),
-  }),
-});
-
-// Roads (White)
-var roads_geojson = require('./data/roads.geojson')
-
-var roads = new VectorLayer({
-  title: 'Roads',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: roads_geojson,
-  }),
-  maxResolution: 1000,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 255, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffffff',
-      width: 3,
     }),
   }),
 });
@@ -492,28 +404,6 @@ var supermarkets = new VectorLayer({
   }),
 });
 
-// Add Water Bodies layer (Dark Blue)
-var waterbodies_geojson = require('./data/waterbodies.geojson')
-
-var waterbodies = new VectorLayer({
-  title: 'Water Bodies',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: waterbodies_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(0, 0, 204, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#0000cc',
-      width: 1,
-    }),
-  }),
-});
-
 // Add OSM hospitals layer (Orange)
 var hospitals_geojson = require('./data/hospitals.geojson')
 
@@ -537,7 +427,7 @@ var hospitals = new VectorLayer({
 });
 
 
-//Add Politicall Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+//Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
 var politics_geojson = require('./data/crimes_politics.geojson')
 
 var politics = new VectorLayer({
@@ -753,24 +643,24 @@ var layers = [
         ],
         fold: 'close',
       }),
-      universities,
-      municipalities,
-      hospitals,
-      schools,
-      leisureparks,
-      cinemas,
-      restaurants,
-      kindergartens,
-      pt_stops,
-      pt_stations,
-      roads,
-      theatres,
-      industries,
-      supermarkets,
-      waterbodies,
-      politics,
-      dk_boundary,
-      // //isolayer,
+      new Group({
+        title: 'Data',
+        layers: [
+          universities,
+          municipalities,
+          hospitals,
+          schools,
+          cinemas,
+          kindergartens,
+          pt_stations,
+          theatres,
+          industries,
+          supermarkets,
+          politics,
+          dk_boundary,
+        ],
+        fold: 'close',
+      }),
     ]
   })
 ];
