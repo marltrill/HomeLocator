@@ -112754,8 +112754,6 @@ module.exports = "/industries.8817bb46.geojson";
 module.exports = "/supermarkets.b8960872.geojson";
 },{}],"data/hospitals.geojson":[function(require,module,exports) {
 module.exports = "/hospitals.1781a0aa.geojson";
-},{}],"data/crimes_politics.geojson":[function(require,module,exports) {
-module.exports = "/crimes_politics.40cb07db.geojson";
 },{}],"data/waterbodies.geojson":[function(require,module,exports) {
 module.exports = "/waterbodies.d808c112.geojson";
 },{}],"data/roads.geojson":[function(require,module,exports) {
@@ -113209,23 +113207,25 @@ var hospitals = new _layer.Vector({
       width: 1
     })
   })
-}); //Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+});
+/*
+//Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+var politics_geojson = require('./data/crimes_politics.geojson')
 
-var politics_geojson = require('./data/crimes_politics.geojson');
-
-var politics = new _layer.Vector({
+var politics = new VectorLayer({
   title: 'Political Party- 2017',
-  source: new _source.Vector({
-    format: new _format.GeoJSON(),
-    url: politics_geojson
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: politics_geojson,
   }),
-  style: function style(feature) {
-    _style.getText().setText(feature.get('political_'));
-
-    return _style;
+  style: function(feature) {
+    style.getText().setText(feature.get('political_'));
+    return style;
   },
-  minResolution: 100
-}); // Add Water Bodies layer (Dark Blue)
+  minResolution: 100,
+});
+*/
+// Add Water Bodies layer (Dark Blue)
 
 var waterbodies_geojson = require('./data/waterbodies.geojson');
 
@@ -113331,9 +113331,6 @@ var leisureparks = new _layer.Vector({
     })
   })
 });
-/*
-
-
 /*
 
 WEIGHTED GRIDS
@@ -113505,7 +113502,8 @@ new _layer.Group({
     fold: 'close'
   }), new _layer.Group({
     title: 'Data',
-    layers: [universities, municipalities, hospitals, schools, leisureparks, cinemas, restaurants, kindergartens, pt_stops, pt_stations, roads, theatres, industries, supermarkets, waterbodies, politics, dk_boundary],
+    layers: [universities, municipalities, hospitals, schools, leisureparks, cinemas, restaurants, kindergartens, pt_stops, pt_stations, roads, theatres, industries, supermarkets, waterbodies, //politics,
+    dk_boundary],
     fold: 'close'
   })]
 })]; // Instantiate Geocoder.
@@ -113983,7 +113981,7 @@ map.on('pointermove', function (e) {
   });
   e.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/crimes_politics.geojson":"data/crimes_politics.geojson","./data/waterbodies.geojson":"data/waterbodies.geojson","./data/roads.geojson":"data/roads.geojson","./data/pt_stops.geojson":"data/pt_stops.geojson","./data/restaurants.geojson":"data/restaurants.geojson","./data/leisureparks.geojson":"data/leisureparks.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson","./data/weighted_grid1km_Syddanmark.geojson":"data/weighted_grid1km_Syddanmark.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/waterbodies.geojson":"data/waterbodies.geojson","./data/roads.geojson":"data/roads.geojson","./data/pt_stops.geojson":"data/pt_stops.geojson","./data/restaurants.geojson":"data/restaurants.geojson","./data/leisureparks.geojson":"data/leisureparks.geojson","./data/weighted_grid100km.geojson":"data/weighted_grid100km.geojson","./data/weighted_grid30km.geojson":"data/weighted_grid30km.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson","./data/weighted_grid1km_Syddanmark.geojson":"data/weighted_grid1km_Syddanmark.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -114011,7 +114009,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63353" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

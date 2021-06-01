@@ -426,7 +426,7 @@ var hospitals = new VectorLayer({
   }),
 });
 
-
+/*
 //Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
 var politics_geojson = require('./data/crimes_politics.geojson')
 
@@ -442,6 +442,7 @@ var politics = new VectorLayer({
   },
   minResolution: 100,
 });
+*/
 
 // Add Water Bodies layer (Dark Blue)
 var waterbodies_geojson = require('./data/waterbodies.geojson')
@@ -552,9 +553,6 @@ var leisureparks = new VectorLayer({
     }),
   }),
 });
-
-/*
-
 
 /*
 
@@ -773,7 +771,7 @@ var layers = [
           industries,
           supermarkets,
           waterbodies,
-          politics,
+          //politics,
           dk_boundary,
         ],
         fold: 'close',
