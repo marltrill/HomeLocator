@@ -262,7 +262,7 @@ body, html {
 
 .percent-match {
   border: 1px solid black;
-  height: 15vh;
+  height: 40vh;
 }
 
 .percent-center {
@@ -270,6 +270,7 @@ body, html {
   font-size: 20px;
   font-weight: bold;
   padding: 1.5vh;
+  height: 100px;
 }
 
 .explanation {
@@ -326,5 +327,6 @@ body, html {
   font-size: 8px;
   text-align: right;
 }
+
 
 /*# sourceMappingURL=/style.78032849.css.map */
