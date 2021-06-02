@@ -197,7 +197,7 @@ body, html {
   border: 1px solid #cccccc;
   bottom: 12px;
   left: -50px;
-  min-width: 280px;
+  min-width: 180px;
   font-size: 11px;
 }
 
@@ -267,7 +267,7 @@ body, html {
 
 .percent-center {
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   padding: 1.5vh;
 }
@@ -320,4 +320,9 @@ body, html {
   background-color: rgba(217, 200, 0, 0.6);
   display: inline-block;
   vertical-align: middle;
+}
+
+.disclaimer {
+  font-size: 8px;
+  text-align: right;
 }

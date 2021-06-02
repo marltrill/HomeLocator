@@ -250,28 +250,6 @@ var schools = new VectorLayer({
   }),
 });
 
-// Add OSM Leisure Parks layer (Green)
-var leisureparks_geojson = require('./data/leisureparks.geojson')
-
-var leisureparks = new VectorLayer({
-  title: 'Leisure Parks',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: leisureparks_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(173, 237, 182, 0.6)',
-    }),
-    stroke: new Stroke({
-      color: '#08961b',
-      width: 1,
-    }),
-  }),
-});
-
 // Add Universities layer (Blue)
 var universities_geojson = require('./data/universities.geojson')
 
@@ -316,28 +294,6 @@ var cinemas = new VectorLayer({
   }),
 });
 
-// Add Restaurants layer (Yellow)
-var restaurants_geojson = require('./data/restaurants.geojson')
-
-var restaurants = new VectorLayer({
-  title: 'Restaurants',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: restaurants_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 0, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffff00',
-      width: 1,
-    }),
-  }),
-});
-
 // // Add Kindergartens layer (Aqua)
 var kindergartens_geojson = require('./data/kindergartens.geojson')
 
@@ -356,50 +312,6 @@ var kindergartens = new VectorLayer({
     stroke: new Stroke({
       color: '#00ffff',
       width: 1,
-    }),
-  }),
-});
-
-// Public Transport Stops (White)
-var pt_stops_geojson = require('./data/pt_stops.geojson')
-
-var pt_stops = new VectorLayer({
-  title: 'Public Transport Stops',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: pt_stops_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 255, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffffff',
-      width: 1,
-    }),
-  }),
-});
-
-// Roads (White)
-var roads_geojson = require('./data/roads.geojson')
-
-var roads = new VectorLayer({
-  title: 'Roads',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: roads_geojson,
-  }),
-  maxResolution: 1000,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(255, 255, 255, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#ffffff',
-      width: 3,
     }),
   }),
 });
@@ -492,28 +404,6 @@ var supermarkets = new VectorLayer({
   }),
 });
 
-// Add Water Bodies layer (Dark Blue)
-var waterbodies_geojson = require('./data/waterbodies.geojson')
-
-var waterbodies = new VectorLayer({
-  title: 'Water Bodies',
-  visible: false,
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: waterbodies_geojson,
-  }),
-  maxResolution: 100,
-  style: new Style({
-    fill: new Fill({
-      color: 'rgba(0, 0, 204, 0.5)',
-    }),
-    stroke: new Stroke({
-      color: '#0000cc',
-      width: 1,
-    }),
-  }),
-});
-
 // Add OSM hospitals layer (Orange)
 var hospitals_geojson = require('./data/hospitals.geojson')
 
@@ -536,8 +426,8 @@ var hospitals = new VectorLayer({
   }),
 });
 
-
-//Add Politicall Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
+/*
+//Add Political Party Layer (THIS FILE IS TOO BIG- And need to be more creative with the style)
 var politics_geojson = require('./data/crimes_politics.geojson')
 
 var politics = new VectorLayer({
@@ -552,9 +442,117 @@ var politics = new VectorLayer({
   },
   minResolution: 100,
 });
+*/
 
-/*
+// Add Water Bodies layer (Dark Blue)
+var waterbodies_geojson = require('./data/waterbodies.geojson')
 
+var waterbodies = new VectorLayer({
+  title: 'Water Bodies',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: waterbodies_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(0, 0, 204, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#0000cc',
+      width: 1,
+    }),
+  }),
+});
+
+// Roads (White)
+var roads_geojson = require('./data/roads.geojson')
+
+var roads = new VectorLayer({
+  title: 'Roads',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: roads_geojson,
+  }),
+  maxResolution: 1000,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffffff',
+      width: 3,
+    }),
+  }),
+});
+
+// Public Transport Stops (White)
+var pt_stops_geojson = require('./data/pt_stops.geojson')
+
+var pt_stops = new VectorLayer({
+  title: 'Public Transport Stops',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: pt_stops_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 255, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffffff',
+      width: 1,
+    }),
+  }),
+});
+
+// Add Restaurants layer (Yellow)
+var restaurants_geojson = require('./data/restaurants.geojson')
+
+var restaurants = new VectorLayer({
+  title: 'Restaurants',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: restaurants_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 0, 0.5)',
+    }),
+    stroke: new Stroke({
+      color: '#ffff00',
+      width: 1,
+    }),
+  }),
+});
+
+// Add OSM Leisure Parks layer (Green)
+var leisureparks_geojson = require('./data/leisureparks.geojson')
+
+var leisureparks = new VectorLayer({
+  title: 'Leisure Parks',
+  visible: false,
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: leisureparks_geojson,
+  }),
+  maxResolution: 100,
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(173, 237, 182, 0.6)',
+    }),
+    stroke: new Stroke({
+      color: '#08961b',
+      width: 1,
+    }),
+  }),
+});
 
 /*
 
@@ -563,7 +561,7 @@ WEIGHTED GRIDS
 */
 
 // Add Weighted Grid (100km Resolution)
-var grid100km_geojson = require('./data/weighted_grid100km.geojson')
+var grid100km_geojson = require('./data/grid100km_aq_p.geojson')
 
 var grid100km = new VectorLayer({
   title: 'Weighted Grid (100km)',
@@ -576,7 +574,7 @@ var grid100km = new VectorLayer({
 });
 
 // Add Weighted Grid (30km Resolution)
-var grid30km_geojson = require('./data/weighted_grid30km.geojson')
+var grid30km_geojson = require('./data/grid30km_aq_p.geojson')
 
 var grid30km = new VectorLayer({
   title: 'Weighted Grid (30km)',
@@ -650,6 +648,7 @@ var grid1km_vectorimage_midtjyllandw = new VectorImageLayer({
   style: classification_search_1km,
 });
 
+/*
 // Nordjylland VectorImage
 var grid1km_vectorimage_nordjylland_geojson = require('./data/weighted_grid1km_Nordjylland.geojson')
 
@@ -664,6 +663,7 @@ var grid1km_vectorimage_nordjylland = new VectorImageLayer({
   maxResolution: 100,
   style: classification_search_1km,
 });
+*/
 
 // Sjælland VectorImage
 var grid1km_vectorimage_sjælland_geojson = require('./data/weighted_grid1km_Sjælland.geojson')
@@ -680,6 +680,7 @@ var grid1km_vectorimage_sjælland = new VectorImageLayer({
   style: classification_search_1km,
 });
 
+/*
 // Syddanmark VectorImage
 var grid1km_vectorimage_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson')
 
@@ -694,6 +695,7 @@ var grid1km_vectorimage_syddanmark = new VectorImageLayer({
   maxResolution: 100,
   style: classification_search_1km,
 });
+*/
 
 // Scaleline
 var scaleline = new ScaleLine();
@@ -736,7 +738,7 @@ var layers = [
   }),
   // Data layers
   new Group({
-    title: 'Data',
+    title: 'Map Layers',
     layers: [
       new Group({
         title: 'Criteria Grids',
@@ -747,30 +749,35 @@ var layers = [
           grid1km_vectorimage_fyn,
           grid1km_vectorimage_midtjylland,
           grid1km_vectorimage_midtjyllandw,
-          grid1km_vectorimage_nordjylland,
+          //grid1km_vectorimage_nordjylland,
           grid1km_vectorimage_sjælland,
-          grid1km_vectorimage_syddanmark
+          //grid1km_vectorimage_syddanmark
         ],
         fold: 'close',
       }),
-      universities,
-      municipalities,
-      hospitals,
-      schools,
-      leisureparks,
-      cinemas,
-      restaurants,
-      kindergartens,
-      pt_stops,
-      pt_stations,
-      roads,
-      theatres,
-      industries,
-      supermarkets,
-      waterbodies,
-      politics,
-      dk_boundary,
-      // //isolayer,
+      new Group({
+        title: 'Data',
+        layers: [
+          universities,
+          municipalities,
+          hospitals,
+          schools,
+          leisureparks,
+          cinemas,
+          restaurants,
+          kindergartens,
+          pt_stops,
+          pt_stations,
+          roads,
+          theatres,
+          industries,
+          supermarkets,
+          waterbodies,
+          //politics,
+          dk_boundary,
+        ],
+        fold: 'close',
+      }),
     ]
   })
 ];
@@ -1050,6 +1057,7 @@ function commitSearchFunction() {
     //counter_1_hovestad += 1;
   });
 
+  /*
   // Calculate Weights for 1km Grid - Syddanmark
   var source_1km_syddanmark = grid1km_vectorimage_syddanmark.getSource();
   var features_1km_syddanmark = source_1km_syddanmark.getFeatures();
@@ -1074,6 +1082,7 @@ function commitSearchFunction() {
     feature.set("fuzzyvalue", new_fuzzy_value_1km_syddanmark);
     //counter_1_hovestad += 1;
   });
+  */
 
   // Calculate Weights for 1km Grid - Midtjylland
   var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
@@ -1125,6 +1134,7 @@ function commitSearchFunction() {
     //counter_1_hovestad += 1;
   });
 
+  /*
   // Calculate Weights for 1km Grid - Nordjylland
   var source_1km_nordjylland = grid1km_vectorimage_nordjylland.getSource();
   var features_1km_nordjylland = source_1km_nordjylland.getFeatures();
@@ -1149,17 +1159,18 @@ function commitSearchFunction() {
     feature.set("fuzzyvalue", new_fuzzy_value_1km_nordjylland);
     //counter_1_hovestad += 1;
   });
+  */
 
   // Calculate Weights for 100km Grid
   var source_100km = grid100km.getSource();
   var features_100km = source_100km.getFeatures();
-  var counter_100 = 1; // Count features for testing
+  //var counter_100 = 1; // Count features for testing
   
     features_100km.forEach(function(feature){
       var new_fuzzy_value_100km = (((parseInt(sliderCoasts.value)/(feature.get("_coastline")/1000)) + (parseInt(sliderHospitals.value)/(feature.get("_hospitals")/1000)) + (parseInt(sliderParks.value)/(feature.get("_leisurepa")/1000)) + (parseInt(sliderRoads.value)/(feature.get("_roadsmean")/1000)) + (parseInt(sliderSchools.value)/(feature.get("_schoolsme")/1000)) + (parseInt(sliderMarkets.value)/(feature.get("_supermark")/1000)) + (parseInt(sliderUni.value)/(feature.get("_universit")/1000)) + (parseInt(sliderWater.value)/(feature.get("_waterbodi")/1000)) + (parseInt(sliderPstations.value)/(feature.get("_pt_statio")/1000)) + (parseInt(sliderPstops.value)/(feature.get("_pt_stopsm")/1000)) + (parseInt(sliderRestuarants.value)/(feature.get("_restauran")/1000)) + (parseInt(sliderTheatres.value)/(feature.get("_theatresm")/1000)) + (parseInt(sliderCinemas.value)/(feature.get("_cinemasme")/1000)) + (parseInt(sliderKinder.value)/feature.get("_kindermea")) + (parseInt(sliderIndustry.value)/(feature.get("_industrie")/1000))) / 261.23441535189943); //15.28740076513416
       feature.set("fuzzyvalue", new_fuzzy_value_100km);
-      console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
-      counter_100 += 1;
+      //console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
+      //counter_100 += 1;
     });
 
   // Calculate Weights for 30km Grid
@@ -1188,28 +1199,18 @@ map.on('singleclick', function (evt) {
 var feature = map.forEachFeatureAtPixel(evt.pixel,
   function(feature, layer) {
     // Work only if the click on the grid layer
-    if (layer == grid100km, grid30km) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland) {
     return feature;
     }
   });
   // Show the property of the feature
-  //var content = 'This cell is a <b>' + (feature.get('fuzzyvalue')*100).toFixed(0).toString() + '%</b> match given your inputs!<br>';
-  var content = 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Industry</u>: <b>' + (feature.get('_industrie')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  var content = 'Avg Crime Rate: <b>' + feature.get('crimes_cri').toFixed(2).toString() + '</b><br>';
+  content += 'Avg PM<sup>10</sup> Content: <b>' + feature.get('_PM10mean').toFixed(2).toString() + '</b><br>';
+  content += 'Avg PM<sup>25</sup> Content: <b>' + feature.get('_PM25mean').toFixed(2).toString() + '</b><br>';
+  content += 'Avg NO<sup>2</sup> Content: <b>' + feature.get('_NO2mean').toFixed(2).toString() + '</b><br>';
+  //content += 'Avg O<sup>3</sup> Content: <b>' + feature.get('O3mean').toFixed(2).toString() + '</b><br>';
   content_element.innerHTML = content;
+
   overlay.setPosition(evt.coordinate);
 
   var overall_percent = (feature.get('fuzzyvalue')*100).toFixed().toString();
@@ -1229,9 +1230,11 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
   var cinema_value = ((feature.get('_cinemasme')/1000)).toFixed(2).toString();
   var kinder_value = ((feature.get('_kindermea')/1000)).toFixed(2).toString();
   var industry_value = ((feature.get('_industrie')/1000)).toFixed(2).toString();
+  var avg_house_price = (feature.get('houseprice')).toFixed(0).toString();
   var cell_id = (feature.get('id')).toFixed(0).toString();
 
-  info_element.innerHTML = 'Cell ' + cell_id + ':<br>' + overall_percent + '% Match';
+  // Populate Results Box with Grid Information
+  info_element.innerHTML = 'Cell ' + cell_id + ':<br>' + overall_percent + '% Match<br>' + 'Average House Price: <br>' + avg_house_price + '(dkk/m2)*';
 
   console.info(feature.getProperties());
 
@@ -1323,7 +1326,7 @@ map.on('pointermove', function(e) {
   var pixel = e.map.getEventPixel(e.originalEvent);
   var hit = false;
   e.map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-    if (layer === grid100km, grid30km) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland) {
           hit = true;
      }
   });
