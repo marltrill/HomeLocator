@@ -736,7 +736,7 @@ var layers = [
   }),
   // Data layers
   new Group({
-    title: 'Data',
+    title: 'Map Layers',
     layers: [
       new Group({
         title: 'Criteria Grids',

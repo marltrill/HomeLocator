@@ -113494,7 +113494,7 @@ new _layer.Group({
   })]
 }), // Data layers
 new _layer.Group({
-  title: 'Data',
+  title: 'Map Layers',
   layers: [new _layer.Group({
     title: 'Criteria Grids',
     layers: [grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, //grid1km_vectorimage_nordjylland,
@@ -114009,7 +114009,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63989" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61371" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
