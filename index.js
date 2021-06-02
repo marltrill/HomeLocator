@@ -680,6 +680,7 @@ var grid1km_vectorimage_sjælland = new VectorImageLayer({
   style: classification_search_1km,
 });
 
+/*
 // Syddanmark VectorImage
 var grid1km_vectorimage_syddanmark_geojson = require('./data/weighted_grid1km_Syddanmark.geojson')
 
@@ -694,6 +695,7 @@ var grid1km_vectorimage_syddanmark = new VectorImageLayer({
   maxResolution: 100,
   style: classification_search_1km,
 });
+*/
 
 // Scaleline
 var scaleline = new ScaleLine();
@@ -749,7 +751,7 @@ var layers = [
           grid1km_vectorimage_midtjyllandw,
           //grid1km_vectorimage_nordjylland,
           grid1km_vectorimage_sjælland,
-          grid1km_vectorimage_syddanmark
+          //grid1km_vectorimage_syddanmark
         ],
         fold: 'close',
       }),
@@ -1055,6 +1057,7 @@ function commitSearchFunction() {
     //counter_1_hovestad += 1;
   });
 
+  /*
   // Calculate Weights for 1km Grid - Syddanmark
   var source_1km_syddanmark = grid1km_vectorimage_syddanmark.getSource();
   var features_1km_syddanmark = source_1km_syddanmark.getFeatures();
@@ -1079,6 +1082,7 @@ function commitSearchFunction() {
     feature.set("fuzzyvalue", new_fuzzy_value_1km_syddanmark);
     //counter_1_hovestad += 1;
   });
+  */
 
   // Calculate Weights for 1km Grid - Midtjylland
   var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
@@ -1195,28 +1199,18 @@ map.on('singleclick', function (evt) {
 var feature = map.forEachFeatureAtPixel(evt.pixel,
   function(feature, layer) {
     // Work only if the click on the grid layer
-    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland) {
     return feature;
     }
   });
   // Show the property of the feature
-  //var content = 'This cell is a <b>' + (feature.get('fuzzyvalue')*100).toFixed(0).toString() + '%</b> match given your inputs!<br>';
-  var content = 'Avg Distance to <u>Coastline</u>: <b>' + (feature.get('_coastline')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Hospitals</u>: <b>' + (feature.get('_hospitals')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Parks</u>: <b>' + (feature.get('_leisurepa')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Major Roads</u>: <b>' + (feature.get('_roadsmean')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Schools</u>: <b>' + (feature.get('_schoolsme')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Grocery Stores</u>: <b>' + (feature.get('_supermark')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Universities</u>: <b>' + (feature.get('_universit')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Water Bodies</u>: <b>' + (feature.get('_waterbodi')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Bus Stops</u>: <b>' + (feature.get('_pt_stopsm')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Train Stations</u>: <b>' + (feature.get('_pt_statio')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Restaurants</u>: <b>' + (feature.get('_restauran')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Theatres</u>: <b>' + (feature.get('_theatresm')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Cinemas</u>: <b>' + (feature.get('_cinemasme')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Kindergartens</u>: <b>' + (feature.get('_kindermea')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
-  content += 'Avg Distance to <u>Industry</u>: <b>' + (feature.get('_industrie')/1000).toFixed(2).toString() + ' km</b>' + '<br>';
+  var content = 'Avg Crime Rate: <b>' + feature.get('crimes_cri').toFixed(2).toString() + '</b><br>';
+  content += 'Avg PM<sup>10</sup> Content: <b>' + feature.get('_PM10mean').toFixed(2).toString() + '</b><br>';
+  content += 'Avg PM<sup>25</sup> Content: <b>' + feature.get('_PM25mean').toFixed(2).toString() + '</b><br>';
+  content += 'Avg NO<sup>2</sup> Content: <b>' + feature.get('_NO2mean').toFixed(2).toString() + '</b><br>';
+  //content += 'Avg O<sup>3</sup> Content: <b>' + feature.get('O3mean').toFixed(2).toString() + '</b><br>';
   content_element.innerHTML = content;
+
   overlay.setPosition(evt.coordinate);
 
   var overall_percent = (feature.get('fuzzyvalue')*100).toFixed().toString();
@@ -1236,7 +1230,7 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
   var cinema_value = ((feature.get('_cinemasme')/1000)).toFixed(2).toString();
   var kinder_value = ((feature.get('_kindermea')/1000)).toFixed(2).toString();
   var industry_value = ((feature.get('_industrie')/1000)).toFixed(2).toString();
-  var avg_house_price = (feature.get('houseprice')).toString();
+  var avg_house_price = (feature.get('houseprice')).toFixed(0).toString();
   var cell_id = (feature.get('id')).toFixed(0).toString();
 
   // Populate Results Box with Grid Information
@@ -1332,7 +1326,7 @@ map.on('pointermove', function(e) {
   var pixel = e.map.getEventPixel(e.originalEvent);
   var hit = false;
   e.map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland) {
           hit = true;
      }
   });
