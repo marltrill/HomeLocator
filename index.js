@@ -89,14 +89,8 @@ var classification_search_30km = function (feature, resolution){
     else if (fuzzyvalue < 0.2) {
     layercolor='rgba(217, 200, 0, 0.6)';
     }
-    else if (fuzzyvalue < 0.4) {
-    layercolor='rgba(133, 200, 0, 0.6)';
-    }
     else if (fuzzyvalue < 0.6) {
     layercolor='rgba(0, 200, 0, 0.6)';
-    }
-    else if (fuzzyvalue < 0.8) {
-    layercolor='rgba(0, 150, 0, 0.6)';
     }
     else if (fuzzyvalue <= 1) {
     layercolor='rgba(0, 100, 0, 0.6)';
@@ -124,14 +118,8 @@ var classification_search_1km = function (feature, resolution){
     else if (fuzzyvalue < 0.2) {
     layercolor='rgba(217, 200, 0, 0.6)';
     }
-    else if (fuzzyvalue < 0.4) {
-    layercolor='rgba(133, 200, 0, 0.6)';
-    }
     else if (fuzzyvalue < 0.6) {
     layercolor='rgba(0, 200, 0, 0.6)';
-    }
-    else if (fuzzyvalue < 0.8) {
-    layercolor='rgba(0, 150, 0, 0.6)';
     }
     else if (fuzzyvalue <= 1) {
     layercolor='rgba(0, 100, 0, 0.6)';
