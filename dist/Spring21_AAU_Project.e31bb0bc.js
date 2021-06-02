@@ -112859,12 +112859,8 @@ var classification_search_100km = function classification_search_100km(feature, 
     layercolor = 'rgba(0, 0, 0, 0)';
   } else if (fuzzyvalue < 0.2) {
     layercolor = 'rgba(217, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
     layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
@@ -113673,6 +113669,15 @@ outputIndustry.innerHTML = sliderIndustry.value; // Update slider value
 
 sliderIndustry.oninput = function () {
   outputIndustry.innerHTML = this.value;
+}; // House Price Slider
+
+
+var sliderHprice = document.getElementById("hpriceDistance");
+var outputHprice = document.getElementById("outHprice");
+outputHprice.innerHTML = sliderHprice.value; // Update slider value
+
+sliderHprice.oninput = function () {
+  outputHprice.innerHTML = this.value;
 };
 
 info_element.innerHTML = 'Search<br>&<br>Select a Cell';
@@ -113686,189 +113691,1580 @@ STLYE GRIDS BASED ON USER INPUT
 function commitSearchFunction() {
   // Calculate Weights for 1km Grid - Hovestadden
   var source_1km_hovestad = grid1km_vectorimage_hovestad.getSource();
-  var features_1km_hovestad = source_1km_hovestad.getFeatures(); //var counter_1_hovestad = 1; // Count features for testing
-
+  var features_1km_hovestad = source_1km_hovestad.getFeatures();
+  var coasts_1_hovestad;
+  var hospitals_1_hovestad;
+  var parks__1_hovestad;
+  var roads_1_hovestad;
+  var schools_1_hovestad;
+  var markets_1_hovestad;
+  var uni_1_hovestad;
+  var stops_1_hovestad;
+  var stations_1_hovestad;
+  var restuarants_1_hovestad;
+  var theatres_1_hovestad;
+  var cinemas_1_hovestad;
+  var kinder_1_hovestad;
+  var industries_1_hovestad;
+  var houseprice_1_hovestad;
+  var water_1_hovestad;
+  var new_fuzzy_value_1km_hovestad;
+  var accessibility_1_hovestad;
+  var livability_1_hovestad;
+  var suitability_1_hovestad;
   features_1km_hovestad.forEach(function (feature) {
-    var new_fuzzy_value_1km_hovestad = (parseInt(sliderCoasts.value) - 49393.320074075 / 1000) / (feature.get("_coastline").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderHospitals.value) - 60628.0617247906 / 1000) / (feature.get("_hospitals").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderParks.value) - 58680.7236596596 / 1000) / (feature.get("_leisurepa").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderRoads.value) - 58625.39610516 / 1000) / (feature.get("_roadsmean").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderSchools.value) - 28208.2584820961 / 1000) / (feature.get("_schoolsme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderMarkets.value) - 26748.9380075178 / 1000) / (feature.get("_supermark").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderUni.value) - 175978.873919025 / 1000) / (feature.get("_universit").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderWater.value) - 19149.471105239 / 1000) / (feature.get("_waterbodi").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderPstations.value) - 58343.955165378 / 1000) / (feature.get("_pt_statio").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderPstops.value) - 58233.3997127363 / 1000) / (feature.get("_pt_stopsm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderRestuarants.value) - 26708.1729391503 / 1000) / (feature.get("_restauran").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderTheatres.value) - 82544.744036771 / 1000) / (feature.get("_theatresm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad += (parseInt(sliderCinemas.value) - 60290.5921492429 / 1000) / (feature.get("_cinemasme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_hovestad = new_fuzzy_value_1km_hovestad / 828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_1_hovestad = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_1_hovestad = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_1_hovestad = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad); //counter_1_hovestad += 1;
+      if (uni_1_hovestad < 0) {
+        uni_1_hovestad = 0;
+      } else if (uni_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_1_hovestad = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_1_hovestad = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_1_hovestad = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_1_hovestad < 0) {
+        roads_1_hovestad = 0;
+      } else if (roadroads_1_hovestad_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_1_hovestad = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_1_hovestad = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_1_hovestad = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_1_hovestad < 0) {
+        coasts_1_hovestad = 0;
+      } else if (coasts_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_1_hovestad = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_1_hovestad = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_1_hovestad = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_1_hovestad < 0) {
+        hospitals_1_hovestad = 0;
+      } else if (hospitals_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks__1_hovestad = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks__1_hovestad = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks__1_hovestad = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks__1_hovestad < 0) {
+        parks__1_hovestad = 0;
+      } else if (parks__1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_1_hovestad = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_1_hovestad = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_1_hovestad = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_1_sjælland < 0) {
+        schools_1_hovestad = 0;
+      } else if (schools_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_1_hovestad = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_1_hovestad = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_1_hovestad = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_1_hovestad < 0) {
+        markets_1_hovestad = 0;
+      } else if (markets_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_1_hovestad = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_1_hovestad = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_1_hovestad = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_1_hovestad < 0) {
+        stops_1_hovestad = 0;
+      } else if (stops_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_1_hovestad = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_1_hovestad = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_1_hovestad = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_1_hovestad < 0) {
+        stations_1_hovestad = 0;
+      } else if (stations_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_1_hovestad = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_1_hovestad = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_1_hovestad = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_1_hovestad < 0) {
+        restuarants_1_hovestad = 0;
+      } else if (restuarants_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_1_hovestad = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_1_hovestad = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_1_hovestad = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_1_hovestad < 0) {
+        theatres_1_hovestad = 0;
+      } else if (theatres_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_1_hovestad = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_1_hovestad = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_1_hovestad = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_1_hovestad < 0) {
+        cinemas_1_hovestad = 0;
+      } else if (cinemas_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_1_hovestad = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_1_hovestad = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_1_hovestad = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_1_hovestad < 0) {
+        kinder_1_hovestad = 0;
+      } else if (kinder_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_1_hovestad = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_1_hovestad = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_1_hovestad = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_1_hovestad < 0) {
+        industries_1_hovestad = 0;
+      } else if (industries_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_1_hovestad = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_1_hovestad = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_1_hovestad = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_1_hovestad < 0) {
+        houseprice_1_hovestad = 0;
+      } else if (houseprice_1_hovestad <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_1_hovestad = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_1_hovestad = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_1_hovestad = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_1_hovestad < 0) {
+        water_1_hovestad = 0;
+      } else if (water_1_hovestad <= 100) {}
+    }
+
+    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks__1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
+    accessibility_1_hovestad = (uni_1_hovestad + roads_1_hovestad + stops_1_hovestad + stations_1_hovestad + houseprice_1_hovestad) / 5 * 100;
+    livability_1_hovestad = (schools_1_hovestad + kinder_1_hovestad + coasts_1_hovestad + markets_1_hovestad + water_1_hovestad + industries_1_hovestad) / 6 * 100;
+    suitability_1_hovestad = (parks__1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad) / 5 * 100;
+    feature.set("accessibility_1_hovestad", accessibility_1_hovestad);
+    feature.set("livability_1_hovestad", livability_1_hovestad);
+    feature.set("suitability_1_hovestad", suitability_1_hovestad);
   }); // Calculate Weights for 1km Grid - Sjælland
 
   var source_1km_sjælland = grid1km_vectorimage_sjælland.getSource();
-  var features_1km_sjælland = source_1km_sjælland.getFeatures(); //var counter_1 = 1; // Count features for testing
-
+  var features_1km_sjælland = source_1km_sjælland.getFeatures();
+  var coasts_1_sjælland;
+  var hospitals_1_sjælland;
+  var parks__1_sjælland;
+  var roads_1_sjælland;
+  var schools_1_sjælland;
+  var markets_1_sjælland;
+  var uni_1_sjælland;
+  var stops_1_sjælland;
+  var stations_1_sjælland;
+  var restuarants_1_sjælland;
+  var theatres_1_sjælland;
+  var cinemas_1_sjælland;
+  var kinder_1_sjælland;
+  var industries_1_sjælland;
+  var houseprice_1_sjælland;
+  var water_1_sjælland;
+  var new_fuzzy_value_1km_sjælland;
+  var accessibility_1_sjælland;
+  var livability_1_sjælland;
+  var suitability_1_sjælland;
   features_1km_sjælland.forEach(function (feature) {
-    var new_fuzzy_value_1km_sjælland = (parseInt(sliderCoasts.value) - 49393.320074075 / 1000) / (feature.get("_coastline").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderHospitals.value) - 60628.0617247906 / 1000) / (feature.get("_hospitals").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderParks.value) - 58680.7236596596 / 1000) / (feature.get("_leisurepa").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderRoads.value) - 58625.39610516 / 1000) / (feature.get("_roadsmean").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderSchools.value) - 28208.2584820961 / 1000) / (feature.get("_schoolsme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderMarkets.value) - 26748.9380075178 / 1000) / (feature.get("_supermark").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderUni.value) - 175978.873919025 / 1000) / (feature.get("_universit").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderWater.value) - 19149.471105239 / 1000) / (feature.get("_waterbodi").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderPstations.value) - 58343.955165378 / 1000) / (feature.get("_pt_statio").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderPstops.value) - 58233.3997127363 / 1000) / (feature.get("_pt_stopsm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderRestuarants.value) - 26708.1729391503 / 1000) / (feature.get("_restauran").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderTheatres.value) - 82544.744036771 / 1000) / (feature.get("_theatresm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland += (parseInt(sliderCinemas.value) - 60290.5921492429 / 1000) / (feature.get("_cinemasme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_sjælland = new_fuzzy_value_1km_sjælland / 828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_1_sjælland = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_1_sjælland = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_1_sjælland = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland); //counter_1_hovestad += 1;
+      if (uni_1_sjælland < 0) {
+        uni_1_sjælland = 0;
+      } else if (uni_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_1_sjælland = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_1_sjælland = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_1_sjælland = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_1_sjælland < 0) {
+        roads_1_sjælland = 0;
+      } else if (roads_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_1_sjælland = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_1_sjælland = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_1_sjælland = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_1_sjælland < 0) {
+        coasts_1_sjælland = 0;
+      } else if (coasts_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_1_sjælland = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_1_sjælland = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_1_sjælland = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_1_sjælland < 0) {
+        hospitals_1_sjælland = 0;
+      } else if (hospitals_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks__1_sjælland = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks__1_sjælland = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks__1_sjælland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks__1_sjælland < 0) {
+        parks__1_sjælland = 0;
+      } else if (parks__1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_1_sjælland = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_1_sjælland = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_1_sjælland = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_1_sjælland < 0) {
+        schools_1_sjælland = 0;
+      } else if (schools_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_1_sjælland = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_1_sjælland = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_1_sjælland = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_1_sjælland < 0) {
+        markets_1_sjælland = 0;
+      } else if (markets_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_1_sjælland = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_1_sjælland = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_1_sjælland = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_1_sjælland < 0) {
+        stops_1_sjælland = 0;
+      } else if (stops_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_1_sjælland = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_1_sjælland = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_1_sjælland = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_1_sjælland < 0) {
+        stations_1_sjælland = 0;
+      } else if (stations_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_1_sjælland = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_1_sjælland = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_1_sjælland = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_1_sjælland < 0) {
+        restuarants_1_sjælland = 0;
+      } else if (restuarants_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_1_sjælland = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_1_sjælland = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_1_sjælland = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_1_sjælland < 0) {
+        theatres_1_sjælland = 0;
+      } else if (theatres_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_1_sjælland = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_1_sjælland = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_1_sjælland = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_1_sjælland < 0) {
+        cinemas_1_sjælland = 0;
+      } else if (cinemas_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_1_sjælland = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_1_sjælland = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_1_sjælland = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_1_sjælland < 0) {
+        kinder_1_sjælland = 0;
+      } else if (kinder_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_1_sjælland = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_1_sjælland = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_1_sjælland = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_1_sjælland < 0) {
+        industries_1_sjælland = 0;
+      } else if (industries_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_1_sjælland = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_1_sjælland = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_1_sjælland = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_1_sjælland < 0) {
+        houseprice_1_sjælland = 0;
+      } else if (houseprice_1_sjælland <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_1_sjælland = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      houseprice_1_sjælland = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      houseprice_1_sjælland = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (houseprice_1_sjælland < 0) {
+        houseprice_1_sjælland = 0;
+      } else if (houseprice_1_sjælland <= 100) {}
+    }
+
+    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks__1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
+    accessibility_1_sjælland = (uni_1_sjælland + roads_1_sjælland + stops_1_sjælland + stations_1_sjælland + houseprice_1_sjælland) / 5 * 100;
+    livability_1_sjælland = (schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland) / 6 * 100;
+    suitability_1_sjælland = (parks__1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland) / 5 * 100;
+    feature.set("accessibility_1_sjælland", accessibility_1_sjælland);
+    feature.set("livability_1_sjælland", livability_1_sjælland);
+    feature.set("suitability_1_sjælland", suitability_1_sjælland);
   }); // Calculate Weights for 1km Grid - Fyn
 
   var source_1km_fyn = grid1km_vectorimage_fyn.getSource();
-  var features_1km_fyn = source_1km_fyn.getFeatures(); //var counter_1 = 1; // Count features for testing
-
+  var features_1km_fyn = source_1km_fyn.getFeatures();
+  var coasts_1_fyn;
+  var hospitals_1_fyn;
+  var parks__1_fyn;
+  var roads_1_fyn;
+  var schools_1_fyn;
+  var markets_1_fyn;
+  var uni_1_fyn;
+  var stops_1_fyn;
+  var stations_1_fyn;
+  var restuarants_1_fyn;
+  var theatres_1_fyn;
+  var cinemas_1_fyn;
+  var kinder_1_fyn;
+  var industries_1_fyn;
+  var houseprice_1_fyn;
+  var water_1_fyn;
+  var new_fuzzy_value_1km_fyn;
+  var accessibility_1_fyn;
+  var livability_1_fyn;
+  var suitability_1_fyn;
   features_1km_fyn.forEach(function (feature) {
-    var new_fuzzy_value_1km_fyn = (parseInt(sliderCoasts.value) - 49393.320074075 / 1000) / (feature.get("_coastline").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderHospitals.value) - 60628.0617247906 / 1000) / (feature.get("_hospitals").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderParks.value) - 58680.7236596596 / 1000) / (feature.get("_leisurepa").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderRoads.value) - 58625.39610516 / 1000) / (feature.get("_roadsmean").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderSchools.value) - 28208.2584820961 / 1000) / (feature.get("_schoolsme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderMarkets.value) - 26748.9380075178 / 1000) / (feature.get("_supermark").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderUni.value) - 175978.873919025 / 1000) / (feature.get("_universit").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderWater.value) - 19149.471105239 / 1000) / (feature.get("_waterbodi").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderPstations.value) - 58343.955165378 / 1000) / (feature.get("_pt_statio").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderPstops.value) - 58233.3997127363 / 1000) / (feature.get("_pt_stopsm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderRestuarants.value) - 26708.1729391503 / 1000) / (feature.get("_restauran").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderTheatres.value) - 82544.744036771 / 1000) / (feature.get("_theatresm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn += (parseInt(sliderCinemas.value) - 60290.5921492429 / 1000) / (feature.get("_cinemasme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_fyn = new_fuzzy_value_1km_fyn / 828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_1_fyn = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_1_fyn = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_1_fyn = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn); //counter_1_hovestad += 1;
-  });
-  /*
-  // Calculate Weights for 1km Grid - Syddanmark
-  var source_1km_syddanmark = grid1km_vectorimage_syddanmark.getSource();
-  var features_1km_syddanmark = source_1km_syddanmark.getFeatures();
-  //var counter_1 = 1; // Count features for testing
-    features_1km_syddanmark.forEach(function(feature){
-    var new_fuzzy_value_1km_syddanmark = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
-    new_fuzzy_value_1km_syddanmark = new_fuzzy_value_1km_syddanmark/828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_syddanmark);
-    //counter_1_hovestad += 1;
-  });
-  */
-  // Calculate Weights for 1km Grid - Midtjylland
+      if (uni_1_fyn < 0) {
+        uni_1_fyn = 0;
+      } else if (uni_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_1_fyn = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_1_fyn = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_1_fyn = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_1_fyn < 0) {
+        roads_1_fyn = 0;
+      } else if (roads_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_1_fyn = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_1_fyn = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_1_fyn = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_1_fyn < 0) {
+        coasts_1_fyn = 0;
+      } else if (coasts_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_1_fyn = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_1_fyn = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_1_fyn = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_1_fyn < 0) {
+        hospitals_1_fyn = 0;
+      } else if (hospitals_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks__1_fyn = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks__1_fyn = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks__1_fyn = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks__1_fyn < 0) {
+        parks__1_fyn = 0;
+      } else if (parks__1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_1_fyn = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_1_fyn = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_1_fyn = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_1_fyn < 0) {
+        schools_1_fyn = 0;
+      } else if (schools_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_1_fyn = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_1_fyn = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_1_fyn = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_1_fyn < 0) {
+        markets_1_fyn = 0;
+      } else if (markets_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_1_fyn = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_1_fyn = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_1_fyn = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_1_fyn < 0) {
+        stops_1_fyn = 0;
+      } else if (stops_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_1_fyn = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_1_fyn = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_1_fyn = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_1_fyn < 0) {
+        stations_1_fyn = 0;
+      } else if (stations_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_1_fyn = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_1_fyn = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_1_fyn = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_1_fyn < 0) {
+        restuarants_1_fyn = 0;
+      } else if (restuarants_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_1_fyn = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_1_fyn = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_1_fyn = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_1_fyn < 0) {
+        theatres_1_fyn = 0;
+      } else if (theatres_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_1_fyn = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_1_fyn = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_1_fyn = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_1_fyn < 0) {
+        cinemas_1_fyn = 0;
+      } else if (cinemas_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_1_fyn = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_1_fyn = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_1_fyn = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_1_fyn < 0) {
+        kinder_1_fyn = 0;
+      } else if (kinder_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_1_fyn = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_1_fyn = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_1_fyn = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_1_fyn < 0) {
+        industries_1_fyn = 0;
+      } else if (industries_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_1_fyn = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_1_fyn = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_1_fyn = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_1_fyn < 0) {
+        houseprice_1_fyn = 0;
+      } else if (houseprice_1_fyn <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_1_fyn = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_1_fyn = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_1_fyn = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_1_fyn < 0) {
+        water_1_fyn = 0;
+      } else if (water_1_fyn <= 100) {}
+    }
+
+    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks__1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
+    accessibility_1_fyn = (uni_1_fyn + roads_1_fyn + stops_1_fyn + stations_1_fyn + houseprice_1_fyn) / 5 * 100;
+    livability_1_fyn = (schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn) / 6 * 100;
+    suitability_1_fyn = (parks__1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn) / 5 * 100;
+    feature.set("accessibility_1_fyn", accessibility_1_fyn);
+    feature.set("livability_1_fyn", livability_1_fyn);
+    feature.set("suitability_1_fyn", suitability_1_fyn);
+  }); // Calculate Weights for 1km Grid - Midtjylland
 
   var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
-  var features_1km_midtjylland = source_1km_midtjylland.getFeatures(); //var counter_1 = 1; // Count features for testing
-
+  var features_1km_midtjylland = source_1km_midtjylland.getFeatures();
+  var coasts_1_midtjylland;
+  var hospitals_1_midtjylland;
+  var parks__1_midtjylland;
+  var roads_1_midtjylland;
+  var schools_1_midtjylland;
+  var markets_1_midtjylland;
+  var uni_1_midtjylland;
+  var stops_1_midtjylland;
+  var stations_1_midtjylland;
+  var restuarants_1_midtjylland;
+  var theatres_1_midtjylland;
+  var cinemas_1_midtjylland;
+  var kinder_1_midtjylland;
+  var industries_1_midtjylland;
+  var houseprice_1_midtjylland;
+  var water_1_midtjylland;
+  var new_fuzzy_value_1km_midtjylland;
+  var accessibility_1_midtjylland;
+  var livability_1_midtjylland;
+  var suitability_1_midtjylland;
   features_1km_midtjylland.forEach(function (feature) {
-    var new_fuzzy_value_1km_midtjylland = (parseInt(sliderCoasts.value) - 49393.320074075 / 1000) / (feature.get("_coastline").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderHospitals.value) - 60628.0617247906 / 1000) / (feature.get("_hospitals").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderParks.value) - 58680.7236596596 / 1000) / (feature.get("_leisurepa").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderRoads.value) - 58625.39610516 / 1000) / (feature.get("_roadsmean").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderSchools.value) - 28208.2584820961 / 1000) / (feature.get("_schoolsme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderMarkets.value) - 26748.9380075178 / 1000) / (feature.get("_supermark").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderUni.value) - 175978.873919025 / 1000) / (feature.get("_universit").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderWater.value) - 19149.471105239 / 1000) / (feature.get("_waterbodi").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderPstations.value) - 58343.955165378 / 1000) / (feature.get("_pt_statio").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderPstops.value) - 58233.3997127363 / 1000) / (feature.get("_pt_stopsm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderRestuarants.value) - 26708.1729391503 / 1000) / (feature.get("_restauran").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderTheatres.value) - 82544.744036771 / 1000) / (feature.get("_theatresm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland += (parseInt(sliderCinemas.value) - 60290.5921492429 / 1000) / (feature.get("_cinemasme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjylland = new_fuzzy_value_1km_midtjylland / 828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_1_midtjylland = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_1_midtjylland = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_1_midtjylland = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland); //counter_1_hovestad += 1;
+      if (uni_1_midtjylland < 0) {
+        uni_1_midtjylland = 0;
+      } else if (uni_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_1_midtjylland = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_1_midtjylland = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_1_midtjylland = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_1_midtjylland < 0) {
+        roads_1_midtjylland = 0;
+      } else if (roads_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjylland = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjylland = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjylland = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_1_midtjylland < 0) {
+        coasts_1_midtjylland = 0;
+      } else if (coasts_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjylland = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjylland = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjylland = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_1_midtjylland < 0) {
+        hospitals_1_midtjylland = 0;
+      } else if (hospitals_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks__1_midtjylland = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks__1_midtjylland = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks__1_midtjylland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks__1_midtjylland < 0) {
+        parks__1_midtjylland = 0;
+      } else if (parks__1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_1_midtjylland = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_1_midtjylland = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_1_midtjylland = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_1_midtjylland < 0) {
+        schools_1_midtjylland = 0;
+      } else if (schools_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_1_midtjylland = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_1_midtjylland = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_1_midtjylland = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_1_midtjylland < 0) {
+        markets_1_midtjylland = 0;
+      } else if (markets_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjylland = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjylland = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjylland = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_1_midtjylland < 0) {
+        stops_1_midtjylland = 0;
+      } else if (stops_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjylland = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjylland = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjylland = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_1_midtjylland < 0) {
+        stations_1_midtjylland = 0;
+      } else if (stations_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjylland = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjylland = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjylland = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_1_midtjylland < 0) {
+        restuarants_1_midtjylland = 0;
+      } else if (restuarants_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjylland = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjylland = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjylland = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_1_midtjylland < 0) {
+        theatres_1_midtjylland = 0;
+      } else if (theatres_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjylland = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjylland = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjylland = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_1_midtjylland < 0) {
+        cinemas_1_midtjylland = 0;
+      } else if (cinemas_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_1_midtjylland = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_1_midtjylland = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_1_midtjylland = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_1_midtjylland < 0) {
+        kinder_1_midtjylland = 0;
+      } else if (kinder_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_1_midtjylland = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_1_midtjylland = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_1_midtjylland = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_1_midtjylland < 0) {
+        industries_1_midtjylland = 0;
+      } else if (industries_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_1_midtjylland = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_1_midtjylland = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_1_midtjylland = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_1_midtjylland < 0) {
+        houseprice_1_midtjylland = 0;
+      } else if (houseprice_1_midtjylland <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_1_midtjylland = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_1_midtjylland = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_1_midtjylland = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_1_midtjylland < 0) {
+        water_1_midtjylland = 0;
+      } else if (water_1_midtjylland <= 100) {}
+    }
+
+    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks__1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
+    accessibility_1_midtjylland = (uni_1_midtjylland + roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + houseprice_1_midtjylland) / 5 * 100;
+    livability_1_midtjylland = (schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland) / 6 * 100;
+    suitability_1_midtjylland = (parks__1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland) / 5 * 100;
+    feature.set("accessibility_1_midtjylland", accessibility_1_midtjylland);
+    feature.set("livability_1_midtjylland", livability_1_midtjylland);
+    feature.set("suitability_1_midtjylland", suitability_1_midtjylland);
   }); // Calculate Weights for 1km Grid - Midtjylland West
 
   var source_1km_midtjyllandw = grid1km_vectorimage_midtjyllandw.getSource();
-  var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures(); //var counter_1 = 1; // Count features for testing
-
+  var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures();
+  var coasts_1_midtjyllandw;
+  var hospitals_1_midtjyllandw;
+  var parks__1_midtjyllandw;
+  var roads_1_midtjyllandw;
+  var schools_1_midtjyllandw;
+  var markets_1_midtjyllandw;
+  var uni_1_midtjyllandw;
+  var stops_1_midtjyllandw;
+  var stations_1_midtjyllandw;
+  var restuarants_1_midtjyllandw;
+  var theatres_1_midtjyllandw;
+  var cinemas_1_midtjyllandw;
+  var kinder_1_midtjyllandw;
+  var industries_1_midtjyllandw;
+  var houseprice_1_midtjyllandw;
+  var water_1_midtjyllandw;
+  var new_fuzzy_value_1km_midtjyllandw;
+  var accessibility_1_midtjyllandw;
+  var livability_1_midtjyllandw;
+  var suitability_1_midtjyllandw;
   features_1km_midtjyllandw.forEach(function (feature) {
-    var new_fuzzy_value_1km_midtjyllandw = (parseInt(sliderCoasts.value) - 49393.320074075 / 1000) / (feature.get("_coastline").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderHospitals.value) - 60628.0617247906 / 1000) / (feature.get("_hospitals").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderParks.value) - 58680.7236596596 / 1000) / (feature.get("_leisurepa").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderRoads.value) - 58625.39610516 / 1000) / (feature.get("_roadsmean").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderSchools.value) - 28208.2584820961 / 1000) / (feature.get("_schoolsme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderMarkets.value) - 26748.9380075178 / 1000) / (feature.get("_supermark").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderUni.value) - 175978.873919025 / 1000) / (feature.get("_universit").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderWater.value) - 19149.471105239 / 1000) / (feature.get("_waterbodi").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderPstations.value) - 58343.955165378 / 1000) / (feature.get("_pt_statio").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderPstops.value) - 58233.3997127363 / 1000) / (feature.get("_pt_stopsm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderRestuarants.value) - 26708.1729391503 / 1000) / (feature.get("_restauran").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderTheatres.value) - 82544.744036771 / 1000) / (feature.get("_theatresm").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw += (parseInt(sliderCinemas.value) - 60290.5921492429 / 1000) / (feature.get("_cinemasme").toFixed(2) / 1000);
-    new_fuzzy_value_1km_midtjyllandw = new_fuzzy_value_1km_midtjyllandw / 828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_1_midtjyllandw = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_1_midtjyllandw = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_1_midtjyllandw = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw); //counter_1_hovestad += 1;
-  });
-  /*
-  // Calculate Weights for 1km Grid - Nordjylland
-  var source_1km_nordjylland = grid1km_vectorimage_nordjylland.getSource();
-  var features_1km_nordjylland = source_1km_nordjylland.getFeatures();
-  //var counter_1 = 1; // Count features for testing
-    features_1km_nordjylland.forEach(function(feature){
-    var new_fuzzy_value_1km_nordjylland = ((parseInt(sliderCoasts.value)-(49393.320074075/1000))/(feature.get("_coastline").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderHospitals.value)-(60628.0617247906/1000))/(feature.get("_hospitals").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderParks.value)-(58680.7236596596/1000))/(feature.get("_leisurepa").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderRoads.value)-(58625.39610516/1000))/(feature.get("_roadsmean").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderSchools.value)-(28208.2584820961/1000))/(feature.get("_schoolsme").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderMarkets.value)-(26748.9380075178/1000))/(feature.get("_supermark").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderUni.value)-(175978.873919025/1000))/(feature.get("_universit").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderWater.value)-(19149.471105239/1000))/(feature.get("_waterbodi").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderPstations.value)-(58343.955165378/1000))/(feature.get("_pt_statio").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderPstops.value)-(58233.3997127363/1000))/(feature.get("_pt_stopsm").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderRestuarants.value)-(26708.1729391503/1000))/(feature.get("_restauran").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderTheatres.value)-(82544.744036771/1000))/(feature.get("_theatresm").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland += ((parseInt(sliderCinemas.value)-(60290.5921492429/1000))/(feature.get("_cinemasme").toFixed(2)/1000));
-    new_fuzzy_value_1km_nordjylland = new_fuzzy_value_1km_nordjylland/828; //20580.493788670843
-    //console.log(new_fuzzy_value_1km_hovestad);
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_nordjylland);
-    //counter_1_hovestad += 1;
-  });
-  */
-  // Calculate Weights for 100km Grid
+      if (uni_1_midtjyllandw < 0) {
+        uni_1_midtjyllandw = 0;
+      } else if (uni_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_1_midtjyllandw = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_1_midtjyllandw = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_1_midtjyllandw = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_1_midtjyllandw < 0) {
+        roads_1_midtjyllandw = 0;
+      } else if (roads_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjyllandw = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjyllandw = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_1_midtjyllandw = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_1_midtjyllandw < 0) {
+        coasts_1_midtjyllandw = 0;
+      } else if (coasts_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjyllandw = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjyllandw = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_1_midtjyllandw = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_1_midtjyllandw < 0) {
+        hospitals_1_midtjyllandw = 0;
+      } else if (hospitals_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks__1_midtjyllandw = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks__1_midtjyllandw = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks__1_midtjyllandw = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks__1_midtjyllandw < 0) {
+        parks__1_midtjyllandw = 0;
+      } else if (parks__1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_1_midtjyllandw = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_1_midtjyllandw = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_1_midtjyllandw = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_1_midtjyllandw < 0) {
+        schools_1_midtjyllandw = 0;
+      } else if (schools_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_1_midtjyllandw = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_1_midtjyllandw = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_1_midtjyllandw = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_1_midtjyllandw < 0) {
+        markets_1_midtjyllandw = 0;
+      } else if (markets_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjyllandw = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjyllandw = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_1_midtjyllandw = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_1_midtjyllandw < 0) {
+        stops_1_midtjyllandw = 0;
+      } else if (stops_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjyllandw = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjyllandw = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_1_midtjyllandw = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_1_midtjyllandw < 0) {
+        stations_1_midtjyllandw = 0;
+      } else if (stations_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjyllandw = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjyllandw = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_1_midtjyllandw = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_1_midtjyllandw < 0) {
+        restuarants_1_midtjyllandw = 0;
+      } else if (restuarants_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjyllandw = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjyllandw = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_1_midtjyllandw = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_1_midtjyllandw < 0) {
+        theatres_1_midtjyllandw = 0;
+      } else if (theatres_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjyllandw = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjyllandw = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_1_midtjyllandw = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_1_midtjyllandw < 0) {
+        cinemas_1_midtjyllandw = 0;
+      } else if (cinemas_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_1_midtjyllandw = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_1_midtjyllandw = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_1_midtjyllandw = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_1_midtjyllandw < 0) {
+        kinder_1_midtjyllandw = 0;
+      } else if (kinder_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_1_midtjyllandw = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_1_midtjyllandw = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_1_midtjyllandw = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_1_midtjyllandw < 0) {
+        industries_1_midtjyllandw = 0;
+      } else if (industries_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_1_midtjyllandw = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_1_midtjyllandw = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_1_midtjyllandw = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_1_midtjyllandw < 0) {
+        houseprice_1_midtjyllandw = 0;
+      } else if (houseprice_1_midtjyllandw <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_1_midtjyllandw = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_1_midtjyllandw = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_1_midtjyllandw = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_1_midtjyllandw < 0) {
+        water_1_midtjyllandw = 0;
+      } else if (water_1_midtjyllandw <= 100) {}
+    }
+
+    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks__1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
+    accessibility_1_midtjyllandw = (uni_1_midtjyllandw + roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + houseprice_1_midtjyllandw) / 5 * 100;
+    livability_1_midtjyllandw = (schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw) / 6 * 100;
+    suitability_1_midtjyllandw = (parks__1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw) / 5 * 100;
+    feature.set("accessibility_1_midtjyllandw", accessibility_1_midtjyllandw);
+    feature.set("livability_1_midtjyllandw", livability_1_midtjyllandw);
+    feature.set("suitability_1_midtjyllandw", suitability_1_midtjyllandw);
+  }); // Calculate Weights for 100km Grid
 
   var source_100km = grid100km.getSource();
-  var features_100km = source_100km.getFeatures(); //var counter_100 = 1; // Count features for testing
-
+  var features_100km = source_100km.getFeatures();
+  var hospitals_100;
+  var parks_100;
+  var roads_100;
+  var schools_100;
+  var markets_100;
+  var uni_100;
+  var stops_100;
+  var stations_100;
+  var restuarants_100;
+  var theatres_100;
+  var cinemas_100;
+  var kinder_100;
+  var industries_100;
+  var houseprice_100;
+  var water_100;
+  var coasts_100;
+  var new_fuzzy_value_100km;
+  var accessibility_100;
+  var livability_100;
+  var suitability_100;
   features_100km.forEach(function (feature) {
-    var new_fuzzy_value_100km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 261.23441535189943; //15.28740076513416
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_100 = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_100 = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_100 = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
 
-    feature.set("fuzzyvalue", new_fuzzy_value_100km); //console.log("100km->" + counter_100 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_100km); // Log values for testing
-    //counter_100 += 1;
+      if (uni_100 < 0) {
+        uni_100 = 0;
+      } else if (uni_100 <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_100 = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_100 = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_100 = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_100 < 0) {
+        roads_100 = 0;
+      } else if (roads_100 <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_100 = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_100 = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_100 = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_100 < 0) {
+        coasts_100 = 0;
+      } else if (coasts_100 <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_100 = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_100 = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_100 = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_100 < 0) {
+        hospitals_100 = 0;
+      } else if (hospitals_100 <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks_100 = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks_100 = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks_100 = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks_100 < 0) {
+        parks_100 = 0;
+      } else if (parks_100 <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_100 = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_100 = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_100 = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_100 < 0) {
+        schools_100 = 0;
+      } else if (schools_100 <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_100 = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_100 = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_100 = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_100 < 0) {
+        markets_100 = 0;
+      } else if (markets_100 <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_100 = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_100 = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_100 = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_100 < 0) {
+        stops_100 = 0;
+      } else if (stops_100 <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_100 = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_100 = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_100 = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_100 < 0) {
+        stations_100 = 0;
+      } else if (stations_100 <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_100 = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_100 = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_100 = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_100 < 0) {
+        restuarants_100 = 0;
+      } else if (restuarants_100 <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_100 = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_100 = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_100 = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_100 < 0) {
+        theatres_100 = 0;
+      } else if (theatres_100 <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_100 = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_100 = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_100 = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_100 < 0) {
+        cinemas_100 = 0;
+      } else if (cinemas_100 <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_100 = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_100 = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_100 = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_100 < 0) {
+        kinder_100 = 0;
+      } else if (kinder_100 <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_100 = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_100 = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_100 = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_100 < 0) {
+        industries_100 = 0;
+      } else if (industries_100 <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_100 = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_100 = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_100 = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_100 < 0) {
+        houseprice_100 = 0;
+      } else if (houseprice_100 <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_100 = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_100 = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_100 = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_100 < 0) {
+        water_100 = 0;
+      } else if (water_100 <= 100) {}
+    }
+
+    new_fuzzy_value_100km = (coasts_100 + hospitals_100 + parks_100 + roads_100 + schools_100 + markets_100 + uni_100 + stops_100 + stations_100 + restuarants_100 + theatres_100 + cinemas_100 + kinder_100 + industries_100 + houseprice_100) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_100km);
+    accessibility_100 = (uni_100 + roads_100 + stops_100 + stations_100 + houseprice_100) / 5 * 100;
+    livability_100 = (schools_100 + kinder_100 + coasts_100 + markets_100 + water_100 + industries_100) / 6 * 100;
+    suitability_100 = (parks_100 + hospitals_100 + restuarants_100 + theatres_100 + cinemas_100) / 5 * 100;
+    feature.set("accessibility_100", accessibility_100);
+    feature.set("livability_100", livability_100);
+    feature.set("suitability_100", suitability_100);
+    console.log(accessibility_100 + '%, ' + livability_100 + '%, ' + suitability_100 + '%');
   }); // Calculate Weights for 30km Grid
 
   var source_30km = grid30km.getSource();
-  var features_30km = source_30km.getFeatures(); //var counter_30 = 1; // Count features for testing
-
+  var features_30km = source_30km.getFeatures();
+  var coasts_30;
+  var hospitals_30;
+  var parks_30;
+  var roads_30;
+  var schools_30;
+  var markets_30;
+  var uni_30;
+  var stops_30;
+  var stations_30;
+  var restuarants_30;
+  var theatres_30;
+  var cinemas_30;
+  var kinder_30;
+  var industries_30;
+  var houseprice_30;
+  var water_30;
+  var new_fuzzy_value_30km;
+  var accessibility_30;
+  var livability_30;
+  var suitability_30;
   features_30km.forEach(function (feature) {
-    var new_fuzzy_value_30km = (parseInt(sliderCoasts.value) / (feature.get("_coastline") / 1000) + parseInt(sliderHospitals.value) / (feature.get("_hospitals") / 1000) + parseInt(sliderParks.value) / (feature.get("_leisurepa") / 1000) + parseInt(sliderRoads.value) / (feature.get("_roadsmean") / 1000) + parseInt(sliderSchools.value) / (feature.get("_schoolsme") / 1000) + parseInt(sliderMarkets.value) / (feature.get("_supermark") / 1000) + parseInt(sliderUni.value) / (feature.get("_universit") / 1000) + parseInt(sliderWater.value) / (feature.get("_waterbodi") / 1000) + parseInt(sliderPstations.value) / (feature.get("_pt_statio") / 1000) + parseInt(sliderPstops.value) / (feature.get("_pt_stopsm") / 1000) + parseInt(sliderRestuarants.value) / (feature.get("_restauran") / 1000) + parseInt(sliderTheatres.value) / (feature.get("_theatresm") / 1000) + parseInt(sliderCinemas.value) / (feature.get("_cinemasme") / 1000) + parseInt(sliderKinder.value) / feature.get("_kindermea") + parseInt(sliderIndustry.value) / (feature.get("_industrie") / 1000)) / 534.6083673974823;
-    feature.set("fuzzyvalue", new_fuzzy_value_30km); //console.log("30km->" + counter_30 + ". " + "Feature " + feature.get("id") + ": " + new_fuzzy_value_30km); // Log values for testing
-    //counter_30 += 1;
+    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_30 = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
+      uni_30 = 0;
+    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
+      uni_30 = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+
+      if (uni_30 < 0) {
+        uni_30 = 0;
+      } else if (uni_30 <= 100) {}
+    }
+
+    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_30 = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
+      roads_30 = 0;
+    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
+      roads_30 = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+
+      if (roads_30 < 0) {
+        roads_30 = 0;
+      } else if (roads_30 <= 100) {}
+    }
+
+    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_30 = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
+      coasts_30 = 0;
+    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
+      coasts_30 = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
+
+      if (coasts_30 < 0) {
+        coasts_30 = 0;
+      } else if (coasts_30 <= 100) {}
+    }
+
+    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospitals_30 = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
+      hospitals_30 = 0;
+    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
+      hospitals_30 = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+
+      if (hospitals_30 < 0) {
+        hospitals_30 = 0;
+      } else if (hospitals_30 <= 100) {}
+    }
+
+    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      parks_30 = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
+      parks_30 = 0;
+    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
+      parks_30 = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+
+      if (parks_30 < 0) {
+        parks_30 = 0;
+      } else if (parks_30 <= 100) {}
+    }
+
+    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      schools_30 = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
+      schools_30 = 0;
+    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
+      schools_30 = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
+
+      if (schools_30 < 0) {
+        schools_30 = 0;
+      } else if (schools_30 <= 100) {}
+    }
+
+    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_30 = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
+      markets_30 = 0;
+    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
+      markets_30 = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+
+      if (markets_30 < 0) {
+        markets_30 = 0;
+      } else if (markets_30 <= 100) {}
+    }
+
+    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      stops_30 = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
+      stops_30 = 0;
+    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
+      stops_30 = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+
+      if (stops_30 < 0) {
+        stops_30 = 0;
+      } else if (stops_30 <= 100) {}
+    }
+
+    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      stations_30 = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
+      stations_30 = 0;
+    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
+      stations_30 = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
+
+      if (stations_30 < 0) {
+        stations_30 = 0;
+      } else if (stations_30 <= 100) {}
+    }
+
+    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_30 = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
+      restuarants_30 = 0;
+    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
+      restuarants_30 = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+
+      if (restuarants_30 < 0) {
+        restuarants_30 = 0;
+      } else if (restuarants_30 <= 100) {}
+    }
+
+    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_30 = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
+      theatres_30 = 0;
+    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
+      theatres_30 = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+
+      if (theatres_30 < 0) {
+        theatres_30 = 0;
+      } else if (theatres_30 <= 100) {}
+    }
+
+    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_30 = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
+      cinemas_30 = 0;
+    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
+      cinemas_30 = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
+
+      if (cinemas_30 < 0) {
+        cinemas_30 = 0;
+      } else if (cinemas_30 <= 100) {}
+    }
+
+    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_30 = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
+      kinder_30 = 0;
+    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
+      kinder_30 = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+
+      if (kinder_30 < 0) {
+        kinder_30 = 0;
+      } else if (kinder_30 <= 100) {}
+    }
+
+    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_30 = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
+      industries_30 = 0;
+    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
+      industries_30 = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+
+      if (industries_30 < 0) {
+        industries_30 = 0;
+      } else if (industries_30 <= 100) {}
+    }
+
+    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
+      houseprice_30 = 0;
+    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
+      houseprice_30 = 0;
+    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
+      houseprice_30 = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
+
+      if (houseprice_30 < 0) {
+        houseprice_30 = 0;
+      } else if (houseprice_30 <= 100) {}
+    }
+
+    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
+      water_30 = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
+      water_30 = 0;
+    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
+      water_30 = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+
+      if (water_30 < 0) {
+        water_30 = 0;
+      } else if (water_30 <= 100) {}
+    }
+
+    new_fuzzy_value_30km = (coasts_30 + hospitals_30 + parks_30 + roads_30 + schools_30 + markets_30 + uni_30 + stops_30 + stations_30 + restuarants_30 + theatres_30 + cinemas_30 + kinder_30 + industries_30 + houseprice_30) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_30km);
+    accessibility_30 = (uni_30 + roads_30 + stops_30 + stations_30 + houseprice_30) / 5 * 100;
+    livability_30 = (schools_30 + kinder_30 + coasts_30 + markets_30 + water_30 + industries_30) / 6 * 100;
+    suitability_30 = (parks_30 + hospitals_30 + restuarants_30 + theatres_30 + cinemas_30) / 5 * 100;
+    feature.set("accessibility_30", accessibility_30);
+    feature.set("livability_30", livability_30);
+    feature.set("suitability_30", suitability_30);
+    console.log(accessibility_30 + '%, ' + livability_30 + '%, ' + suitability_30 + '%');
   });
 }
 
@@ -114005,7 +115401,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49579" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53077" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
