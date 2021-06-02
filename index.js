@@ -561,7 +561,7 @@ WEIGHTED GRIDS
 */
 
 // Add Weighted Grid (100km Resolution)
-var grid100km_geojson = require('./data/weighted_grid100km.geojson')
+var grid100km_geojson = require('./data/grid100km_aq_p.geojson')
 
 var grid100km = new VectorLayer({
   title: 'Weighted Grid (100km)',
@@ -574,7 +574,7 @@ var grid100km = new VectorLayer({
 });
 
 // Add Weighted Grid (30km Resolution)
-var grid30km_geojson = require('./data/weighted_grid30km.geojson')
+var grid30km_geojson = require('./data/grid30km_aq_p.geojson')
 
 var grid30km = new VectorLayer({
   title: 'Weighted Grid (30km)',
@@ -1195,7 +1195,7 @@ map.on('singleclick', function (evt) {
 var feature = map.forEachFeatureAtPixel(evt.pixel,
   function(feature, layer) {
     // Work only if the click on the grid layer
-    if (layer == grid100km, grid30km) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark) {
     return feature;
     }
   });
@@ -1236,9 +1236,11 @@ var feature = map.forEachFeatureAtPixel(evt.pixel,
   var cinema_value = ((feature.get('_cinemasme')/1000)).toFixed(2).toString();
   var kinder_value = ((feature.get('_kindermea')/1000)).toFixed(2).toString();
   var industry_value = ((feature.get('_industrie')/1000)).toFixed(2).toString();
+  var avg_house_price = (feature.get('houseprice')).toString();
   var cell_id = (feature.get('id')).toFixed(0).toString();
 
-  info_element.innerHTML = 'Cell ' + cell_id + ':<br>' + overall_percent + '% Match';
+  // Populate Results Box with Grid Information
+  info_element.innerHTML = 'Cell ' + cell_id + ':<br>' + overall_percent + '% Match<br>' + 'Average House Price: <br>' + avg_house_price + '(dkk/m2)*';
 
   console.info(feature.getProperties());
 
@@ -1330,7 +1332,7 @@ map.on('pointermove', function(e) {
   var pixel = e.map.getEventPixel(e.originalEvent);
   var hit = false;
   e.map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-    if (layer === grid100km, grid30km) {
+    if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland, grid1km_vectorimage_syddanmark) {
           hit = true;
      }
   });
