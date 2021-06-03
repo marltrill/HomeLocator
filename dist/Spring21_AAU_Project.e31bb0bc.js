@@ -115273,13 +115273,30 @@ map.on('singleclick', function (evt) {
     if (layer == grid100km, grid30km, grid1km_vectorimage_hovestad, grid1km_vectorimage_fyn, grid1km_vectorimage_midtjylland, grid1km_vectorimage_midtjyllandw, grid1km_vectorimage_sjælland) {
       return feature;
     }
-  }); // Show the property of the feature
+  }); // Classify Political Party
 
-  var content = 'Avg Crime Rate: <b>' + feature.get('crimes_cri').toFixed(2).toString() + '</b><br>';
+  var feature_party;
+
+  if (feature.get('_Politicsm') == 1) {
+    feature_party = 'Liberal Democratic Party';
+  } else if (feature.get('_Politicsm') == 2) {
+    feature_party = 'Conservative Peoples Party';
+  } else if (feature.get('_Politicsm') == 3) {
+    feature_party = 'Social Democratic Party';
+  } else if (feature.get('_Politicsm') == 4) {
+    feature_party = 'Socialist Peoples Party';
+  } else if (feature.get('_Politicsm') == 5) {
+    feature_party = 'Unkown';
+  } // Show the property of the feature
+
+
+  var content = 'Avg Crime Rate: <b>' + feature.get('crimes_cri').toFixed(2).toString() + '</b>*<br>';
   content += 'Avg PM10 Content: <b>' + feature.get('_PM10mean').toFixed(2).toString() + '</b><br>';
   content += 'Avg PM25 Content: <b>' + feature.get('_PM25mean').toFixed(2).toString() + '</b><br>';
   content += 'Avg NO<sub>2</sub> Content: <b>' + feature.get('_NO2mean').toFixed(2).toString() + '</b><br>'; //content += 'Avg O<sup>3</sup> Content: <b>' + feature.get('O3mean').toFixed(2).toString() + '</b><br>';
 
+  content += 'Political Party: ' + feature_party + '<br>';
+  content += '* # of crimes in Q1 2021';
   content_element.innerHTML = content;
   overlay.setPosition(evt.coordinate);
   var overall_percent = (feature.get('fuzzyvalue') * 100).toFixed().toString();
@@ -115441,7 +115458,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54310" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60959" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
