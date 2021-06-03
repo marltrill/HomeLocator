@@ -114124,7 +114124,6 @@ function commitSearchFunction() {
     }
 
     new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 16;
-    console.log(new_fuzzy_value_1km_sjælland);
     feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
     accessibility_1_sjælland = (uni_1_sjælland + roads_1_sjælland + stops_1_sjælland + stations_1_sjælland + houseprice_1_sjælland) / 5 * 100;
     livability_1_sjælland = (schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland) / 6 * 100;
