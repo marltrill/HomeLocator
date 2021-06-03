@@ -7,7 +7,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/aboestpetersen/Spring21_AAU_Project">
+  <a href="https://github.com/aboestpetersen/HomeLocator">
     <img src="images/HomeLocator Logo.png" alt="Logo" width="500" height="500">
   </a>
 
@@ -17,11 +17,11 @@
     Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
     <br />
     <br />
-    <a href="https://realestate-aauspring2021.herokuapp.com/">View Demo</a>
+    <a href="https://homelocator-aauspring2021.herokuapp.com/">View Demo</a>
     ·
-    <a href="https://github.com/aboestpetersen/Spring21_AAU_Project/issues">Report Bug</a>
+    <a href="https://github.com/aboestpetersen/HomeLocator/issues">Report Bug</a>
     ·
-    <a href="https://github.com/aboestpetersen/Spring21_AAU_Project/issues">Request Feature</a>
+    <a href="https://github.com/aboestpetersen/HomeLocator/issues">Request Feature</a>
   </p>
 </p>
 
@@ -62,13 +62,13 @@ HomeLocator incorporates knowledge and practices garnered from GI Technology, Ge
 
 To get a local copy use the following git command:
 ```
-git clone https://github.com/aboestpetersen/Spring21_AAU_Project.git
+git clone https://github.com/aboestpetersen/HomeLocator.git
 ```
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/aboestpetersen/Spring21_AAU_Project/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/aboestpetersen/HomeLocator/issues) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTING -->
@@ -92,13 +92,13 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Alexander Boest-Petersen - https://www.linkedin.com/in/alexanderboest-petersen/ - aboest20@student.aau.dk
 
-Christina Elmegaard-Fessel -https://www.linkedin.com/ - email
+Christina Elmegaard-Fessel - https://www.linkedin.com/in/christina-elmegaard-fessel/ - clwl17@student.aau.dk
 
 Kristoffer Knudsen Horst - https://www.linkedin.com/ - email
 
-Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - email
+Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - mtrill20@student.aau.dk
 
-Project Link: https://github.com/aboestpetersen/Spring21_AAU_Project
+Project Link: https://github.com/aboestpetersen/HomeLocator
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
