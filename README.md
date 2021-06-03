@@ -104,16 +104,14 @@ Project Link: https://github.com/aboestpetersen/Spring21_AAU_Project
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Piotr296/BalticOffshorePotential
-[contributors-url]: https://github.com/Piotr296/BalticOffshorePotential/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Piotr296/BalticOffshorePotential
-[forks-url]: https://github.com/Piotr296/BalticOffshorePotential/network/members
-[stars-shield]: https://img.shields.io/github/stars/Piotr296/BalticOffshorePotential
-[stars-url]: https://github.com/Piotr296/BalticOffshorePotential/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Piotr296/BalticOffshorePotential
-[issues-url]: https://github.com/Piotr296/BalticOffshorePotential/issues
-[license-shield]: https://img.shields.io/github/license/Piotr296/BalticOffshorePotential
-[license-url]: https://github.com/Piotr296/BalticOffshorePotential/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/michalak-gis/
-[product-screenshot]: images/screenshot.png
+[contributors-shield]: https://img.shields.io/github/contributors/aboestpetersen/HomeLocator
+[contributors-url]: https://github.com/aboestpetersen/HomeLocator/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/aboestpetersen/HomeLocator?style=plastic
+[forks-url]: https://github.com/aboestpetersen/HomeLocator/network/members
+[stars-shield]: https://img.shields.io/github/stars/aboestpetersen/HomeLocator?style=plastic
+[stars-url]: https://github.com/aboestpetersen/HomeLocator/stargazers
+[issues-shield]: https://img.shields.io/github/issues/aboestpetersen/HomeLocator?style=plastic
+[issues-url]: https://github.com/aboestpetersen/HomeLocator/issues
+[license-shield]: https://img.shields.io/github/license/aboestpetersen/HomeLocator?style=plastic
+[license-url]: https://github.com/aboestpetersen/HomeLocator/blob/main/LICENSE.txt
+[product-screenshot]: images/app_progress.png
