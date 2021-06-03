@@ -112887,12 +112887,8 @@ var classification_search_30km = function classification_search_30km(feature, re
     layercolor = 'rgba(0, 0, 0, 0)';
   } else if (fuzzyvalue < 0.2) {
     layercolor = 'rgba(217, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
     layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
@@ -112919,12 +112915,8 @@ var classification_search_1km = function classification_search_1km(feature, reso
     layercolor = 'rgba(0, 0, 0, 0)';
   } else if (fuzzyvalue < 0.2) {
     layercolor = 'rgba(217, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
-  } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
     layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
@@ -113694,7 +113686,7 @@ function commitSearchFunction() {
   var features_1km_hovestad = source_1km_hovestad.getFeatures();
   var coasts_1_hovestad;
   var hospitals_1_hovestad;
-  var parks__1_hovestad;
+  var parks_1_hovestad;
   var roads_1_hovestad;
   var schools_1_hovestad;
   var markets_1_hovestad;
@@ -113734,7 +113726,7 @@ function commitSearchFunction() {
 
       if (roads_1_hovestad < 0) {
         roads_1_hovestad = 0;
-      } else if (roadroads_1_hovestad_1_sjælland <= 100) {}
+      } else if (roads_1_hovestad <= 100) {}
     }
 
     if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
@@ -113762,15 +113754,15 @@ function commitSearchFunction() {
     }
 
     if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks__1_hovestad = 0;
+      parks_1_hovestad = 0;
     } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
       parks__1_hovestad = 0;
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks__1_hovestad = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+      parks_1_hovestad = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks__1_hovestad < 0) {
-        parks__1_hovestad = 0;
-      } else if (parks__1_hovestad <= 100) {}
+      if (parks_1_hovestad < 0) {
+        parks_1_hovestad = 0;
+      } else if (parks_1_hovestad <= 100) {}
     }
 
     if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
@@ -113905,11 +113897,12 @@ function commitSearchFunction() {
       } else if (water_1_hovestad <= 100) {}
     }
 
-    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks__1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 15;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
+    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks_1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 15;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad); //console.log(new_fuzzy_value_1km_hovestad);
+
     accessibility_1_hovestad = (uni_1_hovestad + roads_1_hovestad + stops_1_hovestad + stations_1_hovestad + houseprice_1_hovestad) / 5 * 100;
     livability_1_hovestad = (schools_1_hovestad + kinder_1_hovestad + coasts_1_hovestad + markets_1_hovestad + water_1_hovestad + industries_1_hovestad) / 6 * 100;
-    suitability_1_hovestad = (parks__1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad) / 5 * 100;
+    suitability_1_hovestad = (parks_1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad) / 5 * 100;
     feature.set("accessibility_1_hovestad", accessibility_1_hovestad);
     feature.set("livability_1_hovestad", livability_1_hovestad);
     feature.set("suitability_1_hovestad", suitability_1_hovestad);
@@ -113919,7 +113912,7 @@ function commitSearchFunction() {
   var features_1km_sjælland = source_1km_sjælland.getFeatures();
   var coasts_1_sjælland;
   var hospitals_1_sjælland;
-  var parks__1_sjælland;
+  var parks_1_sjælland;
   var roads_1_sjælland;
   var schools_1_sjælland;
   var markets_1_sjælland;
@@ -113987,15 +113980,15 @@ function commitSearchFunction() {
     }
 
     if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks__1_sjælland = 0;
+      parks_1_sjælland = 0;
     } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks__1_sjælland = 0;
+      parks_1_sjælland = 0;
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks__1_sjælland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+      parks_1_sjælland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks__1_sjælland < 0) {
-        parks__1_sjælland = 0;
-      } else if (parks__1_sjælland <= 100) {}
+      if (park__1_sjælland < 0) {
+        parks_1_sjælland = 0;
+      } else if (parks_1_sjælland <= 100) {}
     }
 
     if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
@@ -114130,11 +114123,11 @@ function commitSearchFunction() {
       } else if (houseprice_1_sjælland <= 100) {}
     }
 
-    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks__1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 15;
+    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 15;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
     accessibility_1_sjælland = (uni_1_sjælland + roads_1_sjælland + stops_1_sjælland + stations_1_sjælland + houseprice_1_sjælland) / 5 * 100;
     livability_1_sjælland = (schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland) / 6 * 100;
-    suitability_1_sjælland = (parks__1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland) / 5 * 100;
+    suitability_1_sjælland = (parks_1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland) / 5 * 100;
     feature.set("accessibility_1_sjælland", accessibility_1_sjælland);
     feature.set("livability_1_sjælland", livability_1_sjælland);
     feature.set("suitability_1_sjælland", suitability_1_sjælland);
@@ -114144,7 +114137,7 @@ function commitSearchFunction() {
   var features_1km_fyn = source_1km_fyn.getFeatures();
   var coasts_1_fyn;
   var hospitals_1_fyn;
-  var parks__1_fyn;
+  var parks_1_fyn;
   var roads_1_fyn;
   var schools_1_fyn;
   var markets_1_fyn;
@@ -114212,15 +114205,15 @@ function commitSearchFunction() {
     }
 
     if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks__1_fyn = 0;
+      parks_1_fyn = 0;
     } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks__1_fyn = 0;
+      parks_1_fyn = 0;
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks__1_fyn = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+      parks_1_fyn = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks__1_fyn < 0) {
-        parks__1_fyn = 0;
-      } else if (parks__1_fyn <= 100) {}
+      if (parks_1_fyn < 0) {
+        parks_1_fyn = 0;
+      } else if (parks_1_fyn <= 100) {}
     }
 
     if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
@@ -114355,11 +114348,11 @@ function commitSearchFunction() {
       } else if (water_1_fyn <= 100) {}
     }
 
-    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks__1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 15;
+    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks_1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 15;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
     accessibility_1_fyn = (uni_1_fyn + roads_1_fyn + stops_1_fyn + stations_1_fyn + houseprice_1_fyn) / 5 * 100;
     livability_1_fyn = (schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn) / 6 * 100;
-    suitability_1_fyn = (parks__1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn) / 5 * 100;
+    suitability_1_fyn = (parks_1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn) / 5 * 100;
     feature.set("accessibility_1_fyn", accessibility_1_fyn);
     feature.set("livability_1_fyn", livability_1_fyn);
     feature.set("suitability_1_fyn", suitability_1_fyn);
@@ -114369,7 +114362,7 @@ function commitSearchFunction() {
   var features_1km_midtjylland = source_1km_midtjylland.getFeatures();
   var coasts_1_midtjylland;
   var hospitals_1_midtjylland;
-  var parks__1_midtjylland;
+  var parks_1_midtjylland;
   var roads_1_midtjylland;
   var schools_1_midtjylland;
   var markets_1_midtjylland;
@@ -114437,15 +114430,15 @@ function commitSearchFunction() {
     }
 
     if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks__1_midtjylland = 0;
+      parks_1_midtjylland = 0;
     } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks__1_midtjylland = 0;
+      parks_1_midtjylland = 0;
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks__1_midtjylland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+      parks_1_midtjylland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks__1_midtjylland < 0) {
-        parks__1_midtjylland = 0;
-      } else if (parks__1_midtjylland <= 100) {}
+      if (parks_1_midtjylland < 0) {
+        parks_1_midtjylland = 0;
+      } else if (parks_1_midtjylland <= 100) {}
     }
 
     if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
@@ -114580,11 +114573,11 @@ function commitSearchFunction() {
       } else if (water_1_midtjylland <= 100) {}
     }
 
-    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks__1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 15;
+    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks_1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 15;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
     accessibility_1_midtjylland = (uni_1_midtjylland + roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + houseprice_1_midtjylland) / 5 * 100;
     livability_1_midtjylland = (schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland) / 6 * 100;
-    suitability_1_midtjylland = (parks__1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland) / 5 * 100;
+    suitability_1_midtjylland = (parks_1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland) / 5 * 100;
     feature.set("accessibility_1_midtjylland", accessibility_1_midtjylland);
     feature.set("livability_1_midtjylland", livability_1_midtjylland);
     feature.set("suitability_1_midtjylland", suitability_1_midtjylland);
@@ -114594,7 +114587,7 @@ function commitSearchFunction() {
   var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures();
   var coasts_1_midtjyllandw;
   var hospitals_1_midtjyllandw;
-  var parks__1_midtjyllandw;
+  var parks_1_midtjyllandw;
   var roads_1_midtjyllandw;
   var schools_1_midtjyllandw;
   var markets_1_midtjyllandw;
@@ -114662,15 +114655,15 @@ function commitSearchFunction() {
     }
 
     if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks__1_midtjyllandw = 0;
+      parks_1_midtjyllandw = 0;
     } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks__1_midtjyllandw = 0;
+      parks_1_midtjyllandw = 0;
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks__1_midtjyllandw = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+      parks_1_midtjyllandw = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks__1_midtjyllandw < 0) {
-        parks__1_midtjyllandw = 0;
-      } else if (parks__1_midtjyllandw <= 100) {}
+      if (parks_1_midtjyllandw < 0) {
+        parks_1_midtjyllandw = 0;
+      } else if (parks_1_midtjyllandw <= 100) {}
     }
 
     if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
@@ -114805,11 +114798,11 @@ function commitSearchFunction() {
       } else if (water_1_midtjyllandw <= 100) {}
     }
 
-    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks__1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 15;
+    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks_1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 15;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
     accessibility_1_midtjyllandw = (uni_1_midtjyllandw + roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + houseprice_1_midtjyllandw) / 5 * 100;
     livability_1_midtjyllandw = (schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw) / 6 * 100;
-    suitability_1_midtjyllandw = (parks__1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw) / 5 * 100;
+    suitability_1_midtjyllandw = (parks_1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw) / 5 * 100;
     feature.set("accessibility_1_midtjyllandw", accessibility_1_midtjyllandw);
     feature.set("livability_1_midtjyllandw", livability_1_midtjyllandw);
     feature.set("suitability_1_midtjyllandw", suitability_1_midtjyllandw);
@@ -115037,8 +115030,7 @@ function commitSearchFunction() {
     suitability_100 = (parks_100 + hospitals_100 + restuarants_100 + theatres_100 + cinemas_100) / 5 * 100;
     feature.set("accessibility_100", accessibility_100);
     feature.set("livability_100", livability_100);
-    feature.set("suitability_100", suitability_100);
-    console.log(accessibility_100 + '%, ' + livability_100 + '%, ' + suitability_100 + '%');
+    feature.set("suitability_100", suitability_100); //console.log(accessibility_100 + '%, ' + livability_100 + '%, ' + suitability_100 + '%');
   }); // Calculate Weights for 30km Grid
 
   var source_30km = grid30km.getSource();
@@ -115264,7 +115256,6 @@ function commitSearchFunction() {
     feature.set("accessibility_30", accessibility_30);
     feature.set("livability_30", livability_30);
     feature.set("suitability_30", suitability_30);
-    console.log(accessibility_30 + '%, ' + livability_30 + '%, ' + suitability_30 + '%');
   });
 }
 
@@ -115401,7 +115392,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53077" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50769" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
