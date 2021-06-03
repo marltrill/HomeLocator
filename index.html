@@ -115,7 +115,7 @@
       <hr>
       <div>
         <p class="center">Categories:</p>
-        <p class="searchdesc">Specify distance to critera. All distances set to maximum by default.</p>
+        <p class="searchdesc">Specify distance to critera.</p>
         <button type="button" class="collapsible"><b>Accessibility</b></button>
         <div class="content">
           <br>
@@ -256,7 +256,10 @@
       <p class="searchdesc">Click on colored grid cell on map to see further information regarding selected area.</p>
 
       <div class="percent-match">
-        <p class="percent-center"><span id="info-element"></span></p>
+        <p class="percent-center"><span id="info-element"></span></p><br>
+        <div class="categories-pane" onload="OnLoad()">
+          <canvas id="categoriesChart" width="150" height="225"></canvas>
+        </div>
       </div>
 
       <p><b>Legend:</b></p>
