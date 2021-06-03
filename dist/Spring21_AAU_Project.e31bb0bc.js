@@ -113897,7 +113897,7 @@ function commitSearchFunction() {
       } else if (water_1_hovestad <= 100) {}
     }
 
-    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks_1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 15;
+    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks_1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad); //console.log(new_fuzzy_value_1km_hovestad);
 
     accessibility_1_hovestad = (uni_1_hovestad + roads_1_hovestad + stops_1_hovestad + stations_1_hovestad + houseprice_1_hovestad) / 5 * 100;
@@ -113986,7 +113986,7 @@ function commitSearchFunction() {
     } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
       parks_1_sjælland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (park__1_sjælland < 0) {
+      if (parks_1_sjælland < 0) {
         parks_1_sjælland = 0;
       } else if (parks_1_sjælland <= 100) {}
     }
@@ -114123,7 +114123,8 @@ function commitSearchFunction() {
       } else if (houseprice_1_sjælland <= 100) {}
     }
 
-    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 15;
+    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 16;
+    console.log(new_fuzzy_value_1km_sjælland);
     feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
     accessibility_1_sjælland = (uni_1_sjælland + roads_1_sjælland + stops_1_sjælland + stations_1_sjælland + houseprice_1_sjælland) / 5 * 100;
     livability_1_sjælland = (schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland) / 6 * 100;
@@ -114348,7 +114349,7 @@ function commitSearchFunction() {
       } else if (water_1_fyn <= 100) {}
     }
 
-    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks_1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 15;
+    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks_1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
     accessibility_1_fyn = (uni_1_fyn + roads_1_fyn + stops_1_fyn + stations_1_fyn + houseprice_1_fyn) / 5 * 100;
     livability_1_fyn = (schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn) / 6 * 100;
@@ -114573,7 +114574,7 @@ function commitSearchFunction() {
       } else if (water_1_midtjylland <= 100) {}
     }
 
-    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks_1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 15;
+    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks_1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
     accessibility_1_midtjylland = (uni_1_midtjylland + roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + houseprice_1_midtjylland) / 5 * 100;
     livability_1_midtjylland = (schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland) / 6 * 100;
@@ -114798,7 +114799,7 @@ function commitSearchFunction() {
       } else if (water_1_midtjyllandw <= 100) {}
     }
 
-    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks_1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 15;
+    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks_1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
     accessibility_1_midtjyllandw = (uni_1_midtjyllandw + roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + houseprice_1_midtjyllandw) / 5 * 100;
     livability_1_midtjyllandw = (schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw) / 6 * 100;
@@ -115023,7 +115024,7 @@ function commitSearchFunction() {
       } else if (water_100 <= 100) {}
     }
 
-    new_fuzzy_value_100km = (coasts_100 + hospitals_100 + parks_100 + roads_100 + schools_100 + markets_100 + uni_100 + stops_100 + stations_100 + restuarants_100 + theatres_100 + cinemas_100 + kinder_100 + industries_100 + houseprice_100) / 15;
+    new_fuzzy_value_100km = (coasts_100 + hospitals_100 + parks_100 + roads_100 + schools_100 + markets_100 + uni_100 + stops_100 + stations_100 + restuarants_100 + theatres_100 + cinemas_100 + kinder_100 + industries_100 + houseprice_100) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
     accessibility_100 = (uni_100 + roads_100 + stops_100 + stations_100 + houseprice_100) / 5 * 100;
     livability_100 = (schools_100 + kinder_100 + coasts_100 + markets_100 + water_100 + industries_100) / 6 * 100;
@@ -115248,7 +115249,7 @@ function commitSearchFunction() {
       } else if (water_30 <= 100) {}
     }
 
-    new_fuzzy_value_30km = (coasts_30 + hospitals_30 + parks_30 + roads_30 + schools_30 + markets_30 + uni_30 + stops_30 + stations_30 + restuarants_30 + theatres_30 + cinemas_30 + kinder_30 + industries_30 + houseprice_30) / 15;
+    new_fuzzy_value_30km = (coasts_30 + hospitals_30 + parks_30 + roads_30 + schools_30 + markets_30 + uni_30 + stops_30 + stations_30 + restuarants_30 + theatres_30 + cinemas_30 + kinder_30 + industries_30 + houseprice_30) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
     accessibility_30 = (uni_30 + roads_30 + stops_30 + stations_30 + houseprice_30) / 5 * 100;
     livability_30 = (schools_30 + kinder_30 + coasts_30 + markets_30 + water_30 + industries_30) / 6 * 100;
