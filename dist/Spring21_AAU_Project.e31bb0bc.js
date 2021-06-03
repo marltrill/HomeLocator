@@ -113672,7 +113672,7 @@ sliderHprice.oninput = function () {
   outputHprice.innerHTML = this.value;
 };
 
-info_element.innerHTML = 'Search<br>&<br>Select a Cell';
+info_element.innerHTML = '<br><br><br><br>Search<br>&<br>Select a Cell';
 /*
 
 STLYE GRIDS BASED ON USER INPUT
@@ -113898,11 +113898,10 @@ function commitSearchFunction() {
     }
 
     new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks_1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad); //console.log(new_fuzzy_value_1km_hovestad);
-
-    accessibility_1_hovestad = (uni_1_hovestad + roads_1_hovestad + stops_1_hovestad + stations_1_hovestad + houseprice_1_hovestad) / 5 * 100;
-    livability_1_hovestad = (schools_1_hovestad + kinder_1_hovestad + coasts_1_hovestad + markets_1_hovestad + water_1_hovestad + industries_1_hovestad) / 6 * 100;
-    suitability_1_hovestad = (parks_1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad) / 5 * 100;
+    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
+    accessibility_1_hovestad = (roads_1_hovestad + stops_1_hovestad + stations_1_hovestad) / 3 * 100;
+    livability_1_hovestad = (uni_1_hovestad + schools_1_hovestad + kinder_1_hovestad + coasts_1_hovestad + markets_1_hovestad + water_1_hovestad + industries_1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + parks_1_hovestad) / 12 * 100;
+    suitability_1_hovestad = houseprice_1_hovestad / 1 * 100;
     feature.set("accessibility", accessibility_1_hovestad);
     feature.set("livability", livability_1_hovestad);
     feature.set("suitability", suitability_1_hovestad);
@@ -114125,9 +114124,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
-    accessibility_1_sjælland = (uni_1_sjælland + roads_1_sjælland + stops_1_sjælland + stations_1_sjælland + houseprice_1_sjælland) / 5 * 100;
-    livability_1_sjælland = (schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland) / 6 * 100;
-    suitability_1_sjælland = (parks_1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland) / 5 * 100;
+    accessibility_1_sjælland = (roads_1_sjælland + stops_1_sjælland + stations_1_sjælland) / 3 * 100;
+    livability_1_sjælland = (uni_1_sjælland + schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + parks_1_sjælland) / 12 * 100;
+    suitability_1_sjælland = houseprice_1_sjælland / 1 * 100;
     feature.set("accessibility", accessibility_1_sjælland);
     feature.set("livability", livability_1_sjælland);
     feature.set("suitability", suitability_1_sjælland);
@@ -114350,9 +114349,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks_1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
-    accessibility_1_fyn = (uni_1_fyn + roads_1_fyn + stops_1_fyn + stations_1_fyn + houseprice_1_fyn) / 5 * 100;
-    livability_1_fyn = (schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn) / 6 * 100;
-    suitability_1_fyn = (parks_1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn) / 5 * 100;
+    accessibility_1_fyn = (roads_1_fyn + stops_1_fyn + stations_1_fyn) / 3 * 100;
+    livability_1_fyn = (uni_1_fyn + schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + parks_1_fyn) / 12 * 100;
+    suitability_1_fyn = houseprice_1_fyn / 1 * 100;
     feature.set("accessibility", accessibility_1_fyn);
     feature.set("livability", livability_1_fyn);
     feature.set("suitability", suitability_1_fyn);
@@ -114575,9 +114574,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks_1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
-    accessibility_1_midtjylland = (uni_1_midtjylland + roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + houseprice_1_midtjylland) / 5 * 100;
-    livability_1_midtjylland = (schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland) / 6 * 100;
-    suitability_1_midtjylland = (parks_1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland) / 5 * 100;
+    accessibility_1_midtjylland = (roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland) / 3 * 100;
+    livability_1_midtjylland = (uni_1_midtjylland + schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + parks_1_midtjylland) / 12 * 100;
+    suitability_1_midtjylland = houseprice_1_midtjylland / 1 * 100;
     feature.set("accessibility", accessibility_1_midtjylland);
     feature.set("livability", livability_1_midtjylland);
     feature.set("suitability", suitability_1_midtjylland);
@@ -114800,9 +114799,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks_1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
-    accessibility_1_midtjyllandw = (uni_1_midtjyllandw + roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + houseprice_1_midtjyllandw) / 5 * 100;
-    livability_1_midtjyllandw = (schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw) / 6 * 100;
-    suitability_1_midtjyllandw = (parks_1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw) / 5 * 100;
+    accessibility_1_midtjyllandw = (roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw) / 3 * 100;
+    livability_1_midtjyllandw = (uni_1_midtjyllandw + schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + parks_1_midtjyllandw) / 12 * 100;
+    suitability_1_midtjyllandw = houseprice_1_midtjyllandw / 1 * 100;
     feature.set("accessibility", accessibility_1_midtjyllandw);
     feature.set("livability", livability_1_midtjyllandw);
     feature.set("suitability", suitability_1_midtjyllandw);
@@ -115025,9 +115024,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_100km = (coasts_100 + hospitals_100 + parks_100 + roads_100 + schools_100 + markets_100 + uni_100 + stops_100 + stations_100 + restuarants_100 + theatres_100 + cinemas_100 + kinder_100 + industries_100 + houseprice_100) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
-    accessibility_100 = (uni_100 + roads_100 + stops_100 + stations_100 + houseprice_100) / 5 * 100;
-    livability_100 = (schools_100 + kinder_100 + coasts_100 + markets_100 + water_100 + industries_100) / 6 * 100;
-    suitability_100 = (parks_100 + hospitals_100 + restuarants_100 + theatres_100 + cinemas_100) / 5 * 100;
+    accessibility_100 = (roads_100 + stops_100 + stations_100) / 3 * 100;
+    livability_100 = (uni_100 + schools_100 + kinder_100 + coasts_100 + markets_100 + water_100 + industries_100 + hospitals_100 + restuarants_100 + theatres_100 + cinemas_100 + parks_100) / 12 * 100;
+    suitability_100 = houseprice_100 / 1 * 100;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
     feature.set("suitability", suitability_100);
@@ -115250,9 +115249,9 @@ function commitSearchFunction() {
 
     new_fuzzy_value_30km = (coasts_30 + hospitals_30 + parks_30 + roads_30 + schools_30 + markets_30 + uni_30 + stops_30 + stations_30 + restuarants_30 + theatres_30 + cinemas_30 + kinder_30 + industries_30 + houseprice_30) / 16;
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
-    accessibility_30 = (uni_30 + roads_30 + stops_30 + stations_30 + houseprice_30) / 5 * 100;
-    livability_30 = (schools_30 + kinder_30 + coasts_30 + markets_30 + water_30 + industries_30) / 6 * 100;
-    suitability_30 = (parks_30 + hospitals_30 + restuarants_30 + theatres_30 + cinemas_30) / 5 * 100;
+    accessibility_30 = (roads_30 + stops_30 + stations_30) / 3 * 100;
+    livability_30 = (uni_30 + schools_30 + kinder_30 + coasts_30 + markets_30 + water_30 + industries_30 + hospitals_30 + restuarants_30 + theatres_30 + cinemas_30 + parks_30) / 12 * 100;
+    suitability_30 = houseprice_30 / 1 * 100;
     feature.set("accessibility", accessibility_30);
     feature.set("livability", livability_30);
     feature.set("suitability", suitability_30);
@@ -115299,7 +115298,7 @@ map.on('singleclick', function (evt) {
   var cinema_value = (feature.get('_cinemasme') / 1000).toFixed(2).toString();
   var kinder_value = (feature.get('_kindermea') / 1000).toFixed(2).toString();
   var industry_value = (feature.get('_industrie') / 1000).toFixed(2).toString();
-  var avg_house_price = feature.get('houseprice').toFixed(0).toString();
+  var avg_house_price = feature.get('housepri_1').toFixed(0).toString();
   var cell_id = feature.get('id').toFixed(0).toString();
   var accessibility_match = feature.get('accessibility').toFixed(0);
   var livability_match = feature.get('livability').toFixed(0);
@@ -115323,7 +115322,7 @@ map.on('singleclick', function (evt) {
   window.myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Markets', 'Universities', 'Water Bodies', 'Bus Stops', 'Train Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
+      labels: ['Coasts', 'Hospitals', 'Parks', 'Roads', 'Schools', 'Grocery Stores', 'Universities', 'Water Bodies', 'Public Transport Stops', 'Public Transport Stations', 'Restaurants', 'Theatres', 'Cinemas', 'Kindergartens', 'Industry'],
       datasets: [{
         label: ['Distance (Km)'],
         data: [coast_value, hospital_value, parks_value, roads_value, schools_value, markets_value, uni_value, water_value, ptstops_value, ptstat_value, rest_value, theatre_value, cinema_value, kinder_value, industry_value],
