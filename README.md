@@ -66,11 +66,6 @@ To get a local copy use the following git command:
 git clone https://github.com/aboestpetersen/Spring21_AAU_Project.git
 ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-The tool has been examined and indicates the same areas as are considered by the governments of countries such as Poland, Sweden or Finland. Baltic Offshore Potential can help identify the most suitable places to establish the new offshore wind farms in the Baltic Sea with respective accuracy. Our product aims to reduce the time needed to search for new areas for wind farms, indicating areas with the greatest potential, which however, should be supported by detailed geotechnical and environmental research.
-
 <!-- ROADMAP -->
 ## Roadmap
 
@@ -98,11 +93,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Alexander Boest-Petersen - https://www.linkedin.com/in/alexanderboest-petersen/ - aboest20@student.aau.dk
 
-Christina Elmegaard-Fessel -https://www.linkedin.com/ - osteau19@student.aau.dk
+Christina Elmegaard-Fessel -https://www.linkedin.com/ - email
 
-Kristoffer Knudsen Horst - https://www.linkedin.com/ - apatsi19@student.aau.dk
+Kristoffer Knudsen Horst - https://www.linkedin.com/ - email
 
-Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - fkiout19@student.aau.dk
+Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - email
 
 Project Link: https://github.com/aboestpetersen/Spring21_AAU_Project
 
