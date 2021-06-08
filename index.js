@@ -426,6 +426,7 @@ var politics = new VectorLayer({
 });
 */
 
+/*
 // Add Water Bodies layer (Dark Blue)
 var waterbodies_geojson = require('./data/waterbodies.geojson')
 
@@ -447,6 +448,7 @@ var waterbodies = new VectorLayer({
     }),
   }),
 });
+*/
 
 // Roads (White)
 var roads_geojson = require('./data/roads.geojson')
