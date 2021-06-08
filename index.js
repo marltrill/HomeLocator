@@ -756,7 +756,7 @@ var layers = [
           theatres,
           industries,
           supermarkets,
-          waterbodies,
+          //waterbodies,
           //politics,
           dk_boundary,
         ],
