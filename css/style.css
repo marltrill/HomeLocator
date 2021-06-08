@@ -50,6 +50,10 @@ body, html {
   left: 50px;
   background: ghostwhite;
   border: 2.5px solid black;
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
 }
 
 .info-canvas{
@@ -326,4 +330,26 @@ body, html {
 .disclaimer {
   font-size: 8px;
   text-align: right;
+}
+
+.hideinfo-button {
+  border-radius: 4px;
+  transition-duration: 0.4s;
+  right: 50%;
+  width: 100%;
+  background-color: rgba(0,60,136,0.5);
+  color: white;
+}
+
+.hideinfo-button:hover {
+  background-color: #555555;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.hidebutton-div {
+  position: absolute;
+  left: 8%;
+  bottom: 1.5%;
+  width: 65%;
 }
