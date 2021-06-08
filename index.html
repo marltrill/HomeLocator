@@ -275,9 +275,27 @@
 
     </div>
 
-    <div class="info-pane" onload="OnLoad()">
-      <canvas id="myChart" width="490" height="50"></canvas>
+    <!-- ChartJS Info Bar Chart -->
+    <div class="info-pane" id="info-pane" onload="OnLoad()">
+        <canvas id="myChart" width="490" height="50"></canvas>
     </div>
+
+    <!-- Button to Hide Chart -->
+    <div class="hidebutton-div">
+      <button class="hideinfo-button" onclick="hideFunction()">Hide/Show Charts</button>
+    </div>
+
+    <!-- Hide Charts -->
+    <script>
+      function hideFunction() {
+        var x = document.getElementById("info-pane");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      </script>
 
     <script type='text/javascript' src='./index.js'></script>
 
