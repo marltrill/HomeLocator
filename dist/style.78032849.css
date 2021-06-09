@@ -51,7 +51,7 @@ body, html {
   background: ghostwhite;
   border: 2.5px solid black;
   padding: 0 18px;
-  display: none;
+  display: block;
   overflow: hidden;
   background-color: #f1f1f1;
 }
