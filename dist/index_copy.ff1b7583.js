@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,19 +184,19 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/ol/ol.css":[function(require,module,exports) {
+},{"./bundle-url":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/ol/ol.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css":[function(require,module,exports) {
+},{"_css_loader":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css":[function(require,module,exports) {
 
         var reloadCSS = require('_css_loader');
         module.hot.dispose(reloadCSS);
         module.hot.accept(reloadCSS);
       
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol/Disposable.js":[function(require,module,exports) {
+},{"_css_loader":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/ol/Disposable.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79888,7 +79888,7 @@ module.exports = function(fonts, size, lineHeight) {
   return cssData[0] + sp + cssData[1] + sp + size + 'px' + (lineHeight ? '/' + lineHeight : '') + sp + cssData[2];
 };
 
-},{}],"node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -80040,14 +80040,101 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -81840,7 +81927,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"node_modules/base64-js/index.js","ieee754":"node_modules/ieee754/index.js","isarray":"node_modules/isarray/index.js","buffer":"node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
+},{"base64-js":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/@mapbox/mapbox-gl-style-spec/dist/index.es.js":[function(require,module,exports) {
 var global = arguments[3];
 var Buffer = require("buffer").Buffer;
 "use strict";
@@ -96576,7 +96663,7 @@ const visit = {
 exports.visit = visit;
 validateStyle.parsed = validateStyle;
 validateStyle.latest = validateStyle;
-},{"buffer":"node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
+},{"buffer":"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/ol-mapbox-style/dist/util.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -114851,6 +114938,21 @@ function commitSearchFunction() {
   var house_matchdiff;
   var cell_int_house;
   var house_match_perc;
+  var ptst_matchmax;
+  var ptst_matchmin;
+  var ptst_matchdiff;
+  var cell_int_ptst;
+  var ptst_match_perc;
+  var ptsta_matchmax;
+  var ptsta_matchmin;
+  var ptsta_matchdiff;
+  var cell_int_ptsta;
+  var ptsta_match_perc;
+  var resto_matchmax;
+  var resto_matchmin;
+  var resto_matchdiff;
+  var cell_int_resto;
+  var resto_match_perc;
   var accessibility_100;
   var suitability_100;
   var livability_100;
@@ -115058,6 +115160,93 @@ function commitSearchFunction() {
         } else if (feature.get("_superma_1") / 1000 > 0) {
           markets_matchmin = feature.get("_superma_1") / 1000;
           console.log(grid100_id + ": Markets slider value smaller than cell min");
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STOPS
+    // When user input doesn't match cell range
+
+
+    if (feature.get("_pt_stop_1") / 1000 > parseInt(sliderPstops.value)) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+      console.log(grid100_id + ": Cell min larger than PT stops slider");
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_1") / 1000) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+      console.log(grid100_id + ": Cell min equal to PT stops slider");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+        console.log(grid100_id + ": Cell max equal to PT stops slider");
+      } else if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+        ptst_matchmax = parseInt(sliderPstops.value);
+        console.log(grid100_id + ": Cell max greater than PT stops slider");
+      } else if (feature.get("_pt_stop_2") / 1000 < parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+        console.log(grid100_id + ": Cell max smaller than PT stops slider");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stop_1") / 1000 == 0) {
+          ptst_matchmin = 0;
+          console.log(grid100_id + ": Cell min equal to 0.");
+        } else if (feature.get("_pt_stop_1") / 1000 > 0) {
+          ptst_matchmin = feature.get("_pt_stop_1") / 1000;
+          console.log(grid100_id + ": Minimum user slider (0) smaller than cell min.");
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STATIONS
+    // When user input doesn't match cell range
+
+
+    if (feature.get("_pt_stat_1") / 1000 > parseInt(sliderPstations.value)) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+      console.log(grid100_id + ": Cell min larger than PT stations slider");
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_1") / 1000) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+      console.log(grid100_id + ": Cell min equal to PT stations slider");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+        console.log(grid100_id + ": Cell max equal to PT stations slider");
+      } else if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+        ptsta_matchmax = parseInt(sliderPstations.value);
+        console.log(grid100_id + ": Cell max greater than PT stations slider");
+      } else if (feature.get("_pt_stations_2") / 1000 < parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+        console.log(grid100_id + ": Cell max smaller than PT stations slider");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stat_1") / 1000 == 0) {
+          ptsta_matchmin = 0;
+          console.log(grid100_id + ": Cell min equal to 0.");
+        } else if (feature.get("_pt_stat_1") / 1000 > 0) {
+          ptsta_matchmin = feature.get("_pt_stat_1") / 1000;
+          console.log(grid100_id + ": Minimum user slider (0) smaller than cell min.");
+        } // MATCH PERCENTAGE FOR RESTAURANTS
+    // When user input doesn 't match cell range
+
+
+    if (feature.get("_restaur_1") / 1000 > parseInt(sliderRestuarants.value)) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+      console.log(grid100_id + ": Resto min larger than slider max");
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_1") / 1000) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+      console.log(grid100_id + ": Coast min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+        console.log(grid100_id + ": Coast max value equal to slider max");
+      } else if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+        resto_matchmax = parseInt(sliderRestuarants.value);
+        console.log(grid100_id + ": Coast max value greater than slider max");
+      } else if (feature.get("_restaur_2") / 1000 < parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+        console.log(grid100_id + ": Resto max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_restaur_1") / 1000 == 0) {
+          resto_matchmin = 0;
+          console.log(grid100_id + ": Resto min value equal to 0");
+        } else if (feature.get("_restaur_1") / 1000 > 0) {
+          resto_matchmin = feature.get("_restaur_1") / 1000;
+          console.log(grid100_id + ": Resto user slider smaller than cell value");
         } // MATCH PERCENTAGE FOR HOUSE PRICES
     // When user input doesn 't match cell range
 
@@ -115123,7 +115312,22 @@ function commitSearchFunction() {
     markets_matchdiff = markets_matchmax - markets_matchmin;
     cell_int_markets = feature.get("_superma_2") / 1000 - feature.get("_superma_1") / 1000; // Getting the match percentage
 
-    markets_match_perc = markets_matchdiff * 100 / cell_int_markets; // HOUSE PRICES matching percentage
+    markets_match_perc = markets_matchdiff * 100 / cell_int_markets; // PUBLIC TRANSPORT STOPS matching percentage
+
+    ptst_matchdiff = ptst_matchmax - ptst_matchmin;
+    cell_int_ptst = feature.get("_pt_stop_2") / 1000 - feature.get("_pt_stop_1") / 1000; // Getting the match percentage
+
+    ptst_match_perc = ptst_matchdiff * 100 / cell_int_ptst; // PUBLIC TRANSPORT STATIONS matching percentage
+
+    ptsta_matchdiff = ptsta_matchmax - ptsta_matchmin;
+    cell_int_ptsta = feature.get("_pt_stat_2") / 1000 - feature.get("_pt_stat_1") / 1000; // Getting the match percentage
+
+    ptsta_match_perc = ptsta_matchdiff * 100 / cell_int_ptsta; // RESTAURANTS matching percentage
+
+    resto_matchdiff = resto_matchmax - resto_matchmin;
+    cell_int_resto = feature.get("_pt_restaur_2") / 1000 - feature.get("_pt_restaur_1") / 1000; // Getting the match percentage
+
+    resto_match_perc = resto_matchdiff * 100 / cell_int_resto; // HOUSE PRICES matching percentage
 
     house_matchdiff = house_matchmax - house_matchmin;
     cell_int_house = feature.get("housepri_3") / 1000 - feature.get("housepri_2") / 1000; // Getting the match percentage
@@ -115131,11 +115335,11 @@ function commitSearchFunction() {
     house_match_perc = house_matchdiff * 100 / cell_int_house; // OVERALL PERCENTAGE CELL MATCH
 
     var new_fuzzy_value_100km;
-    new_fuzzy_value_100km = (markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
+    new_fuzzy_value_100km = (ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
     console.log("Cell " + grid100_id + " Fuzzy Value: " + new_fuzzy_value_100km);
-    accessibility_100 = roads_matchdiff / cell_int_roads * 100;
-    livability_100 = (markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch);
+    accessibility_100 = (roads_matchdiff + ptsta_matchdiff + ptst_matchdiff) * 100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads);
+    livability_100 = (resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_resto + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch);
     suitability_100 = house_matchdiff * 100 / cell_int_house;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
@@ -115782,7 +115986,7 @@ map.on('pointermove', function (e) {
   });
   e.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
-},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/roads.geojson":"data/roads.geojson","./data/pt_stops.geojson":"data/pt_stops.geojson","./data/restaurants.geojson":"data/restaurants.geojson","./data/leisureparks.geojson":"data/leisureparks.geojson","./data/grid100km_aq_p.geojson":"data/grid100km_aq_p.geojson","./data/grid30km_aq_p.geojson":"data/grid30km_aq_p.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"ol/ol.css":"node_modules/ol/ol.css","ol-layerswitcher/dist/ol-layerswitcher.css":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.css","ol/Map":"node_modules/ol/Map.js","ol/View":"node_modules/ol/View.js","ol/format":"node_modules/ol/format.js","ol/style":"node_modules/ol/style.js","ol/layer":"node_modules/ol/layer.js","ol/proj":"node_modules/ol/proj.js","ol/source/OSM":"node_modules/ol/source/OSM.js","ol/Overlay":"node_modules/ol/Overlay.js","ol/control":"node_modules/ol/control.js","ol/format/TopoJSON":"node_modules/ol/format/TopoJSON.js","ol-geocoder":"node_modules/ol-geocoder/dist/ol-geocoder.js","ol-layerswitcher":"node_modules/ol-layerswitcher/dist/ol-layerswitcher.js","ol/source":"node_modules/ol/source.js","ol/source/XYZ":"node_modules/ol/source/XYZ.js","ol/layer/VectorImage":"node_modules/ol/layer/VectorImage.js","./data/schools.geojson":"data/schools.geojson","./data/universities.geojson":"data/universities.geojson","./data/cinemas.geojson":"data/cinemas.geojson","./data/kindergartens.geojson":"data/kindergartens.geojson","./data/pt_stations.geojson":"data/pt_stations.geojson","./data/theatres.geojson":"data/theatres.geojson","./data/industries.geojson":"data/industries.geojson","./data/supermarkets.geojson":"data/supermarkets.geojson","./data/hospitals.geojson":"data/hospitals.geojson","./data/roads.geojson":"data/roads.geojson","./data/pt_stops.geojson":"data/pt_stops.geojson","./data/restaurants.geojson":"data/restaurants.geojson","./data/leisureparks.geojson":"data/leisureparks.geojson","./data/grid100km_aq_p.geojson":"data/grid100km_aq_p.geojson","./data/grid30km_aq_p.geojson":"data/grid30km_aq_p.geojson","./data/weighted_grid1km_hovestad.geojson":"data/weighted_grid1km_hovestad.geojson","./data/weighted_grid1km_Fyn.geojson":"data/weighted_grid1km_Fyn.geojson","./data/weighted_grid1km_Midtjylland.geojson":"data/weighted_grid1km_Midtjylland.geojson","./data/weighted_grid1km_MidtjyllandW.geojson":"data/weighted_grid1km_MidtjyllandW.geojson","./data/weighted_grid1km_Sjælland.geojson":"data/weighted_grid1km_Sjælland.geojson"}],"C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -115810,7 +116014,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49481" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56938" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -115986,5 +116190,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index_copy.js"], null)
+},{}]},{},["C:/Users/marci/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index_copy.js"], null)
 //# sourceMappingURL=/index_copy.ff1b7583.js.map
