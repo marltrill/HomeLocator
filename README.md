@@ -94,7 +94,7 @@ Alexander Boest-Petersen - https://www.linkedin.com/in/alexanderboest-petersen/ 
 
 Christina Elmegaard-Fessel - https://www.linkedin.com/in/christina-elmegaard-fessel/ - clwl17@student.aau.dk
 
-Kristoffer Knudsen Horst - https://www.linkedin.com/ - email
+Kristoffer Knudsen Horst
 
 Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - mtrill20@student.aau.dk
 
