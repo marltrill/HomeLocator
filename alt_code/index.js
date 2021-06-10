@@ -2198,7 +2198,6 @@ function commitSearchFunction() {
 
   var source_100km = grid100km.getSource();
   var features_100km = source_100km.getFeatures();
-
   var uni_matchmax ;
   var uni_matchmin ;
   var uni_matchdiff ;
@@ -2239,120 +2238,114 @@ function commitSearchFunction() {
   var house_matchdiff ;
   var cell_int_house ;
   var house_match_perc ;
-
+  var accessibility_100
+  var suitability_100
+  var livability_100
+  var new_fuzzy_value_100km;
   
    
   // MATCH PERCENTAGE FOR UNIVERSITIES
   features_100km . forEach ( function ( feature ){
   // When user input doesn 't match cell range
-  if (( feature . get(" _univers_1 ") /1000) > parseInt ( sliderUni . value )) {
+  if (( feature . get("_univers_1") /1000) > parseInt ( sliderUni . value )) {
   uni_matchmax = 0;
   uni_matchmin = 0;
-  console .log (" Cell min value larger than Uni slider max value . " + uni_100 )}
-  else if ( parseInt ( sliderUni . value ) == ( feature . get(" _univers_1 ") /1000) ) {
+  console .log (" Cell min value larger than Uni slider max value . " )}
+  else if ( parseInt ( sliderUni . value ) == ( feature . get("_univers_1") /1000) ) {
   uni_matchmax = 0
   uni_matchmin = 0;
   console .log (" Cell min value equal to Uni slider max value .")
   // Getting the maximum matching distance value
   }
-  else if (( feature . get(" _univers_2 ") /1000) == parseInt ( sliderUni . value )) {
-  uni_matchmax = ( feature .get (" _univers_2 ") /1000)
+  else if (( feature . get("_univers_2") /1000) == parseInt ( sliderUni . value )) {
+  uni_matchmax = ( feature .get ("_univers_2") /1000)
   console .log (" Cell max value equal to Uni slider max value .")
   }
-  else if (( feature . get(" _univers_2 ") /1000) > parseInt ( sliderUni . value )) {
+  else if (( feature . get("_univers_2") /1000) > parseInt ( sliderUni . value )) {
   uni_matchmax = parseInt ( sliderUni . value )
   console .log (" Cell max value greater than Uni slider max value .")
   }
-  else if (( feature . get(" _univers_2 ") /1000) < parseInt ( sliderUni . value )) {
-  uni_matchmax = ( feature . get(" _univers_2 ") /1000)
+  else if (( feature . get("_univers_2") /1000) < parseInt ( sliderUni . value )) {
+  uni_matchmax = ( feature . get("_univers_2") /1000)
   console .log (" Cell max value smaller than Uni slider max value .")
   
   // Getting the minimum matching distance value
   }
-  else if (( feature . get(" _univers_1 ") /1000) == 0) {
+  else if (( feature . get("_univers_1") /1000) == 0) {
   uni_matchmin = 0
   console .log (" Cell min value equal to 1.")
   }
-  else if (( feature . get(" _univers_1 ") /1000 > 0)) {
-  uni_matchmin = ( feature . get(" _univers_1 ") /1000)
+  else if (( feature . get("_univers_1") /1000 > 0)) {
+  uni_matchmin = ( feature . get("_univers_1") /1000)
   console .log (" minimum user slider value (0) smaller than Cell min value .")
   }
-
-
- 
-  
   // MATCH PERCENTAGE FOR SCHOOLS
-  // features_100km . forEach ( function ( feature ){
-    // When user input doesn 't match cell range
-    else if (( feature . get(" _schoolsmi ") /1000) > parseInt ( sliderSchools . value )) {
-    sch_matchmax = 0;
-    sch_matchmin = 0;
-    console .log (" Sch: Cell min value larger than Sch slider max value. ")}
-    else if ( parseInt ( sliderSchools . value ) == ( feature . get(" _schoolsmi ") /1000) ) {
-    sch_matchmax = 0
-    sch_matchmin = 0;
-    console .log (" Sch: Cell min value equal to Sch slider max value .")
-    // Getting the maximum matching distance value
-    }
-    else if (( feature . get(" _schoolsma ") /1000) == parseInt ( sliderSchools . value )) {
-    sch_matchmax = ( feature .get (" _schoolsma ") /1000)
-    console .log (" Sch: Cell max value equal to Sch slider max value .")
-    }
-    else if (( feature . get(" _schoolsma ") /1000) > parseInt ( sliderSchools . value )) {
-    sch_matchmax = parseInt ( sliderSchools . value )
-    console .log (" Sch: Cell max value greater than Sch slider max value .")
-    }
-    else if (( feature . get(" _schoolsma ") /1000) < parseInt ( sliderSchools . value )) {
-    sch_matchmax = ( feature . get(" _schoolsma ") /1000)
-    console .log (" Sch: Cell max value smaller than Sch slider max value .")
-    
-    // Getting the minimum matching distance value
-    }
-    else if (( feature . get(" _schoolsmi ") /1000) == 0) {
-    sch_matchmin = 0
-    console .log (" Sch: Cell min value equal to 1.")
-    }
-    else if (( feature . get(" _schoolsmi ") /1000 > 0)) {
-    sch_matchmin = ( feature . get(" _schoolsmi ") /1000)
-    console .log (" Sch: minimum user slider value (0) smaller than Cell min value .")
-    }
-
-
-
+  // When user input doesn 't match cell range
+  else if (( feature . get("_schoolsmi") /1000) > parseInt ( sliderSchools . value )) {
+  sch_matchmax = 0;
+  sch_matchmin = 0;
+  console .log (" Sch: Cell min value larger than Sch slider max value. ")}
+  else if ( parseInt ( sliderSchools . value ) == ( feature . get("_schoolsmi") /1000) ) {
+  sch_matchmax = 0
+  sch_matchmin = 0;
+  console .log (" Sch: Cell min value equal to Sch slider max value .")
+  // Getting the maximum matching distance value
+  }
+  else if (( feature . get("_schoolsma") /1000) == parseInt ( sliderSchools . value )) {
+  sch_matchmax = ( feature .get ("_schoolsma") /1000)
+  console .log (" Sch: Cell max value equal to Sch slider max value .")
+  }
+  else if (( feature . get("_schoolsma") /1000) > parseInt ( sliderSchools . value )) {
+  sch_matchmax = parseInt ( sliderSchools . value )
+  console .log (" Sch: Cell max value greater than Sch slider max value .")
+  }
+  else if (( feature . get("_schoolsma") /1000) < parseInt ( sliderSchools . value )) {
+  sch_matchmax = ( feature . get("_schoolsma") /1000)
+  console .log (" Sch: Cell max value smaller than Sch slider max value .")
   
+  // Getting the minimum matching distance value
+  }
+  else if (( feature . get("_schoolsmi") /1000) == 0) {
+  sch_matchmin = 0
+  console .log (" Sch: Cell min value equal to 1.")
+  }
+  else if (( feature . get("_schoolsmi") /1000 > 0)) {
+  sch_matchmin = ( feature . get("_schoolsmi") /1000)
+  console .log (" Sch: minimum user slider value (0) smaller than Cell min value .")
+  }
+
   // MATCH PERCENTAGE FOR COASTLINE
-  // features_100km . forEach ( function ( feature ){
     // When user input doesn 't match cell range
-    else if (( feature . get(" _coastli_1 ") /1000) > parseInt ( sliderCoasts . value )) {
+    else if (( feature . get("_coastli_1") /1000) > parseInt ( sliderCoasts . value )) {
     coast_matchmax = 0;
     coast_matchmin = 0;
     console .log (" Coast: Cell min value larger than Coast slider max value. ")}
-    else if ( parseInt ( sliderCoasts . value ) == ( feature . get(" _coastli_1 ") /1000) ) {
+    else if ( parseInt ( sliderCoasts . value ) == ( feature . get("_coastli_1") /1000) ) {
     coast_matchmax = 0
     coast_matchmin = 0;
     console .log (" Coast: Cell min value equal to Coast slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" _coastli_2 ") /1000) == parseInt ( sliderCoasts . value )) {
-    coast_matchmax = ( feature .get (" _coastli_2 ") /1000)
+    else if (( feature . get("_coastli_2") /1000) == parseInt ( sliderCoasts . value )) {
+    coast_matchmax = ( feature .get ("_coastli_2") /1000)
     console .log (" Coast: Cell max value equal to Coast slider max value .")
     }
-    else if (( feature . get(" _coastli_2 ") /1000) > parseInt ( sliderSchools . value )) {
+    else if (( feature . get("_coastli_2") /1000) > parseInt ( sliderSchools . value )) {
     coast_matchmax = parseInt ( sliderCoasts . value )
     console .log (" Coast: Cell max value greater than Coast slider max value .")
     }
-    else if (( feature . get(" _coastli_2 ") /1000) < parseInt ( sliderCoasts . value )) {
-    coast_matchmax = ( feature . get(" _coastli_2 ") /1000)
+    else if (( feature . get("_coastli_2") /1000) < parseInt ( sliderCoasts . value )) {
+    coast_matchmax = ( feature . get("_coastli_2") /1000)
     console .log (" Coast: Cell max value smaller than Coast slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" _coastli_1 ") /1000) == 0) {
+    else if (( feature . get("_coastli_1") /1000) == 0) {
     coast_matchmin = 0
     console .log ("Coast: Cell min value equal to 1.")
     }
-    else if (( feature . get(" _coastli_1 ") /1000 > 0)) {
-    coast_matchmin = ( feature . get(" _coastli_1 ") /1000)
+    else if (( feature . get("_coastli_1") /1000 > 0)) {
+    coast_matchmin = ( feature . get("_coastli_1") /1000)
     console .log (" Coast : minimum user slider value (0) smaller than Cell min value .")
     }
 
@@ -2362,212 +2355,194 @@ function commitSearchFunction() {
   // MATCH PERCENTAGE FOR HOSPITALS
   // features_100km . forEach ( function ( feature ){
     // When user input doesn 't match cell range
-    else if (( feature . get(" _hospita_1 ") /1000) > parseInt ( sliderHospitals . value )) {
+    else if (( feature . get("_hospita_1") /1000) > parseInt ( sliderHospitals . value )) {
     hos_matchmax = 0;
     hos_matchmin = 0;
     console .log (" Hos: Cell min value larger than Hos slider max value. ")}
-    else if ( parseInt ( sliderHospitals . value ) == ( feature . get(" _hospita_1 ") /1000) ) {
+    else if ( parseInt ( sliderHospitals . value ) == ( feature . get("_hospita_1") /1000) ) {
     hos_matchmax = 0
     hos_matchmin = 0;
     console .log (" Hos: Cell min value equal to Hos slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" _hospita_2 ") /1000) == parseInt ( sliderHospitals . value )) {
-    hos_matchmax = ( feature .get (" _hospita_2 ") /1000)
+    else if (( feature . get("_hospita_2") /1000) == parseInt ( sliderHospitals . value )) {
+    hos_matchmax = ( feature .get ("_hospita_2") /1000)
     console .log (" Hos: Cell max value equal to Hos slider max value .")
     }
-    else if (( feature . get(" _hospita_2 ") /1000) > parseInt ( sliderHospitals . value )) {
+    else if (( feature . get("_hospita_2") /1000) > parseInt ( sliderHospitals . value )) {
     hos_matchmax = parseInt ( sliderHospitals . value )
     console .log (" Hos: Cell max value greater than Hos slider max value .")
     }
-    else if (( feature . get(" _hospita_2 ") /1000) < parseInt ( sliderHospitals . value )) {
-    hos_matchmax = ( feature . get(" _hospita_2 ") /1000)
+    else if (( feature . get("_hospita_2") /1000) < parseInt ( sliderHospitals . value )) {
+    hos_matchmax = ( feature . get("_hospita_2") /1000)
     console .log (" Hos: Cell max value smaller than Hos slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" _hospita_1 ") /1000) == 0) {
+    else if (( feature . get("_hospita_1") /1000) == 0) {
     hos_matchmin = 0
     console .log ("Hos: Cell min value equal to 1.")
     }
-    else if (( feature . get(" _hospita_1 ") /1000 > 0)) {
-    hos_matchmin = ( feature . get(" _hospita_1 ") /1000)
+    else if (( feature . get("_hospita_1") /1000 > 0)) {
+    hos_matchmin = ( feature . get("_hospita_1") /1000)
     console .log (" Hos : minimum user slider value (0) smaller than Cell min value .")
     }
 
- 
-
-       // MATCH PERCENTAGE FOR LEISURE PARKS
-  // features_100km . forEach ( function ( feature ){
+  // MATCH PERCENTAGE FOR LEISURE PARKS
     // When user input doesn 't match cell range
-    else if (( feature . get(" _leisure_1 ") /1000) > parseInt ( sliderParks . value )) {
+    else if (( feature . get("_leisure_1") /1000) > parseInt ( sliderParks . value )) {
     parks_matchmax = 0;
     parks_matchmin = 0;
     console .log (" Parks: Cell min value larger than Parks slider max value. ")}
-    else if ( parseInt ( sliderParks . value ) == ( feature . get(" _leisure_1 ") /1000) ) {
+    else if ( parseInt ( sliderParks . value ) == ( feature . get("_leisure_1") /1000) ) {
     parks_matchmax = 0
     parks_matchmin = 0;
     console .log (" Parks: Cell min value equal to Parks slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" _leisure_2 ") /1000) == parseInt ( sliderParks . value )) {
-    parks_matchmax = ( feature .get (" _leisure_2 ") /1000)
+    else if (( feature . get("_leisure_2") /1000) == parseInt ( sliderParks . value )) {
+    parks_matchmax = ( feature .get ("_leisure_2") /1000)
     console .log (" Parks: Cell max value equal to Parks slider max value .")
     }
-    else if (( feature . get(" _leisure_2 ") /1000) > parseInt ( sliderParks . value )) {
+    else if (( feature . get("_leisure_2") /1000) > parseInt ( sliderParks . value )) {
     parks_matchmax = parseInt ( sliderParks . value )
     console .log (" Parks: Cell max value greater than Parks slider max value .")
     }
-    else if (( feature . get(" _leisure_2 ") /1000) < parseInt ( sliderParks . value )) {
-    parks_matchmax = ( feature . get(" _leisure_2 ") /1000)
+    else if (( feature . get("_leisure_2") /1000) < parseInt ( sliderParks . value )) {
+    parks_matchmax = ( feature . get("_leisure_2") /1000)
     console .log (" Parks: Cell max value smaller than Parks slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" _leisure_1 ") /1000) == 0) {
+    else if (( feature . get("_leisure_1") /1000) == 0) {
     parks_matchmin = 0
     console .log ("Parks: Cell min value equal to 1.")
     }
-    else if (( feature . get(" _leisure_1 ") /1000 > 0)) {
-    parks_matchmin = ( feature . get(" _leisure_1 ") /1000)
+    else if (( feature . get("_leisure_1") /1000 > 0)) {
+    parks_matchmin = ( feature . get("_leisure_1") /1000)
     console .log (" Parks : minimum user slider value (0) smaller than Cell min value .")
     }
-
-    
-    
  
-
-  // MATCH PERCENTAGE FOR ROADS
-  // features_100km . forEach ( function ( feature ){
-    // When user input doesn 't match cell range
-    else if (( feature . get(" _roadsmin ") /1000) > parseInt ( sliderRoads . value )) {
+   // MATCH PERCENTAGE FOR ROADS
+   // When user input doesn 't match cell range
+    else if (( feature . get("_roadsmin") /1000) > parseInt ( sliderRoads . value )) {
     roads_matchmax = 0;
     roads_matchmin = 0;
     console .log (" Roads: Cell min value larger than Roads slider max value. ")}
-    else if ( parseInt ( sliderRoads . value ) == ( feature . get(" _roadsmin ") /1000) ) {
+    else if ( parseInt ( sliderRoads . value ) == ( feature . get("_roadsmin") /1000) ) {
     roads_matchmax = 0
     roads_matchmin = 0;
     console .log (" Roads: Cell min value equal to Roads slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" _roadsmax ") /1000) == parseInt ( sliderRoads . value )) {
-    roads_matchmax = ( feature .get (" _roadsmax ") /1000)
+    else if (( feature . get("_roadsmax") /1000) == parseInt ( sliderRoads . value )) {
+    roads_matchmax = ( feature .get ("_roadsmax") /1000)
     console .log (" Roads: Cell max value equal to Roads slider max value .")
     }
-    else if (( feature . get(" _roadsmax ") /1000) > parseInt ( sliderRoads . value )) {
+    else if (( feature . get("_roadsmax") /1000) > parseInt ( sliderRoads . value )) {
     roads_matchmax = parseInt ( sliderRoads . value )
     console .log (" Roads: Cell max value greater than Roads slider max value .")
     }
-    else if (( feature . get(" _roadsmax ") /1000) < parseInt ( sliderRoads . value )) {
-    roads_matchmax = ( feature . get(" _roadsmax ") /1000)
+    else if (( feature . get("_roadsmax") /1000) < parseInt ( sliderRoads . value )) {
+    roads_matchmax = ( feature . get("_roadsmax") /1000)
     console .log (" Roads: Cell max value smaller than Roads slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" _roadsmin ") /1000) == 0) {
+    else if (( feature . get("_roadsmin") /1000) == 0) {
     roads_matchmin = 0
     console .log ("Roads: Cell min value equal to 1.")
     }
-    else if (( feature . get(" _roadsmin ") /1000 > 0)) {
-    roads_matchmin = ( feature . get(" _roadsmin ") /1000)
+    else if (( feature . get("_roadsmin") /1000 > 0)) {
+    roads_matchmin = ( feature . get("_roadsmin") /1000)
     console .log (" Roads : minimum user slider value (0) smaller than Cell min value .")
     }
-
-
-   
-         // MATCH PERCENTAGE FOR SUPERMARKETS
-  // features_100km . forEach ( function ( feature ){
+    // MATCH PERCENTAGE FOR SUPERMARKETS
     // When user input doesn 't match cell range
-    else if (( feature . get(" _superma_1 ") /1000) > parseInt ( sliderMarkets . value )) {
+    else if (( feature . get("_superma_1") /1000) > parseInt ( sliderMarkets . value )) {
     markets_matchmax = 0;
     markets_matchmin = 0;
     console .log (" Markets: Cell min value larger than Markets slider max value. ")}
-    else if ( parseInt ( sliderMarkets . value ) == ( feature . get(" _superma_1 ") /1000) ) {
+    else if ( parseInt ( sliderMarkets . value ) == ( feature . get("_superma_1") /1000) ) {
     markets_matchmax = 0
     markets_matchmin = 0;
     console .log (" Markets: Cell min value equal to Markets slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" _superma_2 ") /1000) == parseInt ( sliderMarkets . value )) {
-    markets_matchmax = ( feature .get (" _superma_2 ") /1000)
+    else if (( feature . get("_superma_2") /1000) == parseInt ( sliderMarkets . value )) {
+    markets_matchmax = ( feature .get ("_superma_2") /1000)
     console .log (" Markets: Cell max value equal to Markets slider max value .")
     }
-    else if (( feature . get(" _superma_2 ") /1000) > parseInt ( sliderMarkets . value )) {
+    else if (( feature . get("_superma_2") /1000) > parseInt ( sliderMarkets . value )) {
     markets_matchmax = parseInt ( sliderMarkets . value )
     console .log (" Markets: Cell max value greater than Markets slider max value .")
     }
-    else if (( feature . get(" _superma_2 ") /1000) < parseInt ( sliderMarkets . value )) {
-    markets_matchmax = ( feature . get(" _superma_2 ") /1000)
+    else if (( feature . get("_superma_2") /1000) < parseInt ( sliderMarkets . value )) {
+    markets_matchmax = ( feature . get("_superma_2") /1000)
     console .log (" Markets: Cell max value smaller than Markets slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" _superma_1 ") /1000) == 0) {
+    else if (( feature . get("_superma_1") /1000) == 0) {
     markets_matchmin = 0
     console .log ("Markets: Cell min value equal to 1.")
     }
-    else if (( feature . get(" _superma_1 ") /1000 > 0)) {
-    markets_matchmin = ( feature . get(" _superma_1 ") /1000)
+    else if (( feature . get("_superma_1") /1000 > 0)) {
+    markets_matchmin = ( feature . get("_superma_1") /1000)
     console .log (" Markets : minimum user slider value (0) smaller than Cell min value .")
     }
-
-
-
-  
-
-         // MATCH PERCENTAGE FOR HOUSE PRICES
-  // features_100km . forEach ( function ( feature ){
+  // MATCH PERCENTAGE FOR HOUSE PRICES
     // When user input doesn 't match cell range
-    if (( feature . get(" housepri_2 ") /1000) > parseInt ( sliderHprice . value )) {
+    if (( feature . get("housepri_2") /1000) > parseInt ( sliderHprice . value )) {
     house_matchmax = 0;
     house_matchmin = 0;
     console .log (" HPrice: Cell min value larger than Hprice slider max value. ")}
-    else if ( parseInt ( sliderMarkets . value ) == ( feature . get(" housepri_2 ") /1000) ) {
+    else if ( parseInt ( sliderMarkets . value ) == ( feature . get("housepri_2") /1000) ) {
     house_matchmax = 0
     house_matchmin = 0;
     console .log (" HPrice: Cell min value equal to Markets slider max value .")
     // Getting the maximum matching distance value
     }
-    else if (( feature . get(" housepri_3 ") /1000) == parseInt ( sliderHprice . value )) {
-    house_matchmax = ( feature .get (" housepri_3 ") /1000)
+    else if (( feature . get("housepri_3") /1000) == parseInt ( sliderHprice . value )) {
+    house_matchmax = ( feature .get ("housepri_3") /1000)
     console .log (" Hprice: Cell max value equal to Hprice slider max value .")
     }
-    else if (( feature . get(" housepri_3 ") /1000) > parseInt ( sliderHprice . value )) {
+    else if (( feature . get("housepri_3") /1000) > parseInt ( sliderHprice . value )) {
     house_matchmax = parseInt ( sliderHprice . value )
     console .log (" HPrice: Cell max value greater than HPrice slider max value .")
     }
-    else if (( feature . get(" housepri_3 ") /1000) < parseInt ( sliderHprice . value )) {
-    house_matchmax = ( feature . get(" housepri_3 ") /1000)
+    else if (( feature . get("housepri_3") /1000) < parseInt ( sliderHprice . value )) {
+    house_matchmax = ( feature . get("housepri_3") /1000)
     console .log (" HPrice: Cell max value smaller than HPrice slider max value .")
     
     // Getting the minimum matching distance value
     }
-    else if (( feature . get(" housepri_2 ") /1000) == 0) {
+    else if (( feature . get("housepri_2") /1000) == 0) {
     house_matchmin = 0
     console .log ("HPrices: Cell min value equal to 1.")
     }
-    else if (( feature . get(" housepri_2 ") /1000 > 0)) {
-    house_matchmin = ( feature . get(" housepri_2 ") /1000)
+    else if (( feature . get("housepri_2") /1000 > 0)) {
+    house_matchmin = ( feature . get("housepri_2") /1000)
     console .log (" HPrices : minimum user slider value (0) smaller than Cell min value .")
     }
   
   //UNIVERSITIES matching percentage
     uni_matchdiff = ( uni_matchmax - uni_matchmin )
-  cell_int_u = ( feature . get(" _univers_2 ") /1000) - ( feature . get(" _univers_1 ")
+  cell_int_u = ( feature . get("_univers_2") /1000) - ( feature . get("_univers_1")
   /1000)
   // Getting the match percentage
   uni_match_perc = ( uni_matchdiff * 100) / cell_int_u
   
   //SCHOOLS matching percentage
     sch_matchdiff = ( sch_matchmax - sch_matchmin )
-    cell_int_sch = ( feature . get(" _schoolsma ") /1000) - ( feature . get(" _schoolsmi ")
+    cell_int_sch = ( feature . get("_schoolsma") /1000) - ( feature . get("_schoolsmi")
     /1000)
     // Getting the match percentage
     sch_match_perc = ( sch_matchdiff * 100) / cell_int_sch
   
   //COASTLINE matching percentage
     coast_matchdiff = ( coast_matchmax - coast_matchmin )
-    cell_int_coast = ( feature . get(" _coastli_2 ") /1000) - ( feature . get(" _coastli_1 ")
+    cell_int_coast = ( feature . get("_coastli_2") /1000) - ( feature . get("_coastli_1")
     /1000)
     // Getting the match percentage
     coast_match_perc = ( coast_matchdiff * 100) / cell_int_coast
@@ -2575,42 +2550,40 @@ function commitSearchFunction() {
   //HOSPITALS matching percentage
     
     hos_matchdiff = ( hos_matchmax - hos_matchmin )
-    cell_int_hos = ( feature . get(" _hospita_2 ") /1000) - ( feature . get(" _hospita_1 ")
+    cell_int_hos = ( feature . get("_hospita_2") /1000) - ( feature . get("_hospita_1")
     /1000)
     // Getting the match percentage
     hos_match_perc = ( hos_matchdiff * 100) / cell_int_hos
     
-
     //PARKS matching percentage
     parks_matchdiff = ( parks_matchmax - parks_matchmin )
-    cell_int_parks = ( feature . get(" _leisure_2 ") /1000) - ( feature . get(" _leisure_1 ")
+    cell_int_parks = ( feature . get("_leisure_2") /1000) - ( feature . get("_leisure_1")
     /1000)
     // Getting the match percentage
     parks_match_perc = ( parks_matchdiff * 100) / cell_int_parks
     
    // ROADS matching percentage
     roads_matchdiff = ( roads_matchmax - roads_matchmin )
-    cell_int_roads = ( feature . get(" _roadsmax ") /1000) - ( feature . get(" _roadsmin ")
+    cell_int_roads = ( feature . get("_roadsmax") /1000) - ( feature . get("_roadsmin")
     /1000)
     // Getting the match percentage
     roads_match_perc = ( roads_matchdiff * 100) / cell_int_roads
     
    // SUPERMARKETS matching percentage
     markets_matchdiff = ( markets_matchmax - markets_matchmin )
-    cell_int_markets = ( feature . get(" _superma_2 ") /1000) - ( feature . get(" _superma_1 ")
+    cell_int_markets = ( feature . get("_superma_2") /1000) - ( feature . get("_superma_1")
     /1000)
     // Getting the match percentage
     markets_match_perc = ( markets_matchdiff * 100) / cell_int_markets
     
     // HOUSE PRICES matching percentage
     house_matchdiff = ( house_matchmax - house_matchmin )
-    cell_int_house = ( feature . get(" housepri_3 ") /1000) - ( feature . get(" housepri_2 ")
+    cell_int_house = ( feature . get("housepri_3") /1000) - ( feature . get("housepri_2")
     /1000)
     // Getting the match percentage
     house_match_perc = ( house_matchdiff * 100) / cell_int_house;
     });  
 
-    var new_fuzzy_value_100km;
     // OVERALL PERCENTAGE CELL MATCH
     var new_fuzzy_value_100km
     new_fuzzy_value_100km = ( markets_matchdiff +  roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)* 100/ ( cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_roads);
