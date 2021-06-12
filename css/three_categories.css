@@ -51,6 +51,8 @@ body, html {
 }
 
 .livability-list {
-  text-align: center;
-  list-style-position: inside;
+  text-align: left;
+  margin: auto;
+  width: 50%;
+  padding-left: 13%;
 }
