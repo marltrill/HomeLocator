@@ -115301,31 +115301,31 @@ function commitSearchFunction() {
     // When user input doesn 't match cell range
 
 
-    if (feature.get("housepri_2") / 1000 > parseInt(sliderHprice.value)) {
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
       house_matchmax = 0;
       house_matchmin = 0;
       console.log(grid100_id + ": HPrice min value larger than slider max");
-    } else if (parseInt(sliderMarkets.value) == feature.get("housepri_2") / 1000) {
+    } else if (parseInt(sliderMarkets.value) == feature.get("housepri_2")) {
       house_matchmax = 0;
       house_matchmin = 0;
       console.log(grid100_id + ": HPrice min value equal to slider max");
     } // Getting the maximum matching distance value
-    else if (feature.get("housepri_3") / 1000 == parseInt(sliderHprice.value)) {
-        house_matchmax = feature.get("housepri_3") / 1000;
+    else if (feature.get("housepri_3") == parseInt(sliderHprice.value)) {
+        house_matchmax = feature.get("housepri_3");
         console.log(grid100_id + ": Hprice max value equal to slider max");
-      } else if (feature.get("housepri_3") / 1000 > parseInt(sliderHprice.value)) {
+      } else if (feature.get("housepri_3") > parseInt(sliderHprice.value)) {
         house_matchmax = parseInt(sliderHprice.value);
         console.log(grid100_id + ": HPrice max value greater than slider max");
-      } else if (feature.get("housepri_3") / 1000 < parseInt(sliderHprice.value)) {
-        house_matchmax = feature.get("housepri_3") / 1000;
+      } else if (feature.get("housepri_3") < parseInt(sliderHprice.value)) {
+        house_matchmax = feature.get("housepri_3");
         console.log(grid100_id + ": HPrice max value smaller than slider max");
       } // Getting the minimum matching distance value
-      else if (feature.get("housepri_2") / 1000 == 0) {
+      else if (feature.get("housepri_2") == 0) {
           house_matchmin = 0;
           console.log(grid100_id + ": HPrices min value equal to 0");
         } else {
-          feature.get("housepri_2") / 1000 > 0;
-          house_matchmin = feature.get("housepri_2") / 1000;
+          feature.get("housepri_2") > 0;
+          house_matchmin = feature.get("housepri_2");
           console.log(grid100_id + ": HPrices slider value smaller than cell min");
         } //UNIVERSITIES matching percentage
 
@@ -115409,25 +115409,23 @@ function commitSearchFunction() {
     console.log(grid100_id + ": Kinder Match %: " + kin_match_perc); // INDUSTRIES matching percentage
 
     ind_matchdiff = ind_matchmax - ind_matchmin;
-    console.log(grid100_id + ": IND MAX: " + ind_matchmax);
-    console.log(grid100_id + ": IND MIN: " + ind_matchmin);
-    cell_int_ind = feature.get("_industr_2") / 1000 - feature.get("_industr_1") / 1000;
-    console.log(grid100_id + ": IND CELL INT: " + cell_int_ind); // Getting the match percentage
+    cell_int_ind = feature.get("_industr_2") / 1000 - feature.get("_industr_1") / 1000; // Getting the match percentage
 
     ind_match_perc = ind_matchdiff * 100 / cell_int_ind;
     console.log(grid100_id + ": Industries Match %: " + ind_match_perc); // HOUSE PRICES matching percentage
 
     house_matchdiff = house_matchmax - house_matchmin;
-    cell_int_house = feature.get("housepri_3") / 1000 - feature.get("housepri_2") / 1000; // Getting the match percentage
+    cell_int_house = feature.get("housepri_3") - feature.get("housepri_2"); // Getting the match percentage
 
-    house_match_perc = house_matchdiff * 100 / cell_int_house; // OVERALL PERCENTAGE CELL MATCH
+    house_match_perc = house_matchdiff / cell_int_house;
+    console.log(grid100_id + ": House Price Match %: " + house_match_perc); // OVERALL PERCENTAGE CELL MATCH
 
     var new_fuzzy_value_100km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
     console.log("Cell " + grid100_id + " Fuzzy Value: " + new_fuzzy_value_100km);
     accessibility_100 = (roads_matchdiff + ptsta_matchdiff + ptst_matchdiff) * 100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads);
     livability_100 = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch);
-    suitability_100 = house_matchdiff * 100 / cell_int_house;
+    suitability_100 = house_match_perc;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
     feature.set("suitability", suitability_100);
@@ -115745,25 +115743,25 @@ function commitSearchFunction() {
     // When user input doesn 't match cell range
 
 
-    if (feature.get("housepri_2") / 1000 > parseInt(sliderHprice.value)) {
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
       house_matchmax = 0;
       house_matchmin = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("housepri_2") / 1000) {
+    } else if (parseInt(sliderMarkets.value) == feature.get("housepri_2")) {
       house_matchmax = 0;
       house_matchmin = 0;
     } // Getting the maximum matching distance value
-    else if (feature.get("housepri_3") / 1000 == parseInt(sliderHprice.value)) {
-        house_matchmax = feature.get("housepri_3") / 1000;
-      } else if (feature.get("housepri_3") / 1000 > parseInt(sliderHprice.value)) {
+    else if (feature.get("housepri_3") == parseInt(sliderHprice.value)) {
+        house_matchmax = feature.get("housepri_3");
+      } else if (feature.get("housepri_3") > parseInt(sliderHprice.value)) {
         house_matchmax = parseInt(sliderHprice.value);
-      } else if (feature.get("housepri_3") / 1000 < parseInt(sliderHprice.value)) {
-        house_matchmax = feature.get("housepri_3") / 1000;
+      } else if (feature.get("housepri_3") < parseInt(sliderHprice.value)) {
+        house_matchmax = feature.get("housepri_3");
       } // Getting the minimum matching distance value
-      else if (feature.get("housepri_2") / 1000 == 0) {
+      else if (feature.get("housepri_2") == 0) {
           house_matchmin = 0;
         } else {
-          feature.get("housepri_2") / 1000 > 0;
-          house_matchmin = feature.get("housepri_2") / 1000;
+          feature.get("housepri_2") > 0;
+          house_matchmin = feature.get("housepri_2");
         } //UNIVERSITIES matching percentage
 
 
@@ -115838,16 +115836,16 @@ function commitSearchFunction() {
     ind_match_perc = ind_matchdiff * 100 / cell_int_ind; // HOUSE PRICES matching percentage
 
     house_matchdiff = house_matchmax - house_matchmin;
-    cell_int_house = feature.get("housepri_3") / 1000 - feature.get("housepri_2") / 1000; // Getting the match percentage
+    cell_int_house = feature.get("housepri_3") - feature.get("housepri_2"); // Getting the match percentage
 
-    house_match_perc = house_matchdiff * 100 / cell_int_house; // OVERALL PERCENTAGE CELL MATCH
+    house_match_perc = house_matchdiff / cell_int_house; // OVERALL PERCENTAGE CELL MATCH
 
     var new_fuzzy_value_30km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
     console.log("Cell " + grid30_id + " Fuzzy Value: " + new_fuzzy_value_30km);
     accessibility_100 = (roads_matchdiff + ptsta_matchdiff + ptst_matchdiff) * 100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads);
     livability_100 = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100 / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch);
-    suitability_100 = house_matchdiff * 100 / cell_int_house;
+    suitability_100 = house_match_perc;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
     feature.set("suitability", suitability_100);

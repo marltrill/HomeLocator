@@ -74,7 +74,7 @@ See the [open issues](https://github.com/aboestpetersen/HomeLocator/issues) for 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Any contributions made are **greatly appreciated** and welcomed.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -103,7 +103,7 @@ Project Link: https://github.com/aboestpetersen/HomeLocator
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/aboestpetersen/HomeLocator
+[contributors-shield]: https://img.shields.io/github/contributors/aboestpetersen/HomeLocator?style=plastic
 [contributors-url]: https://github.com/aboestpetersen/HomeLocator/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/aboestpetersen/HomeLocator?style=plastic
 [forks-url]: https://github.com/aboestpetersen/HomeLocator/network/members
