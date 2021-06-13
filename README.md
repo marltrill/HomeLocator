@@ -14,7 +14,7 @@
   <h3 align="center">HomeLocator</h3>
 
   <p align="center">
-    Repository for Spring 2021 semester geoinformatics project for building a real estate web GIS application.
+    Repository for Spring 2021 semester geoinformatics project for building a real estate based decision support system.
     <br />
     <br />
     <a href="https://homelocator-aauspring2021.herokuapp.com/">View Demo</a>
