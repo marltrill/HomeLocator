@@ -112854,15 +112854,15 @@ var classification_search_100km = function classification_search_100km(feature, 
   var layercolor;
 
   if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
     layercolor = 'rgb(0,0,0,0)';
   }
@@ -112884,15 +112884,15 @@ var classification_search_30km = function classification_search_30km(feature, re
   var layercolor;
 
   if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
     layercolor = 'rgb(0,0,0,0)';
   }
@@ -112914,15 +112914,15 @@ var classification_search_1km = function classification_search_1km(feature, reso
   var layercolor;
 
   if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.4) {
-    layercolor = 'rgba(0, 150, 0, 0.6)';
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
   } else if (fuzzyvalue < 0.8) {
-    layercolor = 'rgba(133, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+    layercolor = 'rgba(0, 100, 0, 0.6)';
   } else {
     layercolor = 'rgb(0,0,0,0)';
   }
@@ -114997,7 +114997,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64236" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59490" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
