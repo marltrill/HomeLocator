@@ -124,7 +124,7 @@ var classification_search_1km = function (feature, resolution){
     else if (fuzzyvalue <= 1) {
     layercolor='rgba(0, 100, 0, 0.6)';
     }
-    else { layercolor='rgba(245, 66, 69, 0.6)';
+    else { layercolor='rgba(217, 200, 0, 0)';
   }
   return new Style({
     stroke: new Stroke({
@@ -1026,6 +1026,10 @@ function commitSearchFunction() {
   var markets_matchdiff = 0;
   var cell_int_markets = 0;
   var markets_match_perc = 0;
+  var house_matchmax = 0;
+  var house_matchmin = 0;
+  var house_matchdiff = 0;
+  var cell_int_house = 0;
   var house_match_perc = 0;
   var ptst_matchmax = 0;
   var ptst_matchmin = 0;
@@ -1062,11 +1066,6 @@ function commitSearchFunction() {
   var ind_matchdiff = 0;
   var cell_int_ind = 0;
   var ind_match_perc = 0;
-  var wat_matchmax = 0;
-  var wat_matchmin = 0;
-  var wat_matchdiff = 0;
-  var cell_int_wat = 0;
-  var wat_match_perc = 0;
   var accessibility_100;
   var suitability_100;
   var livability_100;
@@ -1593,45 +1592,43 @@ function commitSearchFunction() {
           console.log(grid100_id + ": Indu user slider smaller than cell value");
         }
   
-          
-      // MATCH PERCENTAGE FOR WATER BODIES
+      // MATCH PERCENTAGE FOR HOUSE PRICES
       // When user input doesn 't match cell range
-      if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-        wat_matchmax = 0;
-        wat_matchmin = 0;
+      if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+        house_matchmax = 0;
+        house_matchmin = 0;
+        console.log(grid100_id + ": HPrice min value larger than slider max");
       }
-        else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+          house_matchmax = 0;
+          house_matchmin = 0;
+          console.log(grid100_id + ": HPrice min value equal to slider max");
         }
         
         // Getting the maximum matching distance value
-        else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-          wat_matchmax = (feature.get("_waterbo_2"));
+        else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+          house_matchmax = (feature.get("housepri_3"));
+          console.log(grid100_id + ": Hprice max value equal to slider max");
         }
-        else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-          wat_matchmax = parseInt(sliderWater.value);
+        else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+          house_matchmax = parseInt(sliderHprice.value);
+          console.log(grid100_id + ": HPrice max value greater than slider max");
         }
-        else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-          wat_matchmax = (feature.get("_waterbo_2"));
+        else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+          house_matchmax = (feature.get("housepri_3"));
+          console.log(grid100_id + ": HPrice max value smaller than slider max");
         }
         
         // Getting the minimum matching distance value
-        else if ((feature.get("_waterbo_1")) == 0) {
-          wat_matchmin = 0;
+        else if ((feature.get("housepri_2")) == 0) {
+          house_matchmin = 0;
+          console.log(grid100_id + ": HPrices min value equal to 0");
         }
-        else if ((feature.get("_waterbo_1")) > 0){
-          wat_matchmin = (feature.get("_waterbo_1"));
+        else { ((feature.get("housepri_2")) > 0)
+          house_matchmin = (feature.get("housepri_2"));
+          console.log(grid100_id + ": HPrices slider value smaller than cell min");
         }
-     
-        // MATCH PERCENTAGE FOR HOUSE PRICES
-     if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
-
+    
     //UNIVERSITIES matching percentage
     uni_matchdiff = (uni_matchmax - uni_matchmin);
     cell_int_u = (feature.get("_univers_2")/1000) - (feature.get("_univers_1")/1000);
@@ -1729,19 +1726,20 @@ function commitSearchFunction() {
     // Getting the match percentage
     ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
     console.log(grid100_id + ": Industries Match %: " + ind_match_perc);
-
-    // WATER BODIES matching percentage
-    wat_matchdiff = (wat_matchmax - wat_matchmin);
-    cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
-    // Getting the match percentage
-    wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
     
+    // HOUSE PRICES matching percentage
+    house_matchdiff = (house_matchmax - house_matchmin);
+    cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
+    // Getting the match percentage
+    house_match_perc = (house_matchdiff) / cell_int_house;
+    console.log(grid100_id + ": House Price Match %: " + house_match_perc);
+
     // OVERALL PERCENTAGE CELL MATCH
-    var new_fuzzy_value_100km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+    var new_fuzzy_value_100km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
     feature.set("fuzzyvalue", new_fuzzy_value_100km); 
     console.log("Cell " + grid100_id + " Fuzzy Value: " + new_fuzzy_value_100km);
     accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-    livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+    livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
     suitability_100 = house_match_perc;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
@@ -2170,43 +2168,36 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if  ((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
       
-          // MATCH PERCENTAGE FOR HOUSE PRICES
-        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-          house_match_perc = 0; //Out of the cell interval
-          }
-            else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-            house_match_perc = 100; //Within the cell interval
-          }  
       //UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
       cell_int_u = (feature.get("_univers_2")/1000) - (feature.get("_univers_1")/1000);
@@ -2290,19 +2281,19 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
-      // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
       
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
+      // Getting the match percentage
+      house_match_perc = (house_matchdiff) / cell_int_house;
+
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_30km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+      var new_fuzzy_value_30km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
       feature.set("fuzzyvalue", new_fuzzy_value_30km); 
       console.log("Cell " + grid30_id + " Fuzzy Value: " + new_fuzzy_value_30km);
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);
@@ -2729,43 +2720,35 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if ((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
-
-        // MATCH PERCENTAGE FOR HOUSE PRICES
-      if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
       
       //UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
@@ -2850,18 +2833,18 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
-      // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
       
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
+      // Getting the match percentage
+      house_match_perc = (house_matchdiff) / cell_int_house;
+
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_1km_fyn = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
-      feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
+      var new_fuzzy_value_1km_fyn = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
+      feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn); 
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);
@@ -3288,43 +3271,35 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if ((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
-        
-          // MATCH PERCENTAGE FOR HOUSE PRICES
-      if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
       
       // UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
@@ -3409,18 +3384,18 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
-      // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
       
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
+      // Getting the match percentage
+      house_match_perc = (house_matchdiff) / cell_int_house;
+
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_1km_hovestad = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+      var new_fuzzy_value_1km_hovestad = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
       feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad); 
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);
@@ -3847,42 +3822,35 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if ((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
-        // MATCH PERCENTAGE FOR HOUSE PRICES
-       if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
       
       //UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
@@ -3967,18 +3935,18 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
+      
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
       // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
-    
+      house_match_perc = (house_matchdiff) / cell_int_house;
+
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_1km_midtjylland = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+      var new_fuzzy_value_1km_midtjylland = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
       feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland); 
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);
@@ -4405,42 +4373,35 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if ((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
-        // MATCH PERCENTAGE FOR HOUSE PRICES
-      if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
       
       //UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
@@ -4525,18 +4486,18 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
+      
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
       // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
+      house_match_perc = (house_matchdiff) / cell_int_house;
 
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_1km_midtjyllandw = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+      var new_fuzzy_value_1km_midtjyllandw = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
       feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw); 
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);
@@ -4963,43 +4924,35 @@ function commitSearchFunction() {
             ind_matchmin = (feature.get("_industr_1")/1000);
           }
     
-        // MATCH PERCENTAGE FOR WATER BODIES
+        // MATCH PERCENTAGE FOR HOUSE PRICES
         // When user input doesn 't match cell range
-        if ((feature.get("_waterbo_1")) > parseInt(sliderWater.value)) {
-          wat_matchmax = 0;
-          wat_matchmin = 0;
+        if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
+          house_matchmax = 0;
+          house_matchmin = 0;
         }
-          else if (parseInt(sliderWater.value) == (feature.get("_waterbo_1"))) {
-            wat_matchmax = 0;
-            wat_matchmin = 0;
+          else if (parseInt(sliderMarkets.value) == (feature.get("housepri_2"))) {
+            house_matchmax = 0;
+            house_matchmin = 0;
           }
           
           // Getting the maximum matching distance value
-          else if ((feature.get("_waterbo_2")) == parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) == parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
-          else if ((feature.get("_waterbo_2")) > parseInt(sliderWater.value)) {
-            wat_matchmax = parseInt(sliderWater.value);
+          else if ((feature.get("housepri_3")) > parseInt(sliderHprice.value)) {
+            house_matchmax = parseInt(sliderHprice.value);
           }
-          else if ((feature.get("_waterbo_2")) < parseInt(sliderWater.value)) {
-            wat_matchmax = (feature.get("_waterbo_2"));
+          else if ((feature.get("housepri_3")) < parseInt(sliderHprice.value)) {
+            house_matchmax = (feature.get("housepri_3"));
           }
           
           // Getting the minimum matching distance value
-          else if ((feature.get("_waterbo_1")) == 0) {
-            wat_matchmin = 0;
+          else if ((feature.get("housepri_2")) == 0) {
+            house_matchmin = 0;
           }
-          else if((feature.get("_waterbo_1")) > 0){
-            wat_matchmin = (feature.get("_waterbo_1"));
+          else { ((feature.get("housepri_2")) > 0)
+            house_matchmin = (feature.get("housepri_2"));
           }
-       
-          // MATCH PERCENTAGE FOR HOUSE PRICES
-     if ((feature.get("housepri_2")) > parseInt(sliderHprice.value)) {
-      house_match_perc = 0; //Out of the cell interval
-      }
-        else {(((feature.get("housepri_2") == parseInt(sliderHprice.value)) || (parseInt(sliderHprice.value) > (feature.get("housepri_2")))))
-        house_match_perc = 100; //Within the cell interval
-      }  
       
       //UNIVERSITIES matching percentage
       uni_matchdiff = (uni_matchmax - uni_matchmin);
@@ -5084,18 +5037,18 @@ function commitSearchFunction() {
       cell_int_ind  = (feature.get("_industr_2")/1000) - (feature.get("_industr_1")/1000);
       // Getting the match percentage
       ind_match_perc = (ind_matchdiff * 100) / cell_int_ind;
-
-      // WATER BODIES matching percentage
-      wat_matchdiff = (wat_matchmax - wat_matchmin);
-      cell_int_wat  = (feature.get("_waterbo_2")/1000) - (feature.get("_waterbo_1")/1000);
-      // Getting the match percentage
-      wat_match_perc = (wat_matchdiff * 100) / cell_int_wat;
       
+      // HOUSE PRICES matching percentage
+      house_matchdiff = (house_matchmax - house_matchmin);
+      cell_int_house = (feature.get("housepri_3")) - (feature.get("housepri_2"));
+      // Getting the match percentage
+      house_match_perc = (house_matchdiff) / cell_int_house;
+
       // OVERALL PERCENTAGE CELL MATCH
-      var new_fuzzy_value_1km_sjælland = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
+      var new_fuzzy_value_1km_sjælland = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff)/ (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads);
       feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland); 
       accessibility_100 = (((roads_matchdiff + ptsta_matchdiff + ptst_matchdiff)*100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads)));
-      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch + cell_int_wat);
+      livability_100 = ((ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff) * 100) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets+ cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u +cell_int_sch);
       suitability_100 = house_match_perc;
       feature.set("accessibility", accessibility_100);
       feature.set("livability", livability_100);

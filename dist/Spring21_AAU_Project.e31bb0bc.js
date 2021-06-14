@@ -114807,456 +114807,1065 @@ function commitSearchFunction() {
     feature.set("accessibility", accessibility_1_midtjyllandw);
     feature.set("livability", livability_1_midtjyllandw);
     feature.set("suitability", suitability_1_midtjyllandw);
-  }); // Calculate Weights for 100km Grid
+  }); //Calculate Weights for 100km & 30km Grids
 
   var source_100km = grid100km.getSource();
   var features_100km = source_100km.getFeatures();
-  var hospitals_100;
-  var parks_100;
-  var roads_100;
-  var schools_100;
-  var markets_100;
-  var uni_100;
-  var stops_100;
-  var stations_100;
-  var restuarants_100;
-  var theatres_100;
-  var cinemas_100;
-  var kinder_100;
-  var industries_100;
-  var houseprice_100;
-  var water_100;
-  var coasts_100;
-  var new_fuzzy_value_100km;
+  var source_30km = grid30km.getSource();
+  var features_30km = source_30km.getFeatures();
+  /*
+  var source_1km_fyn = grid1km_vectorimage_fyn.getSource();
+  var features_1km_fyn = source_1km_fyn.getFeatures();
+  var source_1km_hovestad = grid1km_vectorimage_hovestad.getSource();
+  var features_1km_hovestad = source_1km_hovestad.getFeatures();
+  var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
+  var features_1km_midtjylland = source_1km_midtjylland.getFeatures();
+  var source_1km_midtjyllandw = grid1km_vectorimage_midtjyllandw.getSource();
+  var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures();
+  var source_1km_sjælland = grid1km_vectorimage_sjælland.getSource();
+  var features_1km_sjælland = source_1km_sjælland.getFeatures();
+  */
+
+  var uni_matchmax = 0;
+  var uni_matchmin = 0;
+  var uni_matchdiff = 0;
+  var cell_int_u = 0;
+  var uni_match_perc = 0;
+  var sch_matchmax = 0;
+  var sch_matchmin = 0;
+  var sch_matchdiff = 0;
+  var cell_int_sch = 0;
+  var sch_match_perc = 0;
+  var coast_matchmax = 0;
+  var coast_matchmin = 0;
+  var coast_matchdiff = 0;
+  var cell_int_coast = 0;
+  var coast_match_perc;
+  var hos_matchmax = 0;
+  var hos_matchmin = 0;
+  var hos_matchdiff = 0;
+  var cell_int_hos = 0;
+  var hos_match_perc = 0;
+  var parks_matchmax = 0;
+  var parks_matchmin = 0;
+  var parks_matchdiff = 0;
+  var cell_int_parks = 0;
+  var parks_match_perc = 0;
+  var roads_matchmax = 0;
+  var roads_matchmin = 0;
+  var roads_matchdiff = 0;
+  var cell_int_roads = 0;
+  var roads_match_perc = 0;
+  var markets_matchmax = 0;
+  var markets_matchmin = 0;
+  var markets_matchdiff = 0;
+  var cell_int_markets = 0;
+  var markets_match_perc = 0;
+  var house_match_perc = 0;
+  var ptst_matchmax = 0;
+  var ptst_matchmin = 0;
+  var ptst_matchdiff = 0;
+  var cell_int_ptst = 0;
+  var ptst_match_perc = 0;
+  var ptsta_matchmax = 0;
+  var ptsta_matchmin = 0;
+  var ptsta_matchdiff = 0;
+  var cell_int_ptsta = 0;
+  var ptsta_match_perc = 0;
+  var resto_matchmax = 0;
+  var resto_matchmin = 0;
+  var resto_matchdiff = 0;
+  var cell_int_resto = 0;
+  var resto_match_perc = 0;
+  var the_matchmax = 0;
+  var the_matchmin = 0;
+  var the_matchdiff = 0;
+  var cell_int_the = 0;
+  var the_match_perc = 0;
+  var cin_matchmax = 0;
+  var cin_matchmin = 0;
+  var cin_matchdiff = 0;
+  var cell_int_cin = 0;
+  var cin_match_perc = 0;
+  var kin_matchmax = 0;
+  var kin_matchmin = 0;
+  var kin_matchdiff = 0;
+  var cell_int_kin = 0;
+  var kin_match_perc = 0;
+  var ind_matchmax = 0;
+  var ind_matchmin = 0;
+  var ind_matchdiff = 0;
+  var cell_int_ind = 0;
+  var ind_match_perc = 0;
+  var wat_matchmax = 0;
+  var wat_matchmin = 0;
+  var wat_matchdiff = 0;
+  var cell_int_wat = 0;
+  var wat_match_perc = 0;
   var accessibility_100;
-  var livability_100;
   var suitability_100;
+  var livability_100;
   features_100km.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_100 = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_100 = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_100 = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    var grid100_id = feature.get("id"); // MATCH PERCENTAGE FOR UNIVERSITIES
+    // When user input doesn't match cell range
 
-      if (uni_100 < 0) {
-        uni_100 = 0;
-      } else if (uni_100 <= 100) {}
-    }
+    if (feature.get("_univers_1") / 1000 > parseInt(sliderUni.value)) {
+      uni_matchmax = 0;
+      uni_matchmin = 0;
+      console.log(grid100_id + ": Cell min larger than Uni slider");
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_1") / 1000) {
+      uni_matchmax = 0;
+      uni_matchmin = 0;
+      console.log(grid100_id + ": Cell min equal to Uni slider");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value)) {
+        uni_matchmax = feature.get("_univers_2") / 1000;
+        console.log(grid100_id + ": Cell max equal to Uni slider: " + uni_matchmax);
+      } else if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+        uni_matchmax = parseInt(sliderUni.value);
+        console.log(grid100_id + ": Cell max greater than Uni slider: " + uni_matchmax);
+      } else if (feature.get("_univers_2") / 1000 < parseInt(sliderUni.value)) {
+        uni_matchmax = feature.get("_univers_2") / 1000;
+        console.log(grid100_id + ": Cell max smaller than Uni slider: " + uni_matchmax);
+      } // Getting the minimum matching distance value
+      else if (feature.get("_univers_1") / 1000 == 0) {
+          uni_matchmin = 0;
+          console.log(grid100_id + ": Cell min equal to 0: " + uni_matchmin);
+        } else if (feature.get("_univers_1") / 1000 > 0) {
+          uni_matchmin = feature.get("_univers_1") / 1000;
+          console.log(grid100_id + ": Minimum user slider (0) smaller than cell min: " + uni_matchmin);
+        } // MATCH PERCENTAGE FOR SCHOOLS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_100 = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_100 = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_100 = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
 
-      if (roads_100 < 0) {
-        roads_100 = 0;
-      } else if (roads_100 <= 100) {}
-    }
+    if (feature.get("_schoolsmi") / 1000 > parseInt(sliderSchools.value)) {
+      sch_matchmax = 0;
+      sch_matchmin = 0;
+      console.log(grid100_id + ": School min larger than slider");
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsmi") / 1000) {
+      sch_matchmax = 0;
+      sch_matchmin = 0;
+      console.log(grid100_id + ": School min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value)) {
+        sch_matchmax = feature.get("_schoolsma") / 1000;
+        console.log(grid100_id + ": School max value equal to slider max");
+      } else if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+        sch_matchmax = parseInt(sliderSchools.value);
+        console.log(grid100_id + ": School max value greater than slider max");
+      } else if (feature.get("_schoolsma") / 1000 < parseInt(sliderSchools.value)) {
+        sch_matchmax = feature.get("_schoolsma") / 1000;
+        console.log(grid100_id + ": School max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_schoolsmi") / 1000 == 0) {
+          sch_matchmin = 0;
+          console.log(grid100_id + ": School min value equal to 1");
+        } else if (feature.get("_schoolsmi") / 1000 > 0) {
+          sch_matchmin = feature.get("_schoolsmi") / 1000;
+          console.log(grid100_id + ": School slider value smaller than min value");
+        } // MATCH PERCENTAGE FOR COASTLINE
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_100 = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_100 = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_100 = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_100 < 0) {
-        coasts_100 = 0;
-      } else if (coasts_100 <= 100) {}
-    }
+    if (feature.get("_coastli_1") / 1000 > parseInt(sliderCoasts.value)) {
+      coast_matchmax = 0;
+      coast_matchmin = 0;
+      console.log(grid100_id + ": Coast min larger than slider max");
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_1") / 1000) {
+      coast_matchmax = 0;
+      coast_matchmin = 0;
+      console.log(grid100_id + ": Coast min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value)) {
+        coast_matchmax = feature.get("_coastli_2") / 1000;
+        console.log(grid100_id + ": Coast max value equal to slider max");
+      } else if (feature.get("_coastli_2") / 1000 > parseInt(sliderSchools.value)) {
+        coast_matchmax = parseInt(sliderCoasts.value);
+        console.log(grid100_id + ": Coast max value greater than slider max");
+      } else if (feature.get("_coastli_2") / 1000 < parseInt(sliderCoasts.value)) {
+        coast_matchmax = feature.get("_coastli_2") / 1000;
+        console.log(grid100_id + ": Coast max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_coastli_1") / 1000 == 0) {
+          coast_matchmin = 0;
+          console.log(grid100_id + ": Coast min value equal to 0");
+        } else if (feature.get("_coastli_1") / 1000 > 0) {
+          coast_matchmin = feature.get("_coastli_1") / 1000;
+          console.log(grid100_id + ": Coast user slider smaller than cell value");
+        } // MATCH PERCENTAGE FOR HOSPITALS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_100 = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_100 = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_100 = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
 
-      if (hospitals_100 < 0) {
-        hospitals_100 = 0;
-      } else if (hospitals_100 <= 100) {}
-    }
+    if (feature.get("_hospita_1") / 1000 > parseInt(sliderHospitals.value)) {
+      hos_matchmax = 0;
+      hos_matchmin = 0;
+      console.log(grid100_id + ": Hospital min value larger than slider max");
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_1") / 1000) {
+      hos_matchmax = 0;
+      hos_matchmin = 0;
+      console.log(grid100_id + ": Hospital min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value)) {
+        hos_matchmax = feature.get("_hospita_2") / 1000;
+        console.log(grid100_id + ": Hospital max value equal to slider max");
+      } else if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+        hos_matchmax = parseInt(sliderHospitals.value);
+        console.log(grid100_id + ": Hospital max value greater than slider max");
+      } else if (feature.get("_hospita_2") / 1000 < parseInt(sliderHospitals.value)) {
+        hos_matchmax = feature.get("_hospita_2") / 1000;
+        console.log(grid100_id + ": Hospital max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_hospita_1") / 1000 == 0) {
+          hos_matchmin = 0;
+          console.log(grid100_id + ": Hospital min value equal to 0");
+        } else if (feature.get("_hospita_1") / 1000 > 0) {
+          hos_matchmin = feature.get("_hospita_1") / 1000;
+          console.log(grid100_id + ": Hospital slider value smaller than Cell min");
+        } // MATCH PERCENTAGE FOR LEISURE PARKS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_100 = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_100 = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_100 = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks_100 < 0) {
-        parks_100 = 0;
-      } else if (parks_100 <= 100) {}
-    }
+    if (feature.get("_leisure_1") / 1000 > parseInt(sliderParks.value)) {
+      parks_matchmax = 0;
+      parks_matchmin = 0;
+      console.log(grid100_id + ": Parks min value larger than slider max");
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_1") / 1000) {
+      parks_matchmax = 0;
+      parks_matchmin = 0;
+      console.log(grid100_id + ": Parks min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value)) {
+        parks_matchmax = feature.get("_leisure_2") / 1000;
+        console.log(grid100_id + ": Parks max value equal to slider max");
+      } else if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+        parks_matchmax = parseInt(sliderParks.value);
+        console.log(grid100_id + ": Parks max value greater than slider max");
+      } else if (feature.get("_leisure_2") / 1000 < parseInt(sliderParks.value)) {
+        parks_matchmax = feature.get("_leisure_2") / 1000;
+        console.log(grid100_id + ": Parks max value smaller than Parks slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_leisure_1") / 1000 == 0) {
+          parks_matchmin = 0;
+          console.log(grid100_id + ":Parks min value equal to 0");
+        } else if (feature.get("_leisure_1") / 1000 > 0) {
+          parks_matchmin = feature.get("_leisure_1") / 1000;
+          console.log(grid100_id + ": Parks slider value smaller than cell min ");
+        } // MATCH PERCENTAGE FOR ROADS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_100 = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_100 = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_100 = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_100 < 0) {
-        schools_100 = 0;
-      } else if (schools_100 <= 100) {}
-    }
+    if (feature.get("_roadsmin") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matchmax = 0;
+      roads_matchmin = 0;
+      console.log(grid100_id + ": Roads min value larger than slider max");
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmin") / 1000) {
+      roads_matchmax = 0;
+      roads_matchmin = 0;
+      console.log(grid100_id + ": Roads min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value)) {
+        roads_matchmax = feature.get("_roadsmax") / 1000;
+        console.log(grid100_id + ": Roads max value equal to slider max");
+      } else if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+        roads_matchmax = parseInt(sliderRoads.value);
+        console.log(grid100_id + ": Roads max value greater than slider max");
+      } else if (feature.get("_roadsmax") / 1000 < parseInt(sliderRoads.value)) {
+        roads_matchmax = feature.get("_roadsmax") / 1000;
+        console.log(grid100_id + ": Roads max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_roadsmin") / 1000 == 0) {
+          roads_matchmin = 0;
+          console.log(grid100_id + ": Roads min value equal to 0");
+        } else if (feature.get("_roadsmin") / 1000 > 0) {
+          roads_matchmin = feature.get("_roadsmin") / 1000;
+          console.log(grid100_id + ": Roads slider value smaller than cell min");
+        } // MATCH PERCENTAGE FOR SUPERMARKETS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_100 = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_100 = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_100 = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
 
-      if (markets_100 < 0) {
-        markets_100 = 0;
-      } else if (markets_100 <= 100) {}
-    }
+    if (feature.get("_superma_1") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matchmax = 0;
+      markets_matchmin = 0;
+      console.log(grid100_id + ": Markets min value larger than slider max");
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_1") / 1000) {
+      markets_matchmax = 0;
+      markets_matchmin = 0;
+      console.log(grid100_id + ": Markets min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value)) {
+        markets_matchmax = feature.get("_superma_2") / 1000;
+        console.log(grid100_id + ": Markets max value equal to slider max");
+      } else if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+        markets_matchmax = parseInt(sliderMarkets.value);
+        console.log(grid100_id + ": Markets max value greater than slider max");
+      } else if (feature.get("_superma_2") / 1000 < parseInt(sliderMarkets.value)) {
+        markets_matchmax = feature.get("_superma_2") / 1000;
+        console.log(grid100_id + ": Market max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_superma_1") / 1000 == 0) {
+          markets_matchmin = 0;
+          console.log(grid100_id + ": Markets min value equal to 1");
+        } else if (feature.get("_superma_1") / 1000 > 0) {
+          markets_matchmin = feature.get("_superma_1") / 1000;
+          console.log(grid100_id + ": Markets slider value smaller than cell min");
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STOPS
+    // When user input doesn't match cell range
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_100 = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_100 = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_100 = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
 
-      if (stops_100 < 0) {
-        stops_100 = 0;
-      } else if (stops_100 <= 100) {}
-    }
+    if (feature.get("_pt_stop_1") / 1000 > parseInt(sliderPstops.value)) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+      console.log(grid100_id + ": Cell min larger than PT stops slider");
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_1") / 1000) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+      console.log(grid100_id + ": Cell min equal to PT stops slider");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+        console.log(grid100_id + ": Cell max equal to PT stops slider");
+      } else if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+        ptst_matchmax = parseInt(sliderPstops.value);
+        console.log(grid100_id + ": Cell max greater than PT stops slider");
+      } else if (feature.get("_pt_stop_2") / 1000 < parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+        console.log(grid100_id + ": Cell max smaller than PT stops slider");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stop_1") / 1000 == 0) {
+          ptst_matchmin = 0;
+          console.log(grid100_id + ": Cell min equal to 0.");
+        } else if (feature.get("_pt_stop_1") / 1000 > 0) {
+          ptst_matchmin = feature.get("_pt_stop_1") / 1000;
+          console.log(grid100_id + ": Minimum user slider (0) smaller than cell min.");
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STATIONS
+    // When user input doesn't match cell range
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_100 = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_100 = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_100 = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_100 < 0) {
-        stations_100 = 0;
-      } else if (stations_100 <= 100) {}
-    }
+    if (feature.get("_pt_stat_1") / 1000 > parseInt(sliderPstations.value)) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+      console.log(grid100_id + ": Cell min larger than PT stations slider");
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_1") / 1000) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+      console.log(grid100_id + ": Cell min equal to PT stations slider");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+        console.log(grid100_id + ": Cell max equal to PT stations slider");
+      } else if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+        ptsta_matchmax = parseInt(sliderPstations.value);
+        console.log(grid100_id + ": Cell max greater than PT stations slider");
+      } else if (feature.get("_pt_stations_2") / 1000 < parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+        console.log(grid100_id + ": Cell max smaller than PT stations slider");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stat_1") / 1000 == 0) {
+          ptsta_matchmin = 0;
+          console.log(grid100_id + ": Cell min equal to 0.");
+        } else if (feature.get("_pt_stat_1") / 1000 > 0) {
+          ptsta_matchmin = feature.get("_pt_stat_1") / 1000;
+          console.log(grid100_id + ": Minimum user slider (0) smaller than cell min.");
+        } // MATCH PERCENTAGE FOR RESTAURANTS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_100 = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_100 = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_100 = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
 
-      if (restuarants_100 < 0) {
-        restuarants_100 = 0;
-      } else if (restuarants_100 <= 100) {}
-    }
+    if (feature.get("_restaur_1") / 1000 > parseInt(sliderRestuarants.value)) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+      console.log(grid100_id + ": Resto min larger than slider max");
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_1") / 1000) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+      console.log(grid100_id + ": Resto min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+        console.log(grid100_id + ": Resto max value equal to slider max");
+      } else if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+        resto_matchmax = parseInt(sliderRestuarants.value);
+        console.log(grid100_id + ": Resto max value greater than slider max");
+      } else if (feature.get("_restaur_2") / 1000 < parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+        console.log(grid100_id + ": Resto max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_restaur_1") / 1000 == 0) {
+          resto_matchmin = 0;
+          console.log(grid100_id + ": Resto min value equal to 0");
+        } else if (feature.get("_restaur_1") / 1000 > 0) {
+          resto_matchmin = feature.get("_restaur_1") / 1000;
+          console.log(grid100_id + ": Resto user slider smaller than cell value");
+        } // MATCH PERCENTAGE FOR THEATRES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_100 = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_100 = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_100 = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
 
-      if (theatres_100 < 0) {
-        theatres_100 = 0;
-      } else if (theatres_100 <= 100) {}
-    }
+    if (feature.get("_theatre_1") / 1000 > parseInt(sliderTheatres.value)) {
+      the_matchmax = 0;
+      the_matchmin = 0;
+      console.log(grid100_id + ": Theatres min larger than slider max");
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_1") / 1000) {
+      the_matchmax = 0;
+      the_matchmin = 0;
+      console.log(grid100_id + ": Theatres min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value)) {
+        the_matchmax = feature.get("_theatre_2") / 1000;
+        console.log(grid100_id + ": Theatres max value equal to slider max");
+      } else if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+        the_matchmax = parseInt(sliderTheatres.value);
+        console.log(grid100_id + ": Theatres max value greater than slider max");
+      } else if (feature.get("_theatre_2") / 1000 < parseInt(sliderTheatres.value)) {
+        the_matchmax = feature.get("_theatre_2") / 1000;
+        console.log(grid100_id + ": Theatres max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_theatre_1") / 1000 == 0) {
+          the_matchmin = 0;
+          console.log(grid100_id + ": Theatres min value equal to 0");
+        } else if (feature.get("_theatre_1") / 1000 > 0) {
+          the_matchmin = feature.get("_theatre_1") / 1000;
+          console.log(grid100_id + ": Theatres user slider smaller than cell value");
+        } // MATCH PERCENTAGE FOR CINEMAS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_100 = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_100 = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_100 = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_100 < 0) {
-        cinemas_100 = 0;
-      } else if (cinemas_100 <= 100) {}
-    }
+    if (feature.get("_cinemasmi") / 1000 > parseInt(sliderCinemas.value)) {
+      cin_matchmax = 0;
+      cin_matchmin = 0;
+      console.log(grid100_id + ": Cinemas min value larger than slider max");
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasmi") / 1000) {
+      cin_matchmax = 0;
+      cin_matchmin = 0;
+      console.log(grid100_id + ": Cinemas min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value)) {
+        cin_matchmax = feature.get("_cinemasma") / 1000;
+        console.log(grid100_id + ": Cinemas max value equal to slider max");
+      } else if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+        cin_matchmax = parseInt(sliderCinemas.value);
+        console.log(grid100_id + ": Cinemas max value greater than slider max");
+      } else if (feature.get("_cinemasma") / 1000 < parseInt(sliderCinemas.value)) {
+        cin_matchmax = feature.get("_cinemasma") / 1000;
+        console.log(grid100_id + ": Cinemas max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_cinemasmi") / 1000 == 0) {
+          cin_matchmin = 0;
+          console.log(grid100_id + ": Cinemas min value equal to 0");
+        } else if (feature.get("_cinemasmi") / 1000 > 0) {
+          cin_matchmin = feature.get("_cinemasmi") / 1000;
+          console.log(grid100_id + ": Cinemas slider value smaller than cell min");
+        } // MATCH PERCENTAGE FOR KINDERGARTENS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_100 = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_100 = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_100 = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
 
-      if (kinder_100 < 0) {
-        kinder_100 = 0;
-      } else if (kinder_100 <= 100) {}
-    }
+    if (feature.get("_kindermin") / 1000 > parseInt(sliderKinder.value)) {
+      kin_matchmax = 0;
+      kin_matchmin = 0;
+      console.log(grid100_id + ": Kinder min value larger than slider max");
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermin") / 1000) {
+      kin_matchmax = 0;
+      kin_matchmin = 0;
+      console.log(grid100_id + ": Kinder min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value)) {
+        kin_matchmax = feature.get("_kindermax") / 1000;
+        console.log(grid100_id + ": Kinder max value equal to slider max");
+      } else if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+        kin_matchmax = parseInt(sliderKinder.value);
+        console.log(grid100_id + ": Kinder max value greater than slider max");
+      } else if (feature.get("_kindermax") / 1000 < parseInt(sliderKinder.value)) {
+        kin_matchmax = feature.get("_kindermax") / 1000;
+        console.log(grid100_id + ": Kinder max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_kindermin") / 1000 == 0) {
+          kin_matchmin = 0;
+          console.log(grid100_id + ": Kinder min value equal to 0");
+        } else if (feature.get("_kindermin") / 1000 > 0) {
+          kin_matchmin = feature.get("_kindermin") / 1000;
+          console.log(grid100_id + ": Kinder slider value smaller than cell min");
+        } // MATCH PERCENTAGE FOR INDUSTRIES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_100 = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_100 = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_100 = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
 
-      if (industries_100 < 0) {
-        industries_100 = 0;
-      } else if (industries_100 <= 100) {}
-    }
+    if (feature.get("_industr_1") / 1000 > parseInt(sliderIndustry.value)) {
+      ind_matchmax = 0;
+      ind_matchmin = 0;
+      console.log(grid100_id + ": Indu min larger than slider max");
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_1") / 1000) {
+      ind_matchmax = 0;
+      ind_matchmin = 0;
+      console.log(grid100_id + ": Indu min value equal to slider max");
+    } // Getting the maximum matching distance value
+    else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value)) {
+        ind_matchmax = feature.get("_industr_2") / 1000;
+        console.log(grid100_id + ": Indu max value equal to slider max");
+      } else if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+        ind_matchmax = parseInt(sliderIndustry.value);
+        console.log(grid100_id + ": Indu max value greater than slider max");
+      } else if (feature.get("_industr_2") / 1000 < parseInt(sliderIndustry.value)) {
+        ind_matchmax = feature.get("_industr_2") / 1000;
+        console.log(grid100_id + ": Indu max value smaller than slider max");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_industr_1") / 1000 == 0) {
+          ind_matchmin = 0;
+          console.log(grid100_id + ": Indu min value equal to 0");
+        } else if (feature.get("_industr_1") / 1000 > 0) {
+          ind_matchmin = feature.get("_industr_1") / 1000;
+          console.log(grid100_id + ": Indu user slider smaller than cell value");
+        } // MATCH PERCENTAGE FOR WATER BODIES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_100 = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_100 = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_100 = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_100 < 0) {
-        houseprice_100 = 0;
-      } else if (houseprice_100 <= 100) {}
-    }
+    if (feature.get("_waterbo_1") > parseInt(sliderWater.value)) {
+      wat_matchmax = 0;
+      wat_matchmin = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_1")) {
+      wat_matchmax = 0;
+      wat_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_waterbo_2") == parseInt(sliderWater.value)) {
+        wat_matchmax = feature.get("_waterbo_2");
+      } else if (feature.get("_waterbo_2") > parseInt(sliderWater.value)) {
+        wat_matchmax = parseInt(sliderWater.value);
+      } else if (feature.get("_waterbo_2") < parseInt(sliderWater.value)) {
+        wat_matchmax = feature.get("_waterbo_2");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_waterbo_1") == 0) {
+          wat_matchmin = 0;
+        } else if (feature.get("_waterbo_1") > 0) {
+          wat_matchmin = feature.get("_waterbo_1");
+        } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_100 = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_100 = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_100 = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
 
-      if (water_100 < 0) {
-        water_100 = 0;
-      } else if (water_100 <= 100) {}
-    }
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_match_perc = 0; //Out of the cell interval
+    } else {
+      feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2");
+      house_match_perc = 100; //Within the cell interval
+    } //UNIVERSITIES matching percentage
 
-    new_fuzzy_value_100km = (coasts_100 + hospitals_100 + parks_100 + roads_100 + schools_100 + markets_100 + uni_100 + stops_100 + stations_100 + restuarants_100 + theatres_100 + cinemas_100 + kinder_100 + industries_100 + houseprice_100) / 16;
+
+    uni_matchdiff = uni_matchmax - uni_matchmin;
+    cell_int_u = feature.get("_univers_2") / 1000 - feature.get("_univers_1") / 1000; // Getting the match percentage
+
+    uni_match_perc = uni_matchdiff * 100 / cell_int_u;
+    console.log(grid100_id + ": Uni Match %: " + uni_match_perc); //SCHOOLS matching percentage
+
+    sch_matchdiff = sch_matchmax - sch_matchmin;
+    cell_int_sch = feature.get("_schoolsma") / 1000 - feature.get("_schoolsmi") / 1000; // Getting the match percentage
+
+    sch_match_perc = sch_matchdiff * 100 / cell_int_sch;
+    console.log(grid100_id + ": Schools Match %: " + sch_match_perc); //COASTLINE matching percentage
+
+    coast_matchdiff = coast_matchmax - coast_matchmin;
+    cell_int_coast = feature.get("_coastli_2") / 1000 - feature.get("_coastli_1") / 1000; // Getting the match percentage
+
+    coast_match_perc = coast_matchdiff * 100 / cell_int_coast;
+    console.log(grid100_id + ": Coasts Match %: " + coast_match_perc); //HOSPITALS matching percentage
+
+    hos_matchdiff = hos_matchmax - hos_matchmin;
+    cell_int_hos = feature.get("_hospita_2") / 1000 - feature.get("_hospita_1") / 1000; // Getting the match percentage
+
+    hos_match_perc = hos_matchdiff * 100 / cell_int_hos;
+    console.log(grid100_id + ": Hospitals Match %: " + hos_match_perc); //PARKS matching percentage
+
+    parks_matchdiff = parks_matchmax - parks_matchmin;
+    cell_int_parks = feature.get("_leisure_2") / 1000 - feature.get("_leisure_1") / 1000; // Getting the match percentage
+
+    parks_match_perc = parks_matchdiff * 100 / cell_int_parks;
+    console.log(grid100_id + ": Parks Match %: " + parks_match_perc); // ROADS matching percentage
+
+    roads_matchdiff = roads_matchmax - roads_matchmin;
+    cell_int_roads = feature.get("_roadsmax") / 1000 - feature.get("_roadsmin") / 1000; // Getting the match percentage
+
+    roads_match_perc = roads_matchdiff * 100 / cell_int_roads;
+    console.log(grid100_id + ": Roads Match %: " + roads_match_perc); // SUPERMARKETS matching percentage
+
+    markets_matchdiff = markets_matchmax - markets_matchmin;
+    cell_int_markets = feature.get("_superma_2") / 1000 - feature.get("_superma_1") / 1000; // Getting the match percentage
+
+    markets_match_perc = markets_matchdiff * 100 / cell_int_markets;
+    console.log(grid100_id + ": Markets Match %: " + markets_match_perc); // PUBLIC TRANSPORT STOPS matching percentage
+
+    ptst_matchdiff = ptst_matchmax - ptst_matchmin;
+    cell_int_ptst = feature.get("_pt_stop_2") / 1000 - feature.get("_pt_stop_1") / 1000; // Getting the match percentage
+
+    ptst_match_perc = ptst_matchdiff * 100 / cell_int_ptst;
+    console.log(grid100_id + ": PT Stops Match %: " + ptst_match_perc); // PUBLIC TRANSPORT STATIONS matching percentage
+
+    ptsta_matchdiff = ptsta_matchmax - ptsta_matchmin;
+    cell_int_ptsta = feature.get("_pt_stat_2") / 1000 - feature.get("_pt_stat_1") / 1000; // Getting the match percentage
+
+    ptsta_match_perc = ptsta_matchdiff * 100 / cell_int_ptsta;
+    console.log(grid100_id + ": PT Stats Match %: " + ptsta_match_perc); // RESTAURANTS matching percentage
+
+    resto_matchdiff = resto_matchmax - resto_matchmin;
+    cell_int_resto = feature.get("_restaur_2") / 1000 - feature.get("_restaur_1") / 1000; // Getting the match percentage
+
+    resto_match_perc = resto_matchdiff * 100 / cell_int_resto;
+    console.log(grid100_id + ": Restaurants Match %: " + resto_match_perc); // THEATRES matching percentage
+
+    the_matchdiff = the_matchmax - the_matchmin;
+    cell_int_the = feature.get("_theatre_2") / 1000 - feature.get("_theatre_1") / 1000; // Getting the match percentage
+
+    the_match_perc = the_matchdiff * 100 / cell_int_the;
+    console.log(grid100_id + ": Theatres Match %: " + the_match_perc); // CINEMAS matching percentage
+
+    cin_matchdiff = cin_matchmax - cin_matchmin;
+    cell_int_cin = feature.get("_cinemasma") / 1000 - feature.get("_cinemasmi") / 1000; // Getting the match percentage
+
+    cin_match_perc = cin_matchdiff * 100 / cell_int_cin;
+    console.log(grid100_id + ": Cinemas Match %: " + cin_match_perc); // KINDERGARTENS matching percentage
+
+    kin_matchdiff = kin_matchmax - kin_matchmin;
+    cell_int_kin = feature.get("_kindermax") / 1000 - feature.get("_kindermin") / 1000; // Getting the match percentage
+
+    kin_match_perc = kin_matchdiff * 100 / cell_int_kin;
+    console.log(grid100_id + ": Kinder Match %: " + kin_match_perc); // INDUSTRIES matching percentage
+
+    ind_matchdiff = ind_matchmax - ind_matchmin;
+    cell_int_ind = feature.get("_industr_2") / 1000 - feature.get("_industr_1") / 1000; // Getting the match percentage
+
+    ind_match_perc = ind_matchdiff * 100 / cell_int_ind;
+    console.log(grid100_id + ": Industries Match %: " + ind_match_perc); // WATER BODIES matching percentage
+
+    wat_matchdiff = wat_matchmax - wat_matchmin;
+    cell_int_wat = feature.get("_waterbo_2") / 1000 - feature.get("_waterbo_1") / 1000; // Getting the match percentage
+
+    wat_match_perc = wat_matchdiff * 100 / cell_int_wat; // OVERALL PERCENTAGE CELL MATCH
+
+    var new_fuzzy_value_100km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
     feature.set("fuzzyvalue", new_fuzzy_value_100km);
-    accessibility_100 = (roads_100 + stops_100 + stations_100) / 3 * 100;
-    livability_100 = (uni_100 + schools_100 + kinder_100 + coasts_100 + markets_100 + water_100 + industries_100 + hospitals_100 + restuarants_100 + theatres_100 + cinemas_100 + parks_100) / 12 * 100;
-    suitability_100 = houseprice_100 / 1 * 100;
+    console.log("Cell " + grid100_id + " Fuzzy Value: " + new_fuzzy_value_100km);
+    accessibility_100 = (roads_matchdiff + ptsta_matchdiff + ptst_matchdiff) * 100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads);
+    livability_100 = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100 / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_wat);
+    suitability_100 = house_match_perc;
     feature.set("accessibility", accessibility_100);
     feature.set("livability", livability_100);
     feature.set("suitability", suitability_100);
-  }); // Calculate Weights for 30km Grid
-
-  var source_30km = grid30km.getSource();
-  var features_30km = source_30km.getFeatures();
-  var coasts_30;
-  var hospitals_30;
-  var parks_30;
-  var roads_30;
-  var schools_30;
-  var markets_30;
-  var uni_30;
-  var stops_30;
-  var stations_30;
-  var restuarants_30;
-  var theatres_30;
-  var cinemas_30;
-  var kinder_30;
-  var industries_30;
-  var houseprice_30;
-  var water_30;
-  var new_fuzzy_value_30km;
-  var accessibility_30;
-  var livability_30;
-  var suitability_30;
+  });
   features_30km.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_30 = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_30 = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_30 = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    var grid30_id = feature.get("id"); // MATCH PERCENTAGE FOR UNIVERSITIES
+    // When user input doesn't match cell range
 
-      if (uni_30 < 0) {
-        uni_30 = 0;
-      } else if (uni_30 <= 100) {}
-    }
+    if (feature.get("_univers_1") / 1000 > parseInt(sliderUni.value)) {
+      uni_matchmax = 0;
+      uni_matchmin = 0;
+    } else if (parseInt(sliderUni.value) == feature.get("_univers_1") / 1000) {
+      uni_matchmax = 0;
+      uni_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value)) {
+        uni_matchmax = feature.get("_univers_2") / 1000;
+      } else if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+        uni_matchmax = parseInt(sliderUni.value);
+      } else if (feature.get("_univers_2") / 1000 < parseInt(sliderUni.value)) {
+        uni_matchmax = feature.get("_univers_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_univers_1") / 1000 == 0) {
+          uni_matchmin = 0;
+        } else if (feature.get("_univers_1") / 1000 > 0) {
+          uni_matchmin = feature.get("_univers_1") / 1000;
+        } // MATCH PERCENTAGE FOR SCHOOLS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_30 = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_30 = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_30 = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
 
-      if (roads_30 < 0) {
-        roads_30 = 0;
-      } else if (roads_30 <= 100) {}
-    }
+    if (feature.get("_schoolsmi") / 1000 > parseInt(sliderSchools.value)) {
+      sch_matchmax = 0;
+      sch_matchmin = 0;
+    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsmi") / 1000) {
+      sch_matchmax = 0;
+      sch_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value)) {
+        sch_matchmax = feature.get("_schoolsma") / 1000;
+      } else if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+        sch_matchmax = parseInt(sliderSchools.value);
+      } else if (feature.get("_schoolsma") / 1000 < parseInt(sliderSchools.value)) {
+        sch_matchmax = feature.get("_schoolsma") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_schoolsmi") / 1000 == 0) {
+          sch_matchmin = 0;
+        } else if (feature.get("_schoolsmi") / 1000 > 0) {
+          sch_matchmin = feature.get("_schoolsmi") / 1000;
+        } // MATCH PERCENTAGE FOR COASTLINE
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_30 = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_30 = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_30 = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_30 < 0) {
-        coasts_30 = 0;
-      } else if (coasts_30 <= 100) {}
-    }
+    if (feature.get("_coastli_1") / 1000 > parseInt(sliderCoasts.value)) {
+      coast_matchmax = 0;
+      coast_matchmin = 0;
+    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_1") / 1000) {
+      coast_matchmax = 0;
+      coast_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value)) {
+        coast_matchmax = feature.get("_coastli_2") / 1000;
+      } else if (feature.get("_coastli_2") / 1000 > parseInt(sliderSchools.value)) {
+        coast_matchmax = parseInt(sliderCoasts.value);
+      } else if (feature.get("_coastli_2") / 1000 < parseInt(sliderCoasts.value)) {
+        coast_matchmax = feature.get("_coastli_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_coastli_1") / 1000 == 0) {
+          coast_matchmin = 0;
+        } else if (feature.get("_coastli_1") / 1000 > 0) {
+          coast_matchmin = feature.get("_coastli_1") / 1000;
+        } // MATCH PERCENTAGE FOR HOSPITALS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_30 = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_30 = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_30 = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
 
-      if (hospitals_30 < 0) {
-        hospitals_30 = 0;
-      } else if (hospitals_30 <= 100) {}
-    }
+    if (feature.get("_hospita_1") / 1000 > parseInt(sliderHospitals.value)) {
+      hos_matchmax = 0;
+      hos_matchmin = 0;
+    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_1") / 1000) {
+      hos_matchmax = 0;
+      hos_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value)) {
+        hos_matchmax = feature.get("_hospita_2") / 1000;
+      } else if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+        hos_matchmax = parseInt(sliderHospitals.value);
+      } else if (feature.get("_hospita_2") / 1000 < parseInt(sliderHospitals.value)) {
+        hos_matchmax = feature.get("_hospita_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_hospita_1") / 1000 == 0) {
+          hos_matchmin = 0;
+        } else if (feature.get("_hospita_1") / 1000 > 0) {
+          hos_matchmin = feature.get("_hospita_1") / 1000;
+        } // MATCH PERCENTAGE FOR LEISURE PARKS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_30 = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_30 = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_30 = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
 
-      if (parks_30 < 0) {
-        parks_30 = 0;
-      } else if (parks_30 <= 100) {}
-    }
+    if (feature.get("_leisure_1") / 1000 > parseInt(sliderParks.value)) {
+      parks_matchmax = 0;
+      parks_matchmin = 0;
+    } else if (parseInt(sliderParks.value) == feature.get("_leisure_1") / 1000) {
+      parks_matchmax = 0;
+      parks_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value)) {
+        parks_matchmax = feature.get("_leisure_2") / 1000;
+      } else if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+        parks_matchmax = parseInt(sliderParks.value);
+      } else if (feature.get("_leisure_2") / 1000 < parseInt(sliderParks.value)) {
+        parks_matchmax = feature.get("_leisure_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_leisure_1") / 1000 == 0) {
+          parks_matchmin = 0;
+        } else if (feature.get("_leisure_1") / 1000 > 0) {
+          parks_matchmin = feature.get("_leisure_1") / 1000;
+        } // MATCH PERCENTAGE FOR ROADS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_30 = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_30 = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_30 = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_30 < 0) {
-        schools_30 = 0;
-      } else if (schools_30 <= 100) {}
-    }
+    if (feature.get("_roadsmin") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matchmax = 0;
+      roads_matchmin = 0;
+    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmin") / 1000) {
+      roads_matchmax = 0;
+      roads_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value)) {
+        roads_matchmax = feature.get("_roadsmax") / 1000;
+      } else if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+        roads_matchmax = parseInt(sliderRoads.value);
+      } else if (feature.get("_roadsmax") / 1000 < parseInt(sliderRoads.value)) {
+        roads_matchmax = feature.get("_roadsmax") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_roadsmin") / 1000 == 0) {
+          roads_matchmin = 0;
+        } else if (feature.get("_roadsmin") / 1000 > 0) {
+          roads_matchmin = feature.get("_roadsmin") / 1000;
+        } // MATCH PERCENTAGE FOR SUPERMARKETS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_30 = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_30 = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_30 = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
 
-      if (markets_30 < 0) {
-        markets_30 = 0;
-      } else if (markets_30 <= 100) {}
-    }
+    if (feature.get("_superma_1") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matchmax = 0;
+      markets_matchmin = 0;
+    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_1") / 1000) {
+      markets_matchmax = 0;
+      markets_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value)) {
+        markets_matchmax = feature.get("_superma_2") / 1000;
+      } else if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+        markets_matchmax = parseInt(sliderMarkets.value);
+      } else if (feature.get("_superma_2") / 1000 < parseInt(sliderMarkets.value)) {
+        markets_matchmax = feature.get("_superma_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_superma_1") / 1000 == 0) {
+          markets_matchmin = 0;
+        } else if (feature.get("_superma_1") / 1000 > 0) {
+          markets_matchmin = feature.get("_superma_1") / 1000;
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STOPS
+    // When user input doesn't match cell range
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_30 = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_30 = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_30 = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
 
-      if (stops_30 < 0) {
-        stops_30 = 0;
-      } else if (stops_30 <= 100) {}
-    }
+    if (feature.get("_pt_stop_1") / 1000 > parseInt(sliderPstops.value)) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_1") / 1000) {
+      ptst_matchmax = 0;
+      ptst_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+      } else if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+        ptst_matchmax = parseInt(sliderPstops.value);
+      } else if (feature.get("_pt_stop_2") / 1000 < parseInt(sliderPstops.value)) {
+        ptst_matchmax = feature.get("_pt_stop_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stop_1") / 1000 == 0) {
+          ptst_matchmin = 0;
+        } else if (feature.get("_pt_stop_1") / 1000 > 0) {
+          ptst_matchmin = feature.get("_pt_stop_1") / 1000;
+        } // MATCH PERCENTAGE FOR PUBLIC TRANSPORT STATIONS
+    // When user input doesn't match cell range
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_30 = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_30 = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_30 = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_30 < 0) {
-        stations_30 = 0;
-      } else if (stations_30 <= 100) {}
-    }
+    if (feature.get("_pt_stat_1") / 1000 > parseInt(sliderPstations.value)) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_1") / 1000) {
+      ptsta_matchmax = 0;
+      ptsta_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+      } else if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+        ptsta_matchmax = parseInt(sliderPstations.value);
+      } else if (feature.get("_pt_stations_2") / 1000 < parseInt(sliderPstations.value)) {
+        ptsta_matchmax = feature.get("_pt_stat_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_pt_stat_1") / 1000 == 0) {
+          ptsta_matchmin = 0;
+        } else if (feature.get("_pt_stat_1") / 1000 > 0) {
+          ptsta_matchmin = feature.get("_pt_stat_1") / 1000;
+        } // MATCH PERCENTAGE FOR RESTAURANTS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_30 = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_30 = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_30 = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
 
-      if (restuarants_30 < 0) {
-        restuarants_30 = 0;
-      } else if (restuarants_30 <= 100) {}
-    }
+    if (feature.get("_restaur_1") / 1000 > parseInt(sliderRestuarants.value)) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_1") / 1000) {
+      resto_matchmax = 0;
+      resto_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+      } else if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+        resto_matchmax = parseInt(sliderRestuarants.value);
+      } else if (feature.get("_restaur_2") / 1000 < parseInt(sliderRestuarants.value)) {
+        resto_matchmax = feature.get("_restaur_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_restaur_1") / 1000 == 0) {
+          resto_matchmin = 0;
+        } else if (feature.get("_restaur_1") / 1000 > 0) {
+          resto_matchmin = feature.get("_restaur_1") / 1000;
+        } // MATCH PERCENTAGE FOR THEATRES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_30 = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_30 = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_30 = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
 
-      if (theatres_30 < 0) {
-        theatres_30 = 0;
-      } else if (theatres_30 <= 100) {}
-    }
+    if (feature.get("_theatre_1") / 1000 > parseInt(sliderTheatres.value)) {
+      the_matchmax = 0;
+      the_matchmin = 0;
+    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_1") / 1000) {
+      the_matchmax = 0;
+      the_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value)) {
+        the_matchmax = feature.get("_theatre_2") / 1000;
+      } else if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+        the_matchmax = parseInt(sliderTheatres.value);
+      } else if (feature.get("_theatre_2") / 1000 < parseInt(sliderTheatres.value)) {
+        the_matchmax = feature.get("_theatre_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_theatre_1") / 1000 == 0) {
+          the_matchmin = 0;
+        } else if (feature.get("_theatre_1") / 1000 > 0) {
+          the_matchmin = feature.get("_theatre_1") / 1000;
+        } // MATCH PERCENTAGE FOR CINEMAS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_30 = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_30 = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_30 = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_30 < 0) {
-        cinemas_30 = 0;
-      } else if (cinemas_30 <= 100) {}
-    }
+    if (feature.get("_cinemasmi") / 1000 > parseInt(sliderCinemas.value)) {
+      cin_matchmax = 0;
+      cin_matchmin = 0;
+    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasmi") / 1000) {
+      cin_matchmax = 0;
+      cin_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value)) {
+        cin_matchmax = feature.get("_cinemasma") / 1000;
+      } else if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+        cin_matchmax = parseInt(sliderCinemas.value);
+      } else if (feature.get("_cinemasma") / 1000 < parseInt(sliderCinemas.value)) {
+        cin_matchmax = feature.get("_cinemasma") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_cinemasmi") / 1000 == 0) {
+          cin_matchmin = 0;
+        } else if (feature.get("_cinemasmi") / 1000 > 0) {
+          cin_matchmin = feature.get("_cinemasmi") / 1000;
+        } // MATCH PERCENTAGE FOR KINDERGARTENS
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_30 = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_30 = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_30 = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
 
-      if (kinder_30 < 0) {
-        kinder_30 = 0;
-      } else if (kinder_30 <= 100) {}
-    }
+    if (feature.get("_kindermin") / 1000 > parseInt(sliderKinder.value)) {
+      kin_matchmax = 0;
+      kin_matchmin = 0;
+    } else if (parseInt(sliderKinder.value) == feature.get("_kindermin") / 1000) {
+      kin_matchmax = 0;
+      kin_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value)) {
+        kin_matchmax = feature.get("_kindermax") / 1000;
+      } else if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+        kin_matchmax = parseInt(sliderKinder.value);
+      } else if (feature.get("_kindermax") / 1000 < parseInt(sliderKinder.value)) {
+        kin_matchmax = feature.get("_kindermax") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_kindermin") / 1000 == 0) {
+          kin_matchmin = 0;
+        } else if (feature.get("_kindermin") / 1000 > 0) {
+          kin_matchmin = feature.get("_kindermin") / 1000;
+        } // MATCH PERCENTAGE FOR INDUSTRIES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_30 = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_30 = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_30 = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
 
-      if (industries_30 < 0) {
-        industries_30 = 0;
-      } else if (industries_30 <= 100) {}
-    }
+    if (feature.get("_industr_1") / 1000 > parseInt(sliderIndustry.value)) {
+      ind_matchmax = 0;
+      ind_matchmin = 0;
+    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_1") / 1000) {
+      ind_matchmax = 0;
+      ind_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value)) {} else if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+        ind_matchmax = parseInt(sliderIndustry.value);
+      } else if (feature.get("_industr_2") / 1000 < parseInt(sliderIndustry.value)) {
+        ind_matchmax = feature.get("_industr_2") / 1000;
+      } // Getting the minimum matching distance value
+      else if (feature.get("_industr_1") / 1000 == 0) {
+          ind_matchmin = 0;
+        } else if (feature.get("_industr_1") / 1000 > 0) {
+          ind_matchmin = feature.get("_industr_1") / 1000;
+        } // MATCH PERCENTAGE FOR WATER BODIES
+    // When user input doesn 't match cell range
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_30 = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_30 = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_30 = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_30 < 0) {
-        houseprice_30 = 0;
-      } else if (houseprice_30 <= 100) {}
-    }
+    if (feature.get("_waterbo_1") > parseInt(sliderWater.value)) {
+      wat_matchmax = 0;
+      wat_matchmin = 0;
+    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_1")) {
+      wat_matchmax = 0;
+      wat_matchmin = 0;
+    } // Getting the maximum matching distance value
+    else if (feature.get("_waterbo_2") == parseInt(sliderWater.value)) {
+        wat_matchmax = feature.get("_waterbo_2");
+      } else if (feature.get("_waterbo_2") > parseInt(sliderWater.value)) {
+        wat_matchmax = parseInt(sliderWater.value);
+      } else if (feature.get("_waterbo_2") < parseInt(sliderWater.value)) {
+        wat_matchmax = feature.get("_waterbo_2");
+      } // Getting the minimum matching distance value
+      else if (feature.get("_waterbo_1") == 0) {
+          wat_matchmin = 0;
+        } else if (feature.get("_waterbo_1") > 0) {
+          wat_matchmin = feature.get("_waterbo_1");
+        } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_30 = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_30 = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_30 = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
 
-      if (water_30 < 0) {
-        water_30 = 0;
-      } else if (water_30 <= 100) {}
-    }
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_match_perc = 0; //Out of the cell interval
+    } else {
+      feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2");
+      house_match_perc = 100; //Within the cell interval
+    } //UNIVERSITIES matching percentage
 
-    new_fuzzy_value_30km = (coasts_30 + hospitals_30 + parks_30 + roads_30 + schools_30 + markets_30 + uni_30 + stops_30 + stations_30 + restuarants_30 + theatres_30 + cinemas_30 + kinder_30 + industries_30 + houseprice_30) / 16;
+
+    uni_matchdiff = uni_matchmax - uni_matchmin;
+    cell_int_u = feature.get("_univers_2") / 1000 - feature.get("_univers_1") / 1000; // Getting the match percentage
+
+    uni_match_perc = uni_matchdiff * 100 / cell_int_u; //SCHOOLS matching percentage
+
+    sch_matchdiff = sch_matchmax - sch_matchmin;
+    cell_int_sch = feature.get("_schoolsma") / 1000 - feature.get("_schoolsmi") / 1000; // Getting the match percentage
+
+    sch_match_perc = sch_matchdiff * 100 / cell_int_sch; //COASTLINE matching percentage
+
+    coast_matchdiff = coast_matchmax - coast_matchmin;
+    cell_int_coast = feature.get("_coastli_2") / 1000 - feature.get("_coastli_1") / 1000; // Getting the match percentage
+
+    coast_match_perc = coast_matchdiff * 100 / cell_int_coast; //HOSPITALS matching percentage
+
+    hos_matchdiff = hos_matchmax - hos_matchmin;
+    cell_int_hos = feature.get("_hospita_2") / 1000 - feature.get("_hospita_1") / 1000; // Getting the match percentage
+
+    hos_match_perc = hos_matchdiff * 100 / cell_int_hos; //PARKS matching percentage
+
+    parks_matchdiff = parks_matchmax - parks_matchmin;
+    cell_int_parks = feature.get("_leisure_2") / 1000 - feature.get("_leisure_1") / 1000; // Getting the match percentage
+
+    parks_match_perc = parks_matchdiff * 100 / cell_int_parks; // ROADS matching percentage
+
+    roads_matchdiff = roads_matchmax - roads_matchmin;
+    cell_int_roads = feature.get("_roadsmax") / 1000 - feature.get("_roadsmin") / 1000; // Getting the match percentage
+
+    roads_match_perc = roads_matchdiff * 100 / cell_int_roads; // SUPERMARKETS matching percentage
+
+    markets_matchdiff = markets_matchmax - markets_matchmin;
+    cell_int_markets = feature.get("_superma_2") / 1000 - feature.get("_superma_1") / 1000; // Getting the match percentage
+
+    markets_match_perc = markets_matchdiff * 100 / cell_int_markets; // PUBLIC TRANSPORT STOPS matching percentage
+
+    ptst_matchdiff = ptst_matchmax - ptst_matchmin;
+    cell_int_ptst = feature.get("_pt_stop_2") / 1000 - feature.get("_pt_stop_1") / 1000; // Getting the match percentage
+
+    ptst_match_perc = ptst_matchdiff * 100 / cell_int_ptst; // PUBLIC TRANSPORT STATIONS matching percentage
+
+    ptsta_matchdiff = ptsta_matchmax - ptsta_matchmin;
+    cell_int_ptsta = feature.get("_pt_stat_2") / 1000 - feature.get("_pt_stat_1") / 1000; // Getting the match percentage
+
+    ptsta_match_perc = ptsta_matchdiff * 100 / cell_int_ptsta; // RESTAURANTS matching percentage
+
+    resto_matchdiff = resto_matchmax - resto_matchmin;
+    cell_int_resto = feature.get("_restaur_2") / 1000 - feature.get("_restaur_1") / 1000; // Getting the match percentage
+
+    resto_match_perc = resto_matchdiff * 100 / cell_int_resto; // THEATRES matching percentage
+
+    the_matchdiff = the_matchmax - the_matchmin;
+    cell_int_the = feature.get("_theatre_2") / 1000 - feature.get("_theatre_1") / 1000; // Getting the match percentage
+
+    the_match_perc = the_matchdiff * 100 / cell_int_the; // CINEMAS matching percentage
+
+    cin_matchdiff = cin_matchmax - cin_matchmin;
+    cell_int_cin = feature.get("_cinemasma") / 1000 - feature.get("_cinemasmi") / 1000; // Getting the match percentage
+
+    cin_match_perc = cin_matchdiff * 100 / cell_int_cin; // KINDERGARTENS matching percentage
+
+    kin_matchdiff = kin_matchmax - kin_matchmin;
+    cell_int_kin = feature.get("_kindermax") / 1000 - feature.get("_kindermin") / 1000; // Getting the match percentage
+
+    kin_match_perc = kin_matchdiff * 100 / cell_int_kin; // INDUSTRIES matching percentage
+
+    ind_matchdiff = ind_matchmax - ind_matchmin;
+    cell_int_ind = feature.get("_industr_2") / 1000 - feature.get("_industr_1") / 1000; // Getting the match percentage
+
+    ind_match_perc = ind_matchdiff * 100 / cell_int_ind; // WATER BODIES matching percentage
+
+    wat_matchdiff = wat_matchmax - wat_matchmin;
+    cell_int_wat = feature.get("_waterbo_2") / 1000 - feature.get("_waterbo_1") / 1000; // Getting the match percentage
+
+    wat_match_perc = wat_matchdiff * 100 / cell_int_wat; // OVERALL PERCENTAGE CELL MATCH
+
+    var new_fuzzy_value_30km = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + ptsta_matchdiff + ptst_matchdiff + resto_matchdiff + markets_matchdiff + roads_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_ptsta + cell_int_ptst + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_roads + cell_int_wat);
     feature.set("fuzzyvalue", new_fuzzy_value_30km);
-    accessibility_30 = (roads_30 + stops_30 + stations_30) / 3 * 100;
-    livability_30 = (uni_30 + schools_30 + kinder_30 + coasts_30 + markets_30 + water_30 + industries_30 + hospitals_30 + restuarants_30 + theatres_30 + cinemas_30 + parks_30) / 12 * 100;
-    suitability_30 = houseprice_30 / 1 * 100;
-    feature.set("accessibility", accessibility_30);
-    feature.set("livability", livability_30);
-    feature.set("suitability", suitability_30);
+    console.log("Cell " + grid30_id + " Fuzzy Value: " + new_fuzzy_value_30km);
+    accessibility_100 = (roads_matchdiff + ptsta_matchdiff + ptst_matchdiff) * 100 / (cell_int_ptsta + cell_int_ptst + cell_int_roads);
+    livability_100 = (ind_matchdiff + kin_matchdiff + cin_matchdiff + the_matchdiff + resto_matchdiff + markets_matchdiff + parks_matchdiff + uni_matchdiff + sch_matchdiff + coast_matchdiff + hos_matchdiff + wat_matchdiff) * 100 / (cell_int_ind + cell_int_kin + cell_int_cin + cell_int_the + cell_int_resto + cell_int_markets + cell_int_coast + cell_int_hos + cell_int_parks + cell_int_u + cell_int_sch + cell_int_wat);
+    suitability_100 = house_match_perc;
+    feature.set("accessibility", accessibility_100);
+    feature.set("livability", livability_100);
+    feature.set("suitability", suitability_100);
   });
 }
 
@@ -115460,7 +116069,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61903" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64236" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
