@@ -112853,16 +112853,18 @@ var classification_search_100km = function classification_search_100km(feature, 
   var fuzzyvalue = feature.get('fuzzyvalue');
   var layercolor;
 
-  if (fuzzyvalue < 0.05) {
-    layercolor = 'rgba(0, 0, 0, 0)';
-  } else if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+  if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else if (fuzzyvalue < 0.4) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.8) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else {
-    layercolor = 'rgba(217, 200, 0, 0)';
+    layercolor = 'rgb(0,0,0,0)';
   }
 
   return new _style2.Style({
@@ -112881,16 +112883,18 @@ var classification_search_30km = function classification_search_30km(feature, re
   var fuzzyvalue = feature.get('fuzzyvalue');
   var layercolor;
 
-  if (fuzzyvalue < 0.05) {
-    layercolor = 'rgba(0, 0, 0, 0)';
-  } else if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+  if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else if (fuzzyvalue < 0.4) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.8) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else {
-    layercolor = 'rgba(217, 200, 0, 0)';
+    layercolor = 'rgb(0,0,0,0)';
   }
 
   return new _style2.Style({
@@ -112909,16 +112913,18 @@ var classification_search_1km = function classification_search_1km(feature, reso
   var fuzzyvalue = feature.get('fuzzyvalue');
   var layercolor;
 
-  if (fuzzyvalue < 0.05) {
-    layercolor = 'rgba(0, 0, 0, 0)';
-  } else if (fuzzyvalue < 0.2) {
-    layercolor = 'rgba(217, 200, 0, 0.6)';
+  if (fuzzyvalue < 0.2) {
+    layercolor = 'rgba(0, 100, 0, 0.6)';
+  } else if (fuzzyvalue < 0.4) {
+    layercolor = 'rgba(0, 150, 0, 0.6)';
   } else if (fuzzyvalue < 0.6) {
     layercolor = 'rgba(0, 200, 0, 0.6)';
+  } else if (fuzzyvalue < 0.8) {
+    layercolor = 'rgba(133, 200, 0, 0.6)';
   } else if (fuzzyvalue <= 1) {
-    layercolor = 'rgba(0, 100, 0, 0.6)';
+    layercolor = 'rgba(217, 200, 0, 0.6)';
   } else {
-    layercolor = 'rgba(217, 200, 0, 0)';
+    layercolor = 'rgb(0,0,0,0)';
   }
 
   return new _style2.Style({
@@ -113686,1127 +113692,792 @@ function commitSearchFunction() {
   // Calculate Weights for 1km Grid - Hovestadden
   var source_1km_hovestad = grid1km_vectorimage_hovestad.getSource();
   var features_1km_hovestad = source_1km_hovestad.getFeatures();
-  var coasts_1_hovestad;
-  var hospitals_1_hovestad;
-  var parks_1_hovestad;
-  var roads_1_hovestad;
-  var schools_1_hovestad;
-  var markets_1_hovestad;
-  var uni_1_hovestad;
-  var stops_1_hovestad;
-  var stations_1_hovestad;
-  var restuarants_1_hovestad;
-  var theatres_1_hovestad;
-  var cinemas_1_hovestad;
-  var kinder_1_hovestad;
-  var industries_1_hovestad;
-  var houseprice_1_hovestad;
-  var water_1_hovestad;
-  var new_fuzzy_value_1km_hovestad;
-  var accessibility_1_hovestad;
-  var livability_1_hovestad;
-  var suitability_1_hovestad;
   features_1km_hovestad.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_1_hovestad = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_1_hovestad = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_1_hovestad = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    // MATCH PERCENTAGE FOR UNIVERSITIES
+    var uni_matched;
 
-      if (uni_1_hovestad < 0) {
-        uni_1_hovestad = 0;
-      } else if (uni_1_hovestad <= 100) {}
+    if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+      uni_matched = 0; //Out of the cell interval
+    } else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value) || parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_matched = 1; //Within the cell interval
     }
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_1_hovestad = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_1_hovestad = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_1_hovestad = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+    var school_matched; // MATCH PERCENTAGE FOR SCHOOLS
 
-      if (roads_1_hovestad < 0) {
-        roads_1_hovestad = 0;
-      } else if (roads_1_hovestad <= 100) {}
-    }
+    if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+      school_matched = 0; //Out of the cell interval
+    } else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value) || parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      school_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_1_hovestad = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_1_hovestad = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_1_hovestad = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_1_hovestad < 0) {
-        coasts_1_hovestad = 0;
-      } else if (coasts_1_hovestad <= 100) {}
-    }
+    var house_matched;
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_1_hovestad = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_1_hovestad = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_1_hovestad = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_matched = 0; //Out of the cell interval
+    } else if (feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2")) {
+      house_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR KINDERGARTENS
 
-      if (hospitals_1_hovestad < 0) {
-        hospitals_1_hovestad = 0;
-      } else if (hospitals_1_hovestad <= 100) {}
-    }
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_1_hovestad = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks__1_hovestad = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_1_hovestad = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+    var kinder_matched;
 
-      if (parks_1_hovestad < 0) {
-        parks_1_hovestad = 0;
-      } else if (parks_1_hovestad <= 100) {}
-    }
+    if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+      kinder_matched = 0; //Out of the cell interval
+    } else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value) || parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOSPITALS
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_1_hovestad = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_1_hovestad = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_1_hovestad = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_1_sjælland < 0) {
-        schools_1_hovestad = 0;
-      } else if (schools_1_hovestad <= 100) {}
-    }
+    var hospital_matched;
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_1_hovestad = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_1_hovestad = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_1_hovestad = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+    if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+      hospital_matched = 0; //Out of the cell interval
+    } else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value) || parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospital_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PARKS
 
-      if (markets_1_hovestad < 0) {
-        markets_1_hovestad = 0;
-      } else if (markets_1_hovestad <= 100) {}
-    }
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_1_hovestad = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_1_hovestad = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_1_hovestad = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+    var park_matched;
 
-      if (stops_1_hovestad < 0) {
-        stops_1_hovestad = 0;
-      } else if (stops_1_hovestad <= 100) {}
-    }
+    if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+      park_matched = 0; //Out of the cell interval
+    } else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value) || parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      park_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR ROADS
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_1_hovestad = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_1_hovestad = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_1_hovestad = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_1_hovestad < 0) {
-        stations_1_hovestad = 0;
-      } else if (stations_1_hovestad <= 100) {}
-    }
+    var roads_matched;
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_1_hovestad = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_1_hovestad = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_1_hovestad = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+    if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matched = 0; //Out of the cell interval
+    } else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value) || parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR SUPERMARKETS
 
-      if (restuarants_1_hovestad < 0) {
-        restuarants_1_hovestad = 0;
-      } else if (restuarants_1_hovestad <= 100) {}
-    }
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_1_hovestad = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_1_hovestad = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_1_hovestad = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+    var markets_matched;
 
-      if (theatres_1_hovestad < 0) {
-        theatres_1_hovestad = 0;
-      } else if (theatres_1_hovestad <= 100) {}
-    }
+    if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matched = 0; //Out of the cell interval
+    } else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value) || parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STOPS
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_1_hovestad = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_1_hovestad = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_1_hovestad = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_1_hovestad < 0) {
-        cinemas_1_hovestad = 0;
-      } else if (cinemas_1_hovestad <= 100) {}
-    }
+    var ptstops_matched;
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_1_hovestad = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_1_hovestad = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_1_hovestad = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+    if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+      ptstops_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value) || parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      ptstops_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STATIONS
 
-      if (kinder_1_hovestad < 0) {
-        kinder_1_hovestad = 0;
-      } else if (kinder_1_hovestad <= 100) {}
-    }
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_1_hovestad = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_1_hovestad = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_1_hovestad = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+    var ptstations_matched;
 
-      if (industries_1_hovestad < 0) {
-        industries_1_hovestad = 0;
-      } else if (industries_1_hovestad <= 100) {}
-    }
+    if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+      ptstations_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value) || parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      ptstations_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR RESTUARANTS
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_1_hovestad = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_1_hovestad = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_1_hovestad = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_1_hovestad < 0) {
-        houseprice_1_hovestad = 0;
-      } else if (houseprice_1_hovestad <= 100) {}
-    }
+    var restuarants_matched;
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_1_hovestad = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_1_hovestad = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_1_hovestad = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+    if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+      restuarants_matched = 0; //Out of the cell interval
+    } else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value) || parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR THEATRES
 
-      if (water_1_hovestad < 0) {
-        water_1_hovestad = 0;
-      } else if (water_1_hovestad <= 100) {}
-    }
 
-    new_fuzzy_value_1km_hovestad = (coasts_1_hovestad + hospitals_1_hovestad + parks_1_hovestad + roads_1_hovestad + schools_1_hovestad + markets_1_hovestad + uni_1_hovestad + stops_1_hovestad + stations_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + kinder_1_hovestad + industries_1_hovestad + houseprice_1_hovestad) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_hovestad);
-    accessibility_1_hovestad = (roads_1_hovestad + stops_1_hovestad + stations_1_hovestad) / 3 * 100;
-    livability_1_hovestad = (uni_1_hovestad + schools_1_hovestad + kinder_1_hovestad + coasts_1_hovestad + markets_1_hovestad + water_1_hovestad + industries_1_hovestad + hospitals_1_hovestad + restuarants_1_hovestad + theatres_1_hovestad + cinemas_1_hovestad + parks_1_hovestad) / 12 * 100;
-    suitability_1_hovestad = houseprice_1_hovestad / 1 * 100;
-    feature.set("accessibility", accessibility_1_hovestad);
-    feature.set("livability", livability_1_hovestad);
-    feature.set("suitability", suitability_1_hovestad);
+    var theatres_matched;
+
+    if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+      theatres_matched = 0; //Out of the cell interval
+    } else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value) || parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR CINEMAS
+
+
+    var cinemas_matched;
+
+    if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+      cinemas_matched = 0; //Out of the cell interval
+    } else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value) || parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR INDUSTRIES
+
+
+    var industries_matched;
+
+    if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+      industries_matched = 0; //Out of the cell interval
+    } else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value) || parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR WATER BODIES
+
+
+    var wbodies_matched;
+
+    if (feature.get("_waterbo_2") / 1000 > parseInt(sliderWater.value)) {
+      wbodies_matched = 0; //Out of the cell interval
+    } else if (feature.get("_waterbo_2") / 1000 == parseInt(sliderWater.value) || parseInt(sliderWater.value) > feature.get("_waterbo_2") / 1000) {
+      wbodies_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR COASTS
+
+
+    var coasts_matched;
+
+    if (feature.get("_coastli_2") / 1000 > parseInt(sliderCoasts.value)) {
+      coasts_matched = 0; //Out of the cell interval
+    } else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value) || parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_matched = 1; //Within the cell interval
+    } // OVERALL PERCENTAGE CELL MATCH
+
+
+    var new_fuzzy_value = (uni_matched + school_matched + house_matched + kinder_matched + hospital_matched + park_matched + roads_matched + markets_matched + ptstops_matched + ptstations_matched + restuarants_matched + theatres_matched + cinemas_matched + industries_matched + wbodies_matched + coasts_matched) / 16;
+    feature.set("fuzzyvalue", new_fuzzy_value); //console.log("1km Fuzzy: " + new_fuzzy_value);
+
+    var accessibility = (roads_matched + ptstops_matched + ptstations_matched) / 3 * 100;
+    var livability = (uni_matched + school_matched + kinder_matched + coasts_matched + markets_matched + wbodies_matched + industries_matched + hospital_matched + restuarants_matched + theatres_matched + cinemas_matched + park_matched) / 12 * 100;
+    var suitability = house_matched / 1 * 100;
+    feature.set("accessibility", accessibility);
+    feature.set("livability", livability);
+    feature.set("suitability", suitability);
   }); // Calculate Weights for 1km Grid - Sjælland
 
   var source_1km_sjælland = grid1km_vectorimage_sjælland.getSource();
   var features_1km_sjælland = source_1km_sjælland.getFeatures();
-  var coasts_1_sjælland;
-  var hospitals_1_sjælland;
-  var parks_1_sjælland;
-  var roads_1_sjælland;
-  var schools_1_sjælland;
-  var markets_1_sjælland;
-  var uni_1_sjælland;
-  var stops_1_sjælland;
-  var stations_1_sjælland;
-  var restuarants_1_sjælland;
-  var theatres_1_sjælland;
-  var cinemas_1_sjælland;
-  var kinder_1_sjælland;
-  var industries_1_sjælland;
-  var houseprice_1_sjælland;
-  var water_1_sjælland;
-  var new_fuzzy_value_1km_sjælland;
-  var accessibility_1_sjælland;
-  var livability_1_sjælland;
-  var suitability_1_sjælland;
   features_1km_sjælland.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_1_sjælland = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_1_sjælland = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_1_sjælland = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    // MATCH PERCENTAGE FOR UNIVERSITIES
+    var uni_matched;
 
-      if (uni_1_sjælland < 0) {
-        uni_1_sjælland = 0;
-      } else if (uni_1_sjælland <= 100) {}
+    if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+      uni_matched = 0; //Out of the cell interval
+    } else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value) || parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_matched = 1; //Within the cell interval
     }
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_1_sjælland = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_1_sjælland = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_1_sjælland = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+    var school_matched; // MATCH PERCENTAGE FOR SCHOOLS
 
-      if (roads_1_sjælland < 0) {
-        roads_1_sjælland = 0;
-      } else if (roads_1_sjælland <= 100) {}
-    }
+    if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+      school_matched = 0; //Out of the cell interval
+    } else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value) || parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      school_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_1_sjælland = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_1_sjælland = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_1_sjælland = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_1_sjælland < 0) {
-        coasts_1_sjælland = 0;
-      } else if (coasts_1_sjælland <= 100) {}
-    }
+    var house_matched;
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_1_sjælland = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_1_sjælland = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_1_sjælland = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_matched = 0; //Out of the cell interval
+    } else if (feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2")) {
+      house_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR KINDERGARTENS
 
-      if (hospitals_1_sjælland < 0) {
-        hospitals_1_sjælland = 0;
-      } else if (hospitals_1_sjælland <= 100) {}
-    }
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_1_sjælland = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_1_sjælland = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_1_sjælland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+    var kinder_matched;
 
-      if (parks_1_sjælland < 0) {
-        parks_1_sjælland = 0;
-      } else if (parks_1_sjælland <= 100) {}
-    }
+    if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+      kinder_matched = 0; //Out of the cell interval
+    } else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value) || parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOSPITALS
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_1_sjælland = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_1_sjælland = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_1_sjælland = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_1_sjælland < 0) {
-        schools_1_sjælland = 0;
-      } else if (schools_1_sjælland <= 100) {}
-    }
+    var hospital_matched;
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_1_sjælland = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_1_sjælland = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_1_sjælland = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+    if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+      hospital_matched = 0; //Out of the cell interval
+    } else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value) || parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospital_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PARKS
 
-      if (markets_1_sjælland < 0) {
-        markets_1_sjælland = 0;
-      } else if (markets_1_sjælland <= 100) {}
-    }
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_1_sjælland = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_1_sjælland = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_1_sjælland = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+    var park_matched;
 
-      if (stops_1_sjælland < 0) {
-        stops_1_sjælland = 0;
-      } else if (stops_1_sjælland <= 100) {}
-    }
+    if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+      park_matched = 0; //Out of the cell interval
+    } else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value) || parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      park_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR ROADS
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_1_sjælland = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_1_sjælland = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_1_sjælland = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_1_sjælland < 0) {
-        stations_1_sjælland = 0;
-      } else if (stations_1_sjælland <= 100) {}
-    }
+    var roads_matched;
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_1_sjælland = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_1_sjælland = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_1_sjælland = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+    if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matched = 0; //Out of the cell interval
+    } else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value) || parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR SUPERMARKETS
 
-      if (restuarants_1_sjælland < 0) {
-        restuarants_1_sjælland = 0;
-      } else if (restuarants_1_sjælland <= 100) {}
-    }
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_1_sjælland = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_1_sjælland = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_1_sjælland = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+    var markets_matched;
 
-      if (theatres_1_sjælland < 0) {
-        theatres_1_sjælland = 0;
-      } else if (theatres_1_sjælland <= 100) {}
-    }
+    if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matched = 0; //Out of the cell interval
+    } else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value) || parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STOPS
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_1_sjælland = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_1_sjælland = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_1_sjælland = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_1_sjælland < 0) {
-        cinemas_1_sjælland = 0;
-      } else if (cinemas_1_sjælland <= 100) {}
-    }
+    var ptstops_matched;
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_1_sjælland = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_1_sjælland = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_1_sjælland = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+    if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+      ptstops_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value) || parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      ptstops_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STATIONS
 
-      if (kinder_1_sjælland < 0) {
-        kinder_1_sjælland = 0;
-      } else if (kinder_1_sjælland <= 100) {}
-    }
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_1_sjælland = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_1_sjælland = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_1_sjælland = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+    var ptstations_matched;
 
-      if (industries_1_sjælland < 0) {
-        industries_1_sjælland = 0;
-      } else if (industries_1_sjælland <= 100) {}
-    }
+    if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+      ptstations_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value) || parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      ptstations_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR RESTUARANTS
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_1_sjælland = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_1_sjælland = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_1_sjælland = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_1_sjælland < 0) {
-        houseprice_1_sjælland = 0;
-      } else if (houseprice_1_sjælland <= 100) {}
-    }
+    var restuarants_matched;
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_1_sjælland = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      houseprice_1_sjælland = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      houseprice_1_sjælland = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+    if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+      restuarants_matched = 0; //Out of the cell interval
+    } else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value) || parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR THEATRES
 
-      if (houseprice_1_sjælland < 0) {
-        houseprice_1_sjælland = 0;
-      } else if (houseprice_1_sjælland <= 100) {}
-    }
 
-    new_fuzzy_value_1km_sjælland = (coasts_1_sjælland + hospitals_1_sjælland + parks_1_sjælland + roads_1_sjælland + schools_1_sjælland + markets_1_sjælland + uni_1_sjælland + stops_1_sjælland + stations_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + kinder_1_sjælland + industries_1_sjælland + houseprice_1_sjælland) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_sjælland);
-    accessibility_1_sjælland = (roads_1_sjælland + stops_1_sjælland + stations_1_sjælland) / 3 * 100;
-    livability_1_sjælland = (uni_1_sjælland + schools_1_sjælland + kinder_1_sjælland + coasts_1_sjælland + markets_1_sjælland + water_1_sjælland + industries_1_sjælland + hospitals_1_sjælland + restuarants_1_sjælland + theatres_1_sjælland + cinemas_1_sjælland + parks_1_sjælland) / 12 * 100;
-    suitability_1_sjælland = houseprice_1_sjælland / 1 * 100;
-    feature.set("accessibility", accessibility_1_sjælland);
-    feature.set("livability", livability_1_sjælland);
-    feature.set("suitability", suitability_1_sjælland);
+    var theatres_matched;
+
+    if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+      theatres_matched = 0; //Out of the cell interval
+    } else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value) || parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR CINEMAS
+
+
+    var cinemas_matched;
+
+    if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+      cinemas_matched = 0; //Out of the cell interval
+    } else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value) || parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR INDUSTRIES
+
+
+    var industries_matched;
+
+    if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+      industries_matched = 0; //Out of the cell interval
+    } else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value) || parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR WATER BODIES
+
+
+    var wbodies_matched;
+
+    if (feature.get("_waterbo_2") / 1000 > parseInt(sliderWater.value)) {
+      wbodies_matched = 0; //Out of the cell interval
+    } else if (feature.get("_waterbo_2") / 1000 == parseInt(sliderWater.value) || parseInt(sliderWater.value) > feature.get("_waterbo_2") / 1000) {
+      wbodies_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR COASTS
+
+
+    var coasts_matched;
+
+    if (feature.get("_coastli_2") / 1000 > parseInt(sliderCoasts.value)) {
+      coasts_matched = 0; //Out of the cell interval
+    } else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value) || parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_matched = 1; //Within the cell interval
+    } // OVERALL PERCENTAGE CELL MATCH
+
+
+    var new_fuzzy_value = (uni_matched + school_matched + house_matched + kinder_matched + hospital_matched + park_matched + roads_matched + markets_matched + ptstops_matched + ptstations_matched + restuarants_matched + theatres_matched + cinemas_matched + industries_matched + wbodies_matched + coasts_matched) / 16;
+    feature.set("fuzzyvalue", new_fuzzy_value); //console.log("1km Fuzzy: " + new_fuzzy_value);
+
+    var accessibility = (roads_matched + ptstops_matched + ptstations_matched) / 3 * 100;
+    var livability = (uni_matched + school_matched + kinder_matched + coasts_matched + markets_matched + wbodies_matched + industries_matched + hospital_matched + restuarants_matched + theatres_matched + cinemas_matched + park_matched) / 12 * 100;
+    var suitability = house_matched / 1 * 100;
+    feature.set("accessibility", accessibility);
+    feature.set("livability", livability);
+    feature.set("suitability", suitability);
   }); // Calculate Weights for 1km Grid - Fyn
 
   var source_1km_fyn = grid1km_vectorimage_fyn.getSource();
   var features_1km_fyn = source_1km_fyn.getFeatures();
-  var coasts_1_fyn;
-  var hospitals_1_fyn;
-  var parks_1_fyn;
-  var roads_1_fyn;
-  var schools_1_fyn;
-  var markets_1_fyn;
-  var uni_1_fyn;
-  var stops_1_fyn;
-  var stations_1_fyn;
-  var restuarants_1_fyn;
-  var theatres_1_fyn;
-  var cinemas_1_fyn;
-  var kinder_1_fyn;
-  var industries_1_fyn;
-  var houseprice_1_fyn;
-  var water_1_fyn;
-  var new_fuzzy_value_1km_fyn;
-  var accessibility_1_fyn;
-  var livability_1_fyn;
-  var suitability_1_fyn;
   features_1km_fyn.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_1_fyn = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_1_fyn = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_1_fyn = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    // MATCH PERCENTAGE FOR UNIVERSITIES
+    var uni_matched;
 
-      if (uni_1_fyn < 0) {
-        uni_1_fyn = 0;
-      } else if (uni_1_fyn <= 100) {}
+    if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+      uni_matched = 0; //Out of the cell interval
+    } else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value) || parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_matched = 1; //Within the cell interval
     }
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_1_fyn = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_1_fyn = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_1_fyn = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+    var school_matched; // MATCH PERCENTAGE FOR SCHOOLS
 
-      if (roads_1_fyn < 0) {
-        roads_1_fyn = 0;
-      } else if (roads_1_fyn <= 100) {}
-    }
+    if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+      school_matched = 0; //Out of the cell interval
+    } else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value) || parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      school_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_1_fyn = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_1_fyn = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_1_fyn = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_1_fyn < 0) {
-        coasts_1_fyn = 0;
-      } else if (coasts_1_fyn <= 100) {}
-    }
+    var house_matched;
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_1_fyn = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_1_fyn = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_1_fyn = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_matched = 0; //Out of the cell interval
+    } else if (feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2")) {
+      house_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR KINDERGARTENS
 
-      if (hospitals_1_fyn < 0) {
-        hospitals_1_fyn = 0;
-      } else if (hospitals_1_fyn <= 100) {}
-    }
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_1_fyn = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_1_fyn = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_1_fyn = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+    var kinder_matched;
 
-      if (parks_1_fyn < 0) {
-        parks_1_fyn = 0;
-      } else if (parks_1_fyn <= 100) {}
-    }
+    if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+      kinder_matched = 0; //Out of the cell interval
+    } else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value) || parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOSPITALS
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_1_fyn = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_1_fyn = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_1_fyn = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_1_fyn < 0) {
-        schools_1_fyn = 0;
-      } else if (schools_1_fyn <= 100) {}
-    }
+    var hospital_matched;
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_1_fyn = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_1_fyn = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_1_fyn = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+    if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+      hospital_matched = 0; //Out of the cell interval
+    } else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value) || parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospital_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PARKS
 
-      if (markets_1_fyn < 0) {
-        markets_1_fyn = 0;
-      } else if (markets_1_fyn <= 100) {}
-    }
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_1_fyn = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_1_fyn = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_1_fyn = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+    var park_matched;
 
-      if (stops_1_fyn < 0) {
-        stops_1_fyn = 0;
-      } else if (stops_1_fyn <= 100) {}
-    }
+    if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+      park_matched = 0; //Out of the cell interval
+    } else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value) || parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      park_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR ROADS
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_1_fyn = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_1_fyn = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_1_fyn = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_1_fyn < 0) {
-        stations_1_fyn = 0;
-      } else if (stations_1_fyn <= 100) {}
-    }
+    var roads_matched;
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_1_fyn = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_1_fyn = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_1_fyn = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+    if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matched = 0; //Out of the cell interval
+    } else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value) || parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR SUPERMARKETS
 
-      if (restuarants_1_fyn < 0) {
-        restuarants_1_fyn = 0;
-      } else if (restuarants_1_fyn <= 100) {}
-    }
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_1_fyn = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_1_fyn = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_1_fyn = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+    var markets_matched;
 
-      if (theatres_1_fyn < 0) {
-        theatres_1_fyn = 0;
-      } else if (theatres_1_fyn <= 100) {}
-    }
+    if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matched = 0; //Out of the cell interval
+    } else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value) || parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STOPS
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_1_fyn = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_1_fyn = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_1_fyn = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_1_fyn < 0) {
-        cinemas_1_fyn = 0;
-      } else if (cinemas_1_fyn <= 100) {}
-    }
+    var ptstops_matched;
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_1_fyn = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_1_fyn = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_1_fyn = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+    if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+      ptstops_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value) || parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      ptstops_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STATIONS
 
-      if (kinder_1_fyn < 0) {
-        kinder_1_fyn = 0;
-      } else if (kinder_1_fyn <= 100) {}
-    }
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_1_fyn = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_1_fyn = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_1_fyn = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+    var ptstations_matched;
 
-      if (industries_1_fyn < 0) {
-        industries_1_fyn = 0;
-      } else if (industries_1_fyn <= 100) {}
-    }
+    if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+      ptstations_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value) || parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      ptstations_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR RESTUARANTS
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_1_fyn = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_1_fyn = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_1_fyn = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_1_fyn < 0) {
-        houseprice_1_fyn = 0;
-      } else if (houseprice_1_fyn <= 100) {}
-    }
+    var restuarants_matched;
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_1_fyn = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_1_fyn = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_1_fyn = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+    if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+      restuarants_matched = 0; //Out of the cell interval
+    } else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value) || parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR THEATRES
 
-      if (water_1_fyn < 0) {
-        water_1_fyn = 0;
-      } else if (water_1_fyn <= 100) {}
-    }
 
-    new_fuzzy_value_1km_fyn = (coasts_1_fyn + hospitals_1_fyn + parks_1_fyn + roads_1_fyn + schools_1_fyn + markets_1_fyn + uni_1_fyn + stops_1_fyn + stations_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + kinder_1_fyn + industries_1_fyn + houseprice_1_fyn) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_fyn);
-    accessibility_1_fyn = (roads_1_fyn + stops_1_fyn + stations_1_fyn) / 3 * 100;
-    livability_1_fyn = (uni_1_fyn + schools_1_fyn + kinder_1_fyn + coasts_1_fyn + markets_1_fyn + water_1_fyn + industries_1_fyn + hospitals_1_fyn + restuarants_1_fyn + theatres_1_fyn + cinemas_1_fyn + parks_1_fyn) / 12 * 100;
-    suitability_1_fyn = houseprice_1_fyn / 1 * 100;
-    feature.set("accessibility", accessibility_1_fyn);
-    feature.set("livability", livability_1_fyn);
-    feature.set("suitability", suitability_1_fyn);
+    var theatres_matched;
+
+    if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+      theatres_matched = 0; //Out of the cell interval
+    } else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value) || parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR CINEMAS
+
+
+    var cinemas_matched;
+
+    if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+      cinemas_matched = 0; //Out of the cell interval
+    } else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value) || parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR INDUSTRIES
+
+
+    var industries_matched;
+
+    if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+      industries_matched = 0; //Out of the cell interval
+    } else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value) || parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR WATER BODIES
+
+
+    var wbodies_matched;
+
+    if (feature.get("_waterbo_2") / 1000 > parseInt(sliderWater.value)) {
+      wbodies_matched = 0; //Out of the cell interval
+    } else if (feature.get("_waterbo_2") / 1000 == parseInt(sliderWater.value) || parseInt(sliderWater.value) > feature.get("_waterbo_2") / 1000) {
+      wbodies_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR COASTS
+
+
+    var coasts_matched;
+
+    if (feature.get("_coastli_2") / 1000 > parseInt(sliderCoasts.value)) {
+      coasts_matched = 0; //Out of the cell interval
+    } else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value) || parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_matched = 1; //Within the cell interval
+    } // OVERALL PERCENTAGE CELL MATCH
+
+
+    var new_fuzzy_value = (uni_matched + school_matched + house_matched + kinder_matched + hospital_matched + park_matched + roads_matched + markets_matched + ptstops_matched + ptstations_matched + restuarants_matched + theatres_matched + cinemas_matched + industries_matched + wbodies_matched + coasts_matched) / 16;
+    feature.set("fuzzyvalue", new_fuzzy_value); //console.log("1km Fuzzy: " + new_fuzzy_value);
+
+    var accessibility = (roads_matched + ptstops_matched + ptstations_matched) / 3 * 100;
+    var livability = (uni_matched + school_matched + kinder_matched + coasts_matched + markets_matched + wbodies_matched + industries_matched + hospital_matched + restuarants_matched + theatres_matched + cinemas_matched + park_matched) / 12 * 100;
+    var suitability = house_matched / 1 * 100;
+    feature.set("accessibility", accessibility);
+    feature.set("livability", livability);
+    feature.set("suitability", suitability);
   }); // Calculate Weights for 1km Grid - Midtjylland
 
   var source_1km_midtjylland = grid1km_vectorimage_midtjylland.getSource();
   var features_1km_midtjylland = source_1km_midtjylland.getFeatures();
-  var coasts_1_midtjylland;
-  var hospitals_1_midtjylland;
-  var parks_1_midtjylland;
-  var roads_1_midtjylland;
-  var schools_1_midtjylland;
-  var markets_1_midtjylland;
-  var uni_1_midtjylland;
-  var stops_1_midtjylland;
-  var stations_1_midtjylland;
-  var restuarants_1_midtjylland;
-  var theatres_1_midtjylland;
-  var cinemas_1_midtjylland;
-  var kinder_1_midtjylland;
-  var industries_1_midtjylland;
-  var houseprice_1_midtjylland;
-  var water_1_midtjylland;
-  var new_fuzzy_value_1km_midtjylland;
-  var accessibility_1_midtjylland;
-  var livability_1_midtjylland;
-  var suitability_1_midtjylland;
   features_1km_midtjylland.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_1_midtjylland = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_1_midtjylland = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_1_midtjylland = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    // MATCH PERCENTAGE FOR UNIVERSITIES
+    var uni_matched;
 
-      if (uni_1_midtjylland < 0) {
-        uni_1_midtjylland = 0;
-      } else if (uni_1_midtjylland <= 100) {}
+    if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+      uni_matched = 0; //Out of the cell interval
+    } else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value) || parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_matched = 1; //Within the cell interval
     }
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_1_midtjylland = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_1_midtjylland = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_1_midtjylland = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+    var school_matched; // MATCH PERCENTAGE FOR SCHOOLS
 
-      if (roads_1_midtjylland < 0) {
-        roads_1_midtjylland = 0;
-      } else if (roads_1_midtjylland <= 100) {}
-    }
+    if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+      school_matched = 0; //Out of the cell interval
+    } else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value) || parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      school_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjylland = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjylland = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjylland = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_1_midtjylland < 0) {
-        coasts_1_midtjylland = 0;
-      } else if (coasts_1_midtjylland <= 100) {}
-    }
+    var house_matched;
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjylland = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjylland = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjylland = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_matched = 0; //Out of the cell interval
+    } else if (feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2")) {
+      house_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR KINDERGARTENS
 
-      if (hospitals_1_midtjylland < 0) {
-        hospitals_1_midtjylland = 0;
-      } else if (hospitals_1_midtjylland <= 100) {}
-    }
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_1_midtjylland = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_1_midtjylland = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_1_midtjylland = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+    var kinder_matched;
 
-      if (parks_1_midtjylland < 0) {
-        parks_1_midtjylland = 0;
-      } else if (parks_1_midtjylland <= 100) {}
-    }
+    if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+      kinder_matched = 0; //Out of the cell interval
+    } else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value) || parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOSPITALS
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_1_midtjylland = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_1_midtjylland = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_1_midtjylland = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_1_midtjylland < 0) {
-        schools_1_midtjylland = 0;
-      } else if (schools_1_midtjylland <= 100) {}
-    }
+    var hospital_matched;
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_1_midtjylland = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_1_midtjylland = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_1_midtjylland = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+    if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+      hospital_matched = 0; //Out of the cell interval
+    } else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value) || parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospital_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PARKS
 
-      if (markets_1_midtjylland < 0) {
-        markets_1_midtjylland = 0;
-      } else if (markets_1_midtjylland <= 100) {}
-    }
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjylland = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjylland = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjylland = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+    var park_matched;
 
-      if (stops_1_midtjylland < 0) {
-        stops_1_midtjylland = 0;
-      } else if (stops_1_midtjylland <= 100) {}
-    }
+    if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+      park_matched = 0; //Out of the cell interval
+    } else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value) || parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      park_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR ROADS
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjylland = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjylland = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjylland = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_1_midtjylland < 0) {
-        stations_1_midtjylland = 0;
-      } else if (stations_1_midtjylland <= 100) {}
-    }
+    var roads_matched;
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjylland = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjylland = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjylland = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+    if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matched = 0; //Out of the cell interval
+    } else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value) || parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR SUPERMARKETS
 
-      if (restuarants_1_midtjylland < 0) {
-        restuarants_1_midtjylland = 0;
-      } else if (restuarants_1_midtjylland <= 100) {}
-    }
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjylland = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjylland = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjylland = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+    var markets_matched;
 
-      if (theatres_1_midtjylland < 0) {
-        theatres_1_midtjylland = 0;
-      } else if (theatres_1_midtjylland <= 100) {}
-    }
+    if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matched = 0; //Out of the cell interval
+    } else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value) || parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STOPS
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjylland = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjylland = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjylland = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_1_midtjylland < 0) {
-        cinemas_1_midtjylland = 0;
-      } else if (cinemas_1_midtjylland <= 100) {}
-    }
+    var ptstops_matched;
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_1_midtjylland = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_1_midtjylland = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_1_midtjylland = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+    if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+      ptstops_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value) || parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      ptstops_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STATIONS
 
-      if (kinder_1_midtjylland < 0) {
-        kinder_1_midtjylland = 0;
-      } else if (kinder_1_midtjylland <= 100) {}
-    }
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_1_midtjylland = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_1_midtjylland = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_1_midtjylland = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+    var ptstations_matched;
 
-      if (industries_1_midtjylland < 0) {
-        industries_1_midtjylland = 0;
-      } else if (industries_1_midtjylland <= 100) {}
-    }
+    if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+      ptstations_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value) || parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      ptstations_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR RESTUARANTS
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_1_midtjylland = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_1_midtjylland = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_1_midtjylland = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_1_midtjylland < 0) {
-        houseprice_1_midtjylland = 0;
-      } else if (houseprice_1_midtjylland <= 100) {}
-    }
+    var restuarants_matched;
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_1_midtjylland = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_1_midtjylland = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_1_midtjylland = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+    if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+      restuarants_matched = 0; //Out of the cell interval
+    } else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value) || parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR THEATRES
 
-      if (water_1_midtjylland < 0) {
-        water_1_midtjylland = 0;
-      } else if (water_1_midtjylland <= 100) {}
-    }
 
-    new_fuzzy_value_1km_midtjylland = (coasts_1_midtjylland + hospitals_1_midtjylland + parks_1_midtjylland + roads_1_midtjylland + schools_1_midtjylland + markets_1_midtjylland + uni_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + kinder_1_midtjylland + industries_1_midtjylland + houseprice_1_midtjylland) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjylland);
-    accessibility_1_midtjylland = (roads_1_midtjylland + stops_1_midtjylland + stations_1_midtjylland) / 3 * 100;
-    livability_1_midtjylland = (uni_1_midtjylland + schools_1_midtjylland + kinder_1_midtjylland + coasts_1_midtjylland + markets_1_midtjylland + water_1_midtjylland + industries_1_midtjylland + hospitals_1_midtjylland + restuarants_1_midtjylland + theatres_1_midtjylland + cinemas_1_midtjylland + parks_1_midtjylland) / 12 * 100;
-    suitability_1_midtjylland = houseprice_1_midtjylland / 1 * 100;
-    feature.set("accessibility", accessibility_1_midtjylland);
-    feature.set("livability", livability_1_midtjylland);
-    feature.set("suitability", suitability_1_midtjylland);
+    var theatres_matched;
+
+    if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+      theatres_matched = 0; //Out of the cell interval
+    } else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value) || parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR CINEMAS
+
+
+    var cinemas_matched;
+
+    if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+      cinemas_matched = 0; //Out of the cell interval
+    } else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value) || parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR INDUSTRIES
+
+
+    var industries_matched;
+
+    if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+      industries_matched = 0; //Out of the cell interval
+    } else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value) || parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR WATER BODIES
+
+
+    var wbodies_matched;
+
+    if (feature.get("_waterbo_2") / 1000 > parseInt(sliderWater.value)) {
+      wbodies_matched = 0; //Out of the cell interval
+    } else if (feature.get("_waterbo_2") / 1000 == parseInt(sliderWater.value) || parseInt(sliderWater.value) > feature.get("_waterbo_2") / 1000) {
+      wbodies_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR COASTS
+
+
+    var coasts_matched;
+
+    if (feature.get("_coastli_2") / 1000 > parseInt(sliderCoasts.value)) {
+      coasts_matched = 0; //Out of the cell interval
+    } else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value) || parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_matched = 1; //Within the cell interval
+    } // OVERALL PERCENTAGE CELL MATCH
+
+
+    var new_fuzzy_value = (uni_matched + school_matched + house_matched + kinder_matched + hospital_matched + park_matched + roads_matched + markets_matched + ptstops_matched + ptstations_matched + restuarants_matched + theatres_matched + cinemas_matched + industries_matched + wbodies_matched + coasts_matched) / 16;
+    feature.set("fuzzyvalue", new_fuzzy_value); //console.log("1km Fuzzy: " + new_fuzzy_value);
+
+    var accessibility = (roads_matched + ptstops_matched + ptstations_matched) / 3 * 100;
+    var livability = (uni_matched + school_matched + kinder_matched + coasts_matched + markets_matched + wbodies_matched + industries_matched + hospital_matched + restuarants_matched + theatres_matched + cinemas_matched + park_matched) / 12 * 100;
+    var suitability = house_matched / 1 * 100;
+    feature.set("accessibility", accessibility);
+    feature.set("livability", livability);
+    feature.set("suitability", suitability);
   }); // Calculate Weights for 1km Grid - Midtjylland West
 
   var source_1km_midtjyllandw = grid1km_vectorimage_midtjyllandw.getSource();
   var features_1km_midtjyllandw = source_1km_midtjyllandw.getFeatures();
-  var coasts_1_midtjyllandw;
-  var hospitals_1_midtjyllandw;
-  var parks_1_midtjyllandw;
-  var roads_1_midtjyllandw;
-  var schools_1_midtjyllandw;
-  var markets_1_midtjyllandw;
-  var uni_1_midtjyllandw;
-  var stops_1_midtjyllandw;
-  var stations_1_midtjyllandw;
-  var restuarants_1_midtjyllandw;
-  var theatres_1_midtjyllandw;
-  var cinemas_1_midtjyllandw;
-  var kinder_1_midtjyllandw;
-  var industries_1_midtjyllandw;
-  var houseprice_1_midtjyllandw;
-  var water_1_midtjyllandw;
-  var new_fuzzy_value_1km_midtjyllandw;
-  var accessibility_1_midtjyllandw;
-  var livability_1_midtjyllandw;
-  var suitability_1_midtjyllandw;
   features_1km_midtjyllandw.forEach(function (feature) {
-    if (parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
-      uni_1_midtjyllandw = 0;
-    } else if (parseInt(sliderUni.value) == feature.get("_univers_2") / 1000) {
-      uni_1_midtjyllandw = 0;
-    } else if (parseInt(sliderUni.value) < feature.get("_univers_2") / 1000) {
-      uni_1_midtjyllandw = (sliderUni.value - feature.get("_univers_1") / 1000) / ((feature.get("_univers_2") - feature.get("_univers_1")) / 1000);
+    // MATCH PERCENTAGE FOR UNIVERSITIES
+    var uni_matched;
 
-      if (uni_1_midtjyllandw < 0) {
-        uni_1_midtjyllandw = 0;
-      } else if (uni_1_midtjyllandw <= 100) {}
+    if (feature.get("_univers_2") / 1000 > parseInt(sliderUni.value)) {
+      uni_matched = 0; //Out of the cell interval
+    } else if (feature.get("_univers_2") / 1000 == parseInt(sliderUni.value) || parseInt(sliderUni.value) > feature.get("_univers_2") / 1000) {
+      uni_matched = 1; //Within the cell interval
     }
 
-    if (parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
-      roads_1_midtjyllandw = 0;
-    } else if (parseInt(sliderRoads.value) == feature.get("_roadsmax") / 1000) {
-      roads_1_midtjyllandw = 0;
-    } else if (parseInt(sliderRoads.value) < feature.get("_roadsmax") / 1000) {
-      roads_1_midtjyllandw = (sliderRoads.value - feature.get("_roadsmin") / 1000) / ((feature.get("_roadsmax") - feature.get("_roadsmin")) / 1000);
+    var school_matched; // MATCH PERCENTAGE FOR SCHOOLS
 
-      if (roads_1_midtjyllandw < 0) {
-        roads_1_midtjyllandw = 0;
-      } else if (roads_1_midtjyllandw <= 100) {}
-    }
+    if (feature.get("_schoolsma") / 1000 > parseInt(sliderSchools.value)) {
+      school_matched = 0; //Out of the cell interval
+    } else if (feature.get("_schoolsma") / 1000 == parseInt(sliderSchools.value) || parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
+      school_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOUSE PRICES
 
-    if (parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjyllandw = 0;
-    } else if (parseInt(sliderCoasts.value) == feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjyllandw = 0;
-    } else if (parseInt(sliderCoasts.value) < feature.get("_coastli_2") / 1000) {
-      coasts_1_midtjyllandw = (sliderCoasts.value - feature.get("_coastli_1") / 1000) / ((feature.get("_coastli_2") - feature.get("_coastli_1")) / 1000);
 
-      if (coasts_1_midtjyllandw < 0) {
-        coasts_1_midtjyllandw = 0;
-      } else if (coasts_1_midtjyllandw <= 100) {}
-    }
+    var house_matched;
 
-    if (parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjyllandw = 0;
-    } else if (parseInt(sliderHospitals.value) == feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjyllandw = 0;
-    } else if (parseInt(sliderHospitals.value) < feature.get("_hospita_2") / 1000) {
-      hospitals_1_midtjyllandw = (sliderHospitals.value - feature.get("_hospita_1") / 1000) / ((feature.get("_hospita_2") - feature.get("_hospita_1")) / 1000);
+    if (feature.get("housepri_2") > parseInt(sliderHprice.value)) {
+      house_matched = 0; //Out of the cell interval
+    } else if (feature.get("housepri_2") == parseInt(sliderHprice.value) || parseInt(sliderHprice.value) > feature.get("housepri_2")) {
+      house_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR KINDERGARTENS
 
-      if (hospitals_1_midtjyllandw < 0) {
-        hospitals_1_midtjyllandw = 0;
-      } else if (hospitals_1_midtjyllandw <= 100) {}
-    }
 
-    if (parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
-      parks_1_midtjyllandw = 0;
-    } else if (parseInt(sliderParks.value) == feature.get("_leisure_2") / 1000) {
-      parks_1_midtjyllandw = 0;
-    } else if (parseInt(sliderParks.value) < feature.get("_leisure_2") / 1000) {
-      parks_1_midtjyllandw = (sliderParks.value - feature.get("_leisure_1") / 1000) / ((feature.get("_leisure_2") - feature.get("_leisure_1")) / 1000);
+    var kinder_matched;
 
-      if (parks_1_midtjyllandw < 0) {
-        parks_1_midtjyllandw = 0;
-      } else if (parks_1_midtjyllandw <= 100) {}
-    }
+    if (feature.get("_kindermax") / 1000 > parseInt(sliderKinder.value)) {
+      kinder_matched = 0; //Out of the cell interval
+    } else if (feature.get("_kindermax") / 1000 == parseInt(sliderKinder.value) || parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
+      kinder_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR HOSPITALS
 
-    if (parseInt(sliderSchools.value) > feature.get("_schoolsma") / 1000) {
-      schools_1_midtjyllandw = 0;
-    } else if (parseInt(sliderSchools.value) == feature.get("_schoolsma") / 1000) {
-      schools_1_midtjyllandw = 0;
-    } else if (parseInt(sliderSchools.value) < feature.get("_schoolsma") / 1000) {
-      schools_1_midtjyllandw = (sliderSchools.value - feature.get("_schoolsmi") / 1000) / ((feature.get("_schoolsma") - feature.get("_schoolsmi")) / 1000);
 
-      if (schools_1_midtjyllandw < 0) {
-        schools_1_midtjyllandw = 0;
-      } else if (schools_1_midtjyllandw <= 100) {}
-    }
+    var hospital_matched;
 
-    if (parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
-      markets_1_midtjyllandw = 0;
-    } else if (parseInt(sliderMarkets.value) == feature.get("_superma_2") / 1000) {
-      markets_1_midtjyllandw = 0;
-    } else if (parseInt(sliderMarkets.value) < feature.get("_superma_2") / 1000) {
-      markets_1_midtjyllandw = (sliderMarkets.value - feature.get("_superma_1") / 1000) / ((feature.get("_superma_2") - feature.get("_superma_1")) / 1000);
+    if (feature.get("_hospita_2") / 1000 > parseInt(sliderHospitals.value)) {
+      hospital_matched = 0; //Out of the cell interval
+    } else if (feature.get("_hospita_2") / 1000 == parseInt(sliderHospitals.value) || parseInt(sliderHospitals.value) > feature.get("_hospita_2") / 1000) {
+      hospital_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PARKS
 
-      if (markets_1_midtjyllandw < 0) {
-        markets_1_midtjyllandw = 0;
-      } else if (markets_1_midtjyllandw <= 100) {}
-    }
 
-    if (parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjyllandw = 0;
-    } else if (parseInt(sliderPstops.value) == feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjyllandw = 0;
-    } else if (parseInt(sliderPstops.value) < feature.get("_pt_stop_2") / 1000) {
-      stops_1_midtjyllandw = (sliderPstops.value - feature.get("_pt_stop_1") / 1000) / ((feature.get("_pt_stop_2") - feature.get("_pt_stop_1")) / 1000);
+    var park_matched;
 
-      if (stops_1_midtjyllandw < 0) {
-        stops_1_midtjyllandw = 0;
-      } else if (stops_1_midtjyllandw <= 100) {}
-    }
+    if (feature.get("_leisure_2") / 1000 > parseInt(sliderParks.value)) {
+      park_matched = 0; //Out of the cell interval
+    } else if (feature.get("_leisure_2") / 1000 == parseInt(sliderParks.value) || parseInt(sliderParks.value) > feature.get("_leisure_2") / 1000) {
+      park_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR ROADS
 
-    if (parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjyllandw = 0;
-    } else if (parseInt(sliderPstations.value) == feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjyllandw = 0;
-    } else if (parseInt(sliderPstations.value) < feature.get("_pt_stat_2") / 1000) {
-      stations_1_midtjyllandw = (sliderPstations.value - feature.get("_pt_stat_1") / 1000) / ((feature.get("_pt_stat_2") - feature.get("_pt_stat_1")) / 1000);
 
-      if (stations_1_midtjyllandw < 0) {
-        stations_1_midtjyllandw = 0;
-      } else if (stations_1_midtjyllandw <= 100) {}
-    }
+    var roads_matched;
 
-    if (parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjyllandw = 0;
-    } else if (parseInt(sliderRestuarants.value) == feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjyllandw = 0;
-    } else if (parseInt(sliderRestuarants.value) < feature.get("_restaur_2") / 1000) {
-      restuarants_1_midtjyllandw = (sliderRestuarants.value - feature.get("_restaur_1") / 1000) / ((feature.get("_restaur_2") - feature.get("_restaur_1")) / 1000);
+    if (feature.get("_roadsmax") / 1000 > parseInt(sliderRoads.value)) {
+      roads_matched = 0; //Out of the cell interval
+    } else if (feature.get("_roadsmax") / 1000 == parseInt(sliderRoads.value) || parseInt(sliderRoads.value) > feature.get("_roadsmax") / 1000) {
+      roads_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR SUPERMARKETS
 
-      if (restuarants_1_midtjyllandw < 0) {
-        restuarants_1_midtjyllandw = 0;
-      } else if (restuarants_1_midtjyllandw <= 100) {}
-    }
 
-    if (parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjyllandw = 0;
-    } else if (parseInt(sliderTheatres.value) == feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjyllandw = 0;
-    } else if (parseInt(sliderTheatres.value) < feature.get("_theatre_2") / 1000) {
-      theatres_1_midtjyllandw = (sliderTheatres.value - feature.get("_theatre_1") / 1000) / ((feature.get("_theatre_2") - feature.get("_theatre_1")) / 1000);
+    var markets_matched;
 
-      if (theatres_1_midtjyllandw < 0) {
-        theatres_1_midtjyllandw = 0;
-      } else if (theatres_1_midtjyllandw <= 100) {}
-    }
+    if (feature.get("_superma_2") / 1000 > parseInt(sliderMarkets.value)) {
+      markets_matched = 0; //Out of the cell interval
+    } else if (feature.get("_superma_2") / 1000 == parseInt(sliderMarkets.value) || parseInt(sliderMarkets.value) > feature.get("_superma_2") / 1000) {
+      markets_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STOPS
 
-    if (parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjyllandw = 0;
-    } else if (parseInt(sliderCinemas.value) == feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjyllandw = 0;
-    } else if (parseInt(sliderCinemas.value) < feature.get("_cinemasma") / 1000) {
-      cinemas_1_midtjyllandw = (sliderCinemas.value - feature.get("_cinemasmi") / 1000) / ((feature.get("_cinemasma") - feature.get("_cinemasmi")) / 1000);
 
-      if (cinemas_1_midtjyllandw < 0) {
-        cinemas_1_midtjyllandw = 0;
-      } else if (cinemas_1_midtjyllandw <= 100) {}
-    }
+    var ptstops_matched;
 
-    if (parseInt(sliderKinder.value) > feature.get("_kindermax") / 1000) {
-      kinder_1_midtjyllandw = 0;
-    } else if (parseInt(sliderKinder.value) == feature.get("_kindermax") / 1000) {
-      kinder_1_midtjyllandw = 0;
-    } else if (parseInt(sliderKinder.value) < feature.get("_kindermax") / 1000) {
-      kinder_1_midtjyllandw = (sliderKinder.value - feature.get("_kindermin") / 1000) / ((feature.get("_kindermax") - feature.get("_kindermin")) / 1000);
+    if (feature.get("_pt_stop_2") / 1000 > parseInt(sliderPstops.value)) {
+      ptstops_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stop_2") / 1000 == parseInt(sliderPstops.value) || parseInt(sliderPstops.value) > feature.get("_pt_stop_2") / 1000) {
+      ptstops_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR PT STATIONS
 
-      if (kinder_1_midtjyllandw < 0) {
-        kinder_1_midtjyllandw = 0;
-      } else if (kinder_1_midtjyllandw <= 100) {}
-    }
 
-    if (parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
-      industries_1_midtjyllandw = 0;
-    } else if (parseInt(sliderIndustry.value) == feature.get("_industr_2") / 1000) {
-      industries_1_midtjyllandw = 0;
-    } else if (parseInt(sliderIndustry.value) < feature.get("_industr_2") / 1000) {
-      industries_1_midtjyllandw = (sliderIndustry.value - feature.get("_industr_1") / 1000) / ((feature.get("_industr_2") - feature.get("_industr_1")) / 1000);
+    var ptstations_matched;
 
-      if (industries_1_midtjyllandw < 0) {
-        industries_1_midtjyllandw = 0;
-      } else if (industries_1_midtjyllandw <= 100) {}
-    }
+    if (feature.get("_pt_stat_2") / 1000 > parseInt(sliderPstations.value)) {
+      ptstations_matched = 0; //Out of the cell interval
+    } else if (feature.get("_pt_stat_2") / 1000 == parseInt(sliderPstations.value) || parseInt(sliderPstations.value) > feature.get("_pt_stat_2") / 1000) {
+      ptstations_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR RESTUARANTS
 
-    if (parseInt(sliderHprice.value) > feature.get("housepri_3")) {
-      houseprice_1_midtjyllandw = 0;
-    } else if (parseInt(sliderHprice.value) == feature.get("housepri_3")) {
-      houseprice_1_midtjyllandw = 0;
-    } else if (parseInt(sliderHprice.value) < feature.get("housepri_3")) {
-      houseprice_1_midtjyllandw = (sliderHprice.value - feature.get("housepri_2")) / (feature.get("housepri_3") - feature.get("housepri_2"));
 
-      if (houseprice_1_midtjyllandw < 0) {
-        houseprice_1_midtjyllandw = 0;
-      } else if (houseprice_1_midtjyllandw <= 100) {}
-    }
+    var restuarants_matched;
 
-    if (parseInt(sliderWater.value) > feature.get("_waterbo_2")) {
-      water_1_midtjyllandw = 0;
-    } else if (parseInt(sliderWater.value) == feature.get("_waterbo_2")) {
-      water_1_midtjyllandw = 0;
-    } else if (parseInt(sliderWater.value) < feature.get("_waterbo_2")) {
-      water_1_midtjyllandw = (sliderWater.value - feature.get("_waterbo_1")) / (feature.get("_waterbo_2") - feature.get("_waterbo_1"));
+    if (feature.get("_restaur_2") / 1000 > parseInt(sliderRestuarants.value)) {
+      restuarants_matched = 0; //Out of the cell interval
+    } else if (feature.get("_restaur_2") / 1000 == parseInt(sliderRestuarants.value) || parseInt(sliderRestuarants.value) > feature.get("_restaur_2") / 1000) {
+      restuarants_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR THEATRES
 
-      if (water_1_midtjyllandw < 0) {
-        water_1_midtjyllandw = 0;
-      } else if (water_1_midtjyllandw <= 100) {}
-    }
 
-    new_fuzzy_value_1km_midtjyllandw = (coasts_1_midtjyllandw + hospitals_1_midtjyllandw + parks_1_midtjyllandw + roads_1_midtjyllandw + schools_1_midtjyllandw + markets_1_midtjyllandw + uni_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + kinder_1_midtjyllandw + industries_1_midtjyllandw + houseprice_1_midtjyllandw) / 16;
-    feature.set("fuzzyvalue", new_fuzzy_value_1km_midtjyllandw);
-    accessibility_1_midtjyllandw = (roads_1_midtjyllandw + stops_1_midtjyllandw + stations_1_midtjyllandw) / 3 * 100;
-    livability_1_midtjyllandw = (uni_1_midtjyllandw + schools_1_midtjyllandw + kinder_1_midtjyllandw + coasts_1_midtjyllandw + markets_1_midtjyllandw + water_1_midtjyllandw + industries_1_midtjyllandw + hospitals_1_midtjyllandw + restuarants_1_midtjyllandw + theatres_1_midtjyllandw + cinemas_1_midtjyllandw + parks_1_midtjyllandw) / 12 * 100;
-    suitability_1_midtjyllandw = houseprice_1_midtjyllandw / 1 * 100;
-    feature.set("accessibility", accessibility_1_midtjyllandw);
-    feature.set("livability", livability_1_midtjyllandw);
-    feature.set("suitability", suitability_1_midtjyllandw);
+    var theatres_matched;
+
+    if (feature.get("_theatre_2") / 1000 > parseInt(sliderTheatres.value)) {
+      theatres_matched = 0; //Out of the cell interval
+    } else if (feature.get("_theatre_2") / 1000 == parseInt(sliderTheatres.value) || parseInt(sliderTheatres.value) > feature.get("_theatre_2") / 1000) {
+      theatres_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR CINEMAS
+
+
+    var cinemas_matched;
+
+    if (feature.get("_cinemasma") / 1000 > parseInt(sliderCinemas.value)) {
+      cinemas_matched = 0; //Out of the cell interval
+    } else if (feature.get("_cinemasma") / 1000 == parseInt(sliderCinemas.value) || parseInt(sliderCinemas.value) > feature.get("_cinemasma") / 1000) {
+      cinemas_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR INDUSTRIES
+
+
+    var industries_matched;
+
+    if (feature.get("_industr_2") / 1000 > parseInt(sliderIndustry.value)) {
+      industries_matched = 0; //Out of the cell interval
+    } else if (feature.get("_industr_2") / 1000 == parseInt(sliderIndustry.value) || parseInt(sliderIndustry.value) > feature.get("_industr_2") / 1000) {
+      industries_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR WATER BODIES
+
+
+    var wbodies_matched;
+
+    if (feature.get("_waterbo_2") / 1000 > parseInt(sliderWater.value)) {
+      wbodies_matched = 0; //Out of the cell interval
+    } else if (feature.get("_waterbo_2") / 1000 == parseInt(sliderWater.value) || parseInt(sliderWater.value) > feature.get("_waterbo_2") / 1000) {
+      wbodies_matched = 1; //Within the cell interval
+    } // MATCH PERCENTAGE FOR COASTS
+
+
+    var coasts_matched;
+
+    if (feature.get("_coastli_2") / 1000 > parseInt(sliderCoasts.value)) {
+      coasts_matched = 0; //Out of the cell interval
+    } else if (feature.get("_coastli_2") / 1000 == parseInt(sliderCoasts.value) || parseInt(sliderCoasts.value) > feature.get("_coastli_2") / 1000) {
+      coasts_matched = 1; //Within the cell interval
+    } // OVERALL PERCENTAGE CELL MATCH
+
+
+    var new_fuzzy_value = (uni_matched + school_matched + house_matched + kinder_matched + hospital_matched + park_matched + roads_matched + markets_matched + ptstops_matched + ptstations_matched + restuarants_matched + theatres_matched + cinemas_matched + industries_matched + wbodies_matched + coasts_matched) / 16;
+    feature.set("fuzzyvalue", new_fuzzy_value); //console.log("1km Fuzzy: " + new_fuzzy_value);
+
+    var accessibility = (roads_matched + ptstops_matched + ptstations_matched) / 3 * 100;
+    var livability = (uni_matched + school_matched + kinder_matched + coasts_matched + markets_matched + wbodies_matched + industries_matched + hospital_matched + restuarants_matched + theatres_matched + cinemas_matched + park_matched) / 12 * 100;
+    var suitability = house_matched / 1 * 100;
+    feature.set("accessibility", accessibility);
+    feature.set("livability", livability);
+    feature.set("suitability", suitability);
   }); // Calculate Weights for 100km Grid
 
   var source_100km = grid100km.getSource();
