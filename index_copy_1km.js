@@ -3,7 +3,7 @@ import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 
 import Map from 'ol/Map';
 import View from 'ol/View';
-import {GeoJSON} from 'ol/format';
+import {GeoJSON} from 'ol/format'; 
 import {Text, Style, Stroke, Fill} from 'ol/style';
 import {Tile as TileLayer, Vector as VectorLayer, Group} from 'ol/layer';
 import {fromLonLat} from 'ol/proj';
@@ -18,7 +18,7 @@ import XYZ from 'ol/source/XYZ';
 import VectorImageLayer from 'ol/layer/VectorImage';
 
 /**
- * Elements that make up the popup.
+ * Elements that make up the popup...
  */
  var container = document.getElementById('popup');
  var content_element = document.getElementById('popup-content');
