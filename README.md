@@ -96,7 +96,7 @@ Christina Elmegaard-Fessel - https://www.linkedin.com/in/christina-elmegaard-fes
 
 Kristoffer Knudsen Horst
 
-Marcia Trillo - https://www.linkedin.com/in/marcia-trillo-2303a753 - mtrill20@student.aau.dk
+Marcia Trillo - https://www.linkedin.com/in/marcia-trillo - marciatrillo@gmail.com / mtrill20@student.aau.dk
 
 Project Link: https://github.com/aboestpetersen/HomeLocator
 
